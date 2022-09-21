@@ -8,7 +8,7 @@ import Teams from './pages/teams';
 import Login from './pages/login';
 import parseRoute from './lib/parse-route';
 
-import GroupsNav from './components/second-nav';
+// import GroupsNav from './components/second-nav';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,10 +36,7 @@ export default class App extends React.Component {
     }
     if (route.path === 'groups') {
       return (
-        <>
-          <GroupsNav />
-          <Groups />
-        </>
+        <Groups />
       );
     }
     if (route.path === 'bracket') {

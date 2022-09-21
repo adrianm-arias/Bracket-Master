@@ -1,3 +1,15 @@
 body {
-  padding-top: 151px;
+  padding-top: 111px;
 }
+
+@media (max-width: 576px) {
+  body {
+    padding-top: 101px;
+  }
+}
+
+/* @media (max-width: 376px) {
+  body {
+    padding-top: 101px;
+  }
+} */

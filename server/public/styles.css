@@ -1,8 +1,5 @@
 /* font-family: "Noto Sans Display", sans-serif;
    font-family: Poppins, sans-serif; */
-.example::-webkit-scrollbar {
-  display: none;
-}
 
 .logo-text {
   font-family: Poppins, sans-serif;
@@ -92,10 +89,6 @@
 
 .second-nav-bg {
   background-color: #465c69;
-
-  /* overflow-x: scroll; */
-
-  /* white-space: nowrap; */
 }
 
 .overflow-x {
@@ -104,10 +97,24 @@
 }
 
 .group-link {
-  width: 100%;
-  margin: 0 0.5rem;
+  margin: 0 0.2rem;
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.9rem;
+  font-family: Poppins, sans-serif;
+  text-decoration: none;
+}
+
+.group-link.active:hover {
+  color: #465c69;
+}
+
+.group-link:hover {
+  color: #6aaae4;
+}
+
+div::-webkit-scrollbar {
+  display: none;
 }
 
 @media (max-width: 992px) {
