@@ -9,8 +9,6 @@ import Login from './pages/login';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
 
-// import GroupsNav from './components/second-nav';
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -71,7 +69,6 @@ export default class App extends React.Component {
   render() {
     const { teams } = this.state;
     const contextValue = { teams };
-    // console.log('app page:', contextValue);
     return (
       <AppContext.Provider value={contextValue}>
         <>

@@ -1,5 +1,6 @@
 body {
   padding-top: 111px;
+  padding-bottom: 100px;
 }
 
 @media (max-width: 576px) {
@@ -7,9 +8,3 @@ body {
     padding-top: 101px;
   }
 }
-
-/* @media (max-width: 376px) {
-  body {
-    padding-top: 101px;
-  }
-} */
