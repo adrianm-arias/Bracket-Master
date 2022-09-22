@@ -48,6 +48,7 @@ CREATE TABLE "public"."teams" (
     "thirdGame" char(1) NOT NULL,
     "secondGame" char(1) NOT NULL,
     "firstGame" char(1) NOT NULL,
+    "group" char(1) NOT NULL,
     CONSTRAINT "teams_pk" PRIMARY KEY ("teamId")
 ) WITH (
   OIDS=FALSE

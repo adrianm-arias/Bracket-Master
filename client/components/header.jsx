@@ -25,7 +25,7 @@ export default function Header(props) {
               <a className={`${route.path === 'bracket' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#bracket'>
                 <i className='bi bi-layout-three-columns nav-icon-xs' />
                 Bracket</a>
-              <a className={`${route.path === 'groups' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#groups'>
+              <a className={`${route.path === 'groups' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#groups?groupa'>
                 <i className='bi bi-grid nav-icon-xs' />
                 Groups</a>
               <a className={`${route.path === 'teams' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#teams'>

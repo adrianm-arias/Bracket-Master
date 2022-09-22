@@ -1,71 +1,77 @@
 import React from 'react';
 import parseRoute from '../lib/parse-route';
 import GroupsNav from '../components/second-nav';
-
-// export default function Groups(props) {
-//   return (
-//     <div>
-//       <h1>Groups Page</h1>
-//     </div>
-//   );
-// }
+import AppContext from '../lib/app-context';
 
 export default class Groups extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      route: parseRoute(window.location.hash)
+      group: []
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('hashchange', event => {
-      const newRoute = parseRoute(window.location.hash);
-      this.setState({
-        route: newRoute
-      });
-    });
-  }
+  // componentDidMount() {
+  //   fetch('/api/teams')
+  //     .then(response => response.json())
+  //     .then(groupData => {
+  //       this.setState({
+  //         group: groupData
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.error('error:', error);
+  //     });
+  // }
 
   renderGroup() {
-    const { route } = this.state;
-
-    if (route.params.get('groupa') !== null) {
+    const { teams } = this.context;
+    const route = parseRoute(window.location.hash);
+    // if (this.state.group.length === 0) {
+    //   return null;
+    // }
+    if (route.params.get('group') === 'A') {
       return (
-        <h1>Group A</h1>
+        <>
+          <h1>{teams[0].countryName}</h1>
+          <h1>{teams[1].countryName}</h1>
+        </>
       );
     }
-    if (route.params.get('groupb') !== null) {
+    if (route.params.get('group') === 'B') {
       return (
-        <h1>Group B</h1>
+        <>
+          <h1>{teams[2].countryName}</h1>
+          <h1>{teams[3].countryName}</h1>
+        </>
       );
     }
-    if (route.params.get('groupc') !== null) {
+    if (route.params.get('group') === 'C') {
       return (
         <h1>Group C</h1>
       );
     }
-    if (route.params.get('groupd') !== null) {
+    if (route.params.get('group') === 'D') {
       return (
         <h1>Group D</h1>
       );
     }
-    if (route.params.get('groupe') !== null) {
+    if (route.params.get('group') === 'E') {
       return (
         <h1>Group E</h1>
       );
     }
-    if (route.params.get('groupf') !== null) {
+    if (route.params.get('group') === 'F') {
       return (
         <h1>Group F</h1>
       );
     }
-    if (route.params.get('groupg') !== null) {
+    if (route.params.get('group') === 'G') {
       return (
         <h1>Group G</h1>
       );
     }
-    if (route.params.get('grouph') !== null) {
+    if (route.params.get('group') === 'H') {
       return (
         <h1>Group H</h1>
       );
@@ -73,6 +79,10 @@ export default class Groups extends React.Component {
   }
 
   render() {
+    // const { teams } = this.context;
+    // console.log('teams page:', teams[0]);
+    // const route = parseRoute(window.location.hash);
+    // console.log(route.params.get('group'));
     return (
       <>
         <GroupsNav />
@@ -81,3 +91,4 @@ export default class Groups extends React.Component {
     );
   }
 }
+Groups.contextType = AppContext;

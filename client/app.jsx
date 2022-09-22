@@ -7,6 +7,7 @@ import Bracket from './pages/bracket';
 import Teams from './pages/teams';
 import Login from './pages/login';
 import parseRoute from './lib/parse-route';
+import AppContext from './lib/app-context';
 
 // import GroupsNav from './components/second-nav';
 
@@ -14,6 +15,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      teams: [],
       route: parseRoute(window.location.hash)
     };
   }
@@ -25,6 +27,16 @@ export default class App extends React.Component {
         route: newRoute
       });
     });
+    fetch('/api/teams')
+      .then(response => response.json())
+      .then(teamData => {
+        this.setState({
+          teams: teamData
+        });
+      })
+      .catch(error => {
+        console.error('error:', error);
+      });
   }
 
   renderPage() {
@@ -57,12 +69,17 @@ export default class App extends React.Component {
   }
 
   render() {
+    const { teams } = this.state;
+    const contextValue = { teams };
+    // console.log('app page:', contextValue);
     return (
-      <>
-        <Header />
-        { this.renderPage() }
-        <Footer />
-      </>
+      <AppContext.Provider value={contextValue}>
+        <>
+          <Header />
+          { this.renderPage() }
+          <Footer />
+        </>
+      </AppContext.Provider>
     );
   }
 }

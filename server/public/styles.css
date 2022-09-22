@@ -117,6 +117,29 @@ div::-webkit-scrollbar {
   display: none;
 }
 
+.team-wrapper {
+  background-color: #d9d9d971;
+  width: 30%;
+  padding: 0.8rem 3rem;
+  border-radius: 1rem;
+}
+
+.team-flag {
+  height: 30px;
+}
+
+.team-name {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 500;
+  font-family: Poppins, sans-serif;
+}
+
+.team-link {
+  color: black;
+  text-decoration: none;
+}
+
 @media (max-width: 992px) {
   .nav-position {
     display: block;
