@@ -11,7 +11,7 @@ export default function Footer(props) {
 
           <a href='#bracket'><i className={`${route.path === 'bracket' ? 'bi bi-layout-three-columns footer-icon-xs active' : 'bi bi-layout-three-columns footer-icon-xs'}`} /></a>
 
-          <a href='#groups'><i className={`${route.path === 'groups' ? 'bi bi-grid footer-icon-xs active' : 'bi bi-grid footer-icon-xs'}`} /></a>
+          <a href='#groups?group=A'><i className={`${route.path === 'groups' ? 'bi bi-grid footer-icon-xs active' : 'bi bi-grid footer-icon-xs'}`} /></a>
 
           <a href='#teams'><i className={`${route.path === 'teams' ? 'bi bi-flag footer-icon-xs active' : 'bi bi-flag footer-icon-xs'}`} /></a>
         </div>
