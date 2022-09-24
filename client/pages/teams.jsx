@@ -24,7 +24,7 @@ export default class Teams extends React.Component {
 
     return (
       <div className='d-flex flex-column'>
-        <a className='team-title-link mx-2' href="">
+        <a className='team-title-link mx-2' href={`#groups?group=${letter}`}>
           <div className='group-wrapper d-flex justify-content-center'>
             <h2 className='group-title'>group {letter}</h2>
           </div>

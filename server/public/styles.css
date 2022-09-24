@@ -5,6 +5,10 @@
   font-size: 1.3rem;
 }
 
+p {
+  font-family: "Noto Sans", sans-serif;
+}
+
 .logo-icon {
   width: 85px;
 }
@@ -186,8 +190,76 @@ div::-webkit-scrollbar {
   color: white;
 }
 
-.btn-primary:hover {
-  background-color: #6aa9e488;
+.btn-main:hover {
+  background-color: #465c69;
+}
+
+.fa-link {
+  text-decoration: none;
+  color: #6aaae4;
+}
+
+.w {
+  background-color: #20c997;
+}
+
+.l {
+  background-color: #dc3545;
+}
+
+.d {
+  background-color: #ffc107;
+}
+
+.match-icon {
+  color: black;
+
+  /* background-color: green; */
+  width: 30px;
+  height: 30px;
+  margin: 0 0.5rem;
+  border-radius: 4rem;
+  padding: 1rem;
+}
+
+.match-icon-text {
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.fa-link:hover {
+  text-decoration: none;
+  color: #012a36;
+}
+
+.empty-btn {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-bg {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.modal-content {
+  padding: 1rem 2rem;
+  background-color: white;
+  max-width: 600px;
+  width: 80%;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.75);
 }
 
 @media (max-width: 992px) {

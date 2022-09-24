@@ -5,7 +5,7 @@ import Home from './pages/home';
 import Groups from './pages/groups';
 import Bracket from './pages/bracket';
 import Teams from './pages/teams';
-import Login from './pages/login';
+import Modal from './components/modal';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
 
@@ -61,7 +61,7 @@ export default class App extends React.Component {
     }
     if (route.path === 'login') {
       return (
-        <Login />
+        <Modal />
       );
     }
   }
@@ -69,6 +69,7 @@ export default class App extends React.Component {
   render() {
     const { teams } = this.state;
     const contextValue = { teams };
+    // console.log(contextValue);
     return (
       <AppContext.Provider value={contextValue}>
         <>
