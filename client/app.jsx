@@ -5,9 +5,9 @@ import Home from './pages/home';
 import Groups from './pages/groups';
 import Bracket from './pages/bracket';
 import Teams from './pages/teams';
-import Modal from './components/modal';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
+import Login from './pages/login';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -61,7 +61,7 @@ export default class App extends React.Component {
     }
     if (route.path === 'login') {
       return (
-        <Modal />
+        <Login />
       );
     }
   }

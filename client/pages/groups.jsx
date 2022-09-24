@@ -21,14 +21,48 @@ export default class Groups extends React.Component {
       }
     }
     const groupRender = group.map(groupList => {
-      const teamId = groupList.teamId;
+      const teamId = groupList.teamId - 1;
+      const StringId = teamId.toString();
       return (
-        <button onClick={() => this.setState({ teamId }) } type="button" className='empty-btn' data-bs-toggle="modal" data-bs-target="#teamModal" key={groupList.teamId}>
-          <div className='team-wrapper my-1 mx-auto d-flex justify-content-start'>
-            <img className='team-flag me-4' src={groupList.countryFlag} alt="" />
-            <h1 className='team-name'>{groupList.countryName}</h1>
+        <div className="accordion accordion-flush" id="accordionFlushExample" key={groupList.teamId}>
+          <div className="accordion-item">
+            <h2 className="accordion-header" id={`flush-heading-${StringId}`}>
+              <button className="empty-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${StringId}`} aria-expanded="false" aria-controls={`collapse-${StringId}`}>
+                <div className='team-wrapper my-1 mx-auto d-flex justify-content-start'>
+                  <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryName} Flag`} />
+                  <h1 className='team-name'>{groupList.countryName}</h1>
+                </div>
+              </button>
+            </h2>
+            <div id={`collapse-${StringId}`} className="accordion-collapse collapse" aria-labelledby={`flush-heading-${StringId}`} >
+              <div className="accordion-body">
+                <p className='fs-5'>Coach: <span className='fw-semibold'>{teams[teamId].coach}</span></p>
+                <p className='fs-5'>Rank: <span className='fw-semibold'>{teams[teamId].fifaRank}</span></p>
+                <p className='fs-5'>Last 5 Games:</p>
+                <div className='d-flex flex-row mb-4'>
+                  <div className={`${teams[teamId].fifthGame} match-icon d-flex justify-content-center align-items-center`}>
+                    <p className='fs-6 match-icon-text'>{teams[teamId].fifthGame}</p>
+                  </div>
+                  <div className={`${teams[teamId].fourthGame} match-icon d-flex justify-content-center align-items-center`}>
+                    <p className='fs-6 match-icon-text'>{teams[teamId].fourthGame}</p>
+                  </div>
+                  <div className={`${teams[teamId].thirdGame} match-icon d-flex justify-content-center align-items-center`}>
+                    <p className='fs-6 match-icon-text'>{teams[teamId].thirdGame}</p>
+                  </div>
+                  <div className={`${teams[teamId].secondGame} match-icon d-flex justify-content-center align-items-center`}>
+                    <p className='fs-6 match-icon-text'>{teams[teamId].secondGame}</p>
+                  </div>
+                  <div className={`${teams[teamId].firstGame} match-icon d-flex justify-content-center align-items-center`}>
+                    <p className='fs-6 match-icon-text'>{teams[teamId].firstGame}</p>
+                  </div>
+                </div>
+                <p className='fs-5'>2018 World Cup Finish: <span className='fw-semibold'>{teams[teamId].prevWC}</span></p>
+                <a className='fs-5 fw-semibold fa-link' target="_blank" rel="noreferrer" href={teams[teamId].websiteLink}>Visit Football Association Website <i className="bi bi-chevron-right" />
+                </a>
+              </div>
+            </div>
           </div>
-        </button>
+        </div>
       );
     });
     return (
@@ -70,21 +104,21 @@ export default class Groups extends React.Component {
     const groupClicked = this.renderGroup();
     return (
       <>
+
         {/* {this.state.openModal && this.handleModal()} */}
-        {/* <Modal /> */}
         <div className='second-nav-bg d-flex justify-content-center'>
           <GroupsNav />
         </div>
-        <h1 className='pt-teamModalId text-center mx-auto mb-2 page-title'>{`Group ${groupClicked}`}</h1>
-        <div className='d-md-flex justify-content-center my-4'>
-          {this.renderTeams(groupClicked)}
+        <div className='mt-5 pt-5'>
+          <h1 className='pt-teams[teamId] text-center mx-auto mb-2 page-title'>{`Group ${groupClicked}`}</h1>
+          <div className='d-flex justify-content-center my-4'>
+            {this.renderTeams(groupClicked)}
+          </div>
         </div>
         <div className='d-flex justify-content-center'>
           <button className='btn btn-main'>Start New Prediction</button>
-          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-            Launch demo modal
-          </button>
         </div>
+
       </>
     );
   }

@@ -5,6 +5,10 @@
   font-size: 1.3rem;
 }
 
+body {
+  /* background-color: #d9d9d91e; */
+}
+
 p {
   font-family: "Noto Sans", sans-serif;
 }
@@ -148,6 +152,8 @@ div::-webkit-scrollbar {
 .team-title-link {
   color: black;
   text-decoration: none;
+  width: 475px;
+  margin-bottom: 0.5rem;
 }
 
 .team-title-link:hover {
@@ -262,6 +268,10 @@ div::-webkit-scrollbar {
   box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.75);
 }
 
+.accordion-button-bg {
+  background-color: red;
+}
+
 @media (max-width: 992px) {
   .nav-position {
     display: block;
@@ -275,47 +285,62 @@ div::-webkit-scrollbar {
 
   .team-wrapper {
     max-width: 100%;
-    padding: 0.8rem 3rem;
+    padding: 1rem 6rem;
+  }
+
+  @media (max-width: 576px) {
+    .logo-text {
+      font-size: 1.1rem;
+    }
+
+    .logo-icon {
+      width: 75px;
+    }
+
+    .footer-icon-xs {
+      color: white;
+      font-size: 1.5rem;
+      padding: 0.3rem 0.6rem;
+      margin: 0 0.5em;
+    }
+
+    .team-wrapper {
+      max-width: 375px;
+      padding: 0.8rem 2rem;
+    }
+
+    .team-flag {
+      height: 25px;
+      width: 50px;
+    }
+
+    .team-name {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 500;
+      font-family: Poppins, sans-serif;
+    }
+
+    .group-wrapper {
+      max-width: 45%;
+      padding: 0.6rem 1rem;
+      border-radius: 1rem;
+      margin-left: 1.3rem;
+    }
+
+    .team-title-link {
+      width: 420px;
+    }
   }
 }
 
-@media (max-width: 576px) {
-  .logo-text {
-    font-size: 1.1rem;
-  }
-
-  .logo-icon {
-    width: 75px;
-  }
-
-  .footer-icon-xs {
-    color: white;
-    font-size: 1.5rem;
-    padding: 0.3rem 0.6rem;
-    margin: 0 0.5em;
-  }
-
+@media (max-width: 375px) {
   .team-wrapper {
-    max-width: 90%;
+    width: 300px;
     padding: 0.8rem 2rem;
   }
 
-  .team-flag {
-    height: 25px;
-    width: 50px;
-  }
-
-  .team-name {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 500;
-    font-family: Poppins, sans-serif;
-  }
-
-  .group-wrapper {
-    max-width: 45%;
-    padding: 0.6rem 1rem;
-    border-radius: 1rem;
-    margin-left: 1.3rem;
+  .team-title-link {
+    width: 340px;
   }
 }
