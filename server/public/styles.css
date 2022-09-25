@@ -127,6 +127,10 @@ div::-webkit-scrollbar {
   border-radius: 1rem;
 }
 
+/* .selected {
+  background-color: red;
+} */
+
 .team-flag {
   height: 30px;
   width: 55px;
@@ -162,9 +166,7 @@ div::-webkit-scrollbar {
 
 .page-title {
   font-size: 3rem;
-  font-family:
-    Poppins,
-    sans-serif;
+  font-family: Poppins, sans-serif;
   font-weight: 500;
   text-transform: capitalize;
 }
@@ -188,16 +190,9 @@ div::-webkit-scrollbar {
   font-family: Poppins, sans-serif;
 }
 
-.btn-main {
+.btn-primary {
   background-color: #6aaae4;
   border: none;
-  font-family: "Noto Sans", sans-serif;
-  font-weight: 500;
-  color: white;
-}
-
-.btn-main:hover {
-  background-color: #465c69;
 }
 
 .fa-link {
@@ -270,6 +265,23 @@ div::-webkit-scrollbar {
 
 .accordion-button-bg {
   background-color: red;
+}
+
+.editing-wrapper {
+  position: relative;
+  color: white;
+  background-color: #8a1538;
+  padding: 0 5rem;
+  margin-bottom: 5.5rem;
+}
+
+.editing-wrapper-title {
+  font-weight: 600;
+}
+
+.editing-icons {
+  font-size: 1.4rem;
+  color: white;
 }
 
 @media (max-width: 992px) {
