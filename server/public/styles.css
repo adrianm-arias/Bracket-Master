@@ -127,6 +127,14 @@ div::-webkit-scrollbar {
   border-radius: 1rem;
 }
 
+.team-wrapper-edit {
+  background-color: #d9d9d971;
+  width: 30rem;
+
+  /* padding: 1rem 6rem; */
+  border-radius: 1rem;
+}
+
 /* .selected {
   background-color: red;
 } */
@@ -193,6 +201,7 @@ div::-webkit-scrollbar {
 .btn-primary {
   background-color: #6aaae4;
   border: none;
+  font-family: Poppins, sans-serif;
 }
 
 .fa-link {
@@ -282,6 +291,25 @@ div::-webkit-scrollbar {
 .editing-icons {
   font-size: 1.4rem;
   color: white;
+}
+
+label {
+  -webkit-font-smoothing: antialiased;
+  width: 30rem;
+  padding: 1rem 6rem;
+  border-radius: 1rem;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input:checked + label {
+  background-color: rgba(106, 170, 228, 0.5);
+}
+
+input:checked + label::before {
+  content: "";
 }
 
 @media (max-width: 992px) {

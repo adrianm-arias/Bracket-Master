@@ -7,16 +7,59 @@ import AppContext from '../lib/app-context';
 export default class Groups extends React.Component {
   constructor(props) {
     super(props);
+    this.inputRef = React.createRef();
     this.state = {
       isSelected: false,
       isEditing: false,
       teamId: 1,
+      isChecked: false,
+      checkedCount: 1,
       groupStage: [
         {
           a1: null
+        },
+        {
+          a2: 0
+        },
+        {
+          b1: 0
+        },
+        {
+          b2: 0
         }
       ]
     };
+  }
+
+  toggleChange = () => {
+    this.setState({
+      isChecked: !this.state.isChecked
+    });
+    this.setState({
+      groupStage: [{ a1: this.state.teamId }]
+    });
+  };
+
+  teamSelected(teamId) {
+    // console.log(teamId);
+    // console.log('teamSelection() A1:', this.state.groupStage[0]);
+
+    // if (this.isChecked) {
+    //   this.setState({
+    //     groupStage: [{ a1: teamId }]
+    //   });
+    //   console.log('teamSelection() A1:', this.state.groupStage[0]);
+    //   // console.log('teamSelection() count:', this.state.checkedCount);
+    // } else {
+    //   this.setState({
+    //     groupStage: [{ a1: null }]
+    //   });
+    //   console.log('teamSelection() A1:', this.state.groupStage[0]);
+    // }
+
+    // else {
+    //   alert('max 1 choices');
+    // }
   }
 
   renderTeams(letter) {
@@ -35,12 +78,16 @@ export default class Groups extends React.Component {
       const StringId = teamId.toString();
       return (
         (this.state.isEditing)
-          ? <button type="button" className='empty-btn' key={groupList.teamId} onClick={() => this.setState({ groupStage: [{ a1: groupList.teamId }] })} >
-            <div className='team-wrapper selected my-1 mx-auto d-flex justify-content-start'>
-              <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
-              <h1 className='team-name'>{groupList.countryName}</h1>
+          ? <button type="button" className='empty-btn' key={groupList.teamId} onClick={() => this.teamSelected(groupList.teamId)} >
+            <div className='team-wrapper-edit selected my-1 mx-auto d-flex justify-content-start'>
+              <input value={teamId} defaultChecked={this.state.isChecked} onChange={this.toggleChange} className='checkbox' type="checkbox" id={groupList.teamId} name="teams" />
+              <label className='d-flex' htmlFor={groupList.teamId}>
+                <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
+                <h1 className='team-name'>{groupList.countryName}</h1>
+              </label>
             </div>
           </button>
+
           : <div className='accordion accordion-flush' id='accordionFlushExample' key={groupList.teamId}>
             <div className='accordion-item'>
               <h2 className='accordion-header' id={`flush-heading-${StringId}`}>
@@ -135,7 +182,7 @@ export default class Groups extends React.Component {
 
   render() {
     // const { teams } = this.context;
-    // console.log('groups render:', teams);
+    // console.log('groups render:', this.state.checkedCount === 0);
     // console.log('groups render:', this.state.groupStage[0]);
     // console.log('isEditing State:', this.state.isEditing);
     const groupClicked = this.renderGroup();
