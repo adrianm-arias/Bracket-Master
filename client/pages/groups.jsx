@@ -23,8 +23,8 @@ export default class Groups extends React.Component {
     }
     // Render the team info
     const groupRender = group.map(groupList => {
-      const teamId = groupList.teamId - 1;
-      const StringId = teamId.toString();
+      // const teamId = groupList.teamId - 1;
+      const StringId = groupList.teamId.toString();
       return (
         (this.state.isEditing)
           ? <button type="button" className='empty-btn' key={groupList.teamId}>
@@ -36,7 +36,6 @@ export default class Groups extends React.Component {
               </label>
             </div>
           </button>
-
           : <div className='accordion accordion-flush' id='accordionFlushExample' key={groupList.teamId}>
             <div className='accordion-item'>
               <h2 className='accordion-header' id={`flush-heading-${StringId}`}>
@@ -49,28 +48,28 @@ export default class Groups extends React.Component {
               </h2>
               <div id={`collapse-${StringId}`} className='accordion-collapse collapse' aria-labelledby={`flush-heading-${StringId}`} >
                 <div className='accordion-body'>
-                  <p className='fs-5'>Coach: <span className='fw-semibold'>{teams[teamId].coach}</span></p>
-                  <p className='fs-5'>Rank: <span className='fw-semibold'>{teams[teamId].fifaRank}</span></p>
+                  <p className='fs-5'>Coach: <span className='fw-semibold'>{groupList.coach}</span></p>
+                  <p className='fs-5'>Rank: <span className='fw-semibold'>{groupList.fifaRank}</span></p>
                   <p className='fs-5'>Last 5 Games:</p>
                   <div className='d-flex flex-row mb-4'>
-                    <div className={`${teams[teamId].fifthGame} match-icon d-flex justify-content-center align-items-center`}>
-                      <p className='fs-6 match-icon-text'>{teams[teamId].fifthGame}</p>
+                    <div className={`${groupList.fifthGame} match-icon d-flex justify-content-center align-items-center`}>
+                      <p className='fs-6 match-icon-text'>{groupList.fifthGame}</p>
                     </div>
-                    <div className={`${teams[teamId].fourthGame} match-icon d-flex justify-content-center align-items-center`}>
-                      <p className='fs-6 match-icon-text'>{teams[teamId].fourthGame}</p>
+                    <div className={`${groupList.fourthGame} match-icon d-flex justify-content-center align-items-center`}>
+                      <p className='fs-6 match-icon-text'>{groupList.fourthGame}</p>
                     </div>
-                    <div className={`${teams[teamId].thirdGame} match-icon d-flex justify-content-center align-items-center`}>
-                      <p className='fs-6 match-icon-text'>{teams[teamId].thirdGame}</p>
+                    <div className={`${groupList.thirdGame} match-icon d-flex justify-content-center align-items-center`}>
+                      <p className='fs-6 match-icon-text'>{groupList.thirdGame}</p>
                     </div>
-                    <div className={`${teams[teamId].secondGame} match-icon d-flex justify-content-center align-items-center`}>
-                      <p className='fs-6 match-icon-text'>{teams[teamId].secondGame}</p>
+                    <div className={`${groupList.secondGame} match-icon d-flex justify-content-center align-items-center`}>
+                      <p className='fs-6 match-icon-text'>{groupList.secondGame}</p>
                     </div>
-                    <div className={`${teams[teamId].firstGame} match-icon d-flex justify-content-center align-items-center`}>
-                      <p className='fs-6 match-icon-text'>{teams[teamId].firstGame}</p>
+                    <div className={`${groupList.firstGame} match-icon d-flex justify-content-center align-items-center`}>
+                      <p className='fs-6 match-icon-text'>{groupList.firstGame}</p>
                     </div>
                   </div>
-                  <p className='fs-5'>2018 World Cup Finish: <span className='fw-semibold'>{teams[teamId].prevWC}</span></p>
-                  <a className='fs-5 fw-semibold fa-link' target='_blank' rel='noreferrer' href={teams[teamId].websiteLink}>Visit Football Association Website <i className='bi bi-chevron-right' />
+                  <p className='fs-5'>2018 World Cup Finish: <span className='fw-semibold'>{groupList.prevWC}</span></p>
+                  <a className='fs-5 fw-semibold fa-link' target='_blank' rel='noreferrer' href={groupList.websiteLink}>Visit Football Association Website <i className='bi bi-chevron-right' />
                   </a>
                 </div>
               </div>
@@ -138,7 +137,7 @@ export default class Groups extends React.Component {
           <GroupsNav />
         </div>
         <div className='mt-5 pt-5'>
-          <h1 className='pt-teams[teamId] text-center mx-auto mb-2 page-title'>{`Group ${groupClicked}`}</h1>
+          <h1 className='pt-teams text-center mx-auto mb-2 page-title'>{`Group ${groupClicked}`}</h1>
           <div className='d-flex justify-content-center my-4'>
             {this.renderTeams(groupClicked)}
           </div>
