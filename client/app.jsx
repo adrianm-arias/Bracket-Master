@@ -69,7 +69,6 @@ export default class App extends React.Component {
   render() {
     const { teams } = this.state;
     const contextValue = { teams };
-    // console.log(contextValue);
     return (
       <AppContext.Provider value={contextValue}>
         <>
