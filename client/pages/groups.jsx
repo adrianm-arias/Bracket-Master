@@ -2,64 +2,13 @@ import React from 'react';
 import parseRoute from '../lib/parse-route';
 import GroupsNav from '../components/second-nav';
 import AppContext from '../lib/app-context';
-// import Modal from '../components/modal';
 
 export default class Groups extends React.Component {
   constructor(props) {
     super(props);
-    this.inputRef = React.createRef();
     this.state = {
-      isSelected: false,
-      isEditing: false,
-      teamId: 1,
-      isChecked: false,
-      checkedCount: 1,
-      groupStage: [
-        {
-          a1: null
-        },
-        {
-          a2: 0
-        },
-        {
-          b1: 0
-        },
-        {
-          b2: 0
-        }
-      ]
+      isEditing: false
     };
-  }
-
-  toggleChange = () => {
-    this.setState({
-      isChecked: !this.state.isChecked
-    });
-    this.setState({
-      groupStage: [{ a1: this.state.teamId }]
-    });
-  };
-
-  teamSelected(teamId) {
-    // console.log(teamId);
-    // console.log('teamSelection() A1:', this.state.groupStage[0]);
-
-    // if (this.isChecked) {
-    //   this.setState({
-    //     groupStage: [{ a1: teamId }]
-    //   });
-    //   console.log('teamSelection() A1:', this.state.groupStage[0]);
-    //   // console.log('teamSelection() count:', this.state.checkedCount);
-    // } else {
-    //   this.setState({
-    //     groupStage: [{ a1: null }]
-    //   });
-    //   console.log('teamSelection() A1:', this.state.groupStage[0]);
-    // }
-
-    // else {
-    //   alert('max 1 choices');
-    // }
   }
 
   renderTeams(letter) {
@@ -78,9 +27,9 @@ export default class Groups extends React.Component {
       const StringId = teamId.toString();
       return (
         (this.state.isEditing)
-          ? <button type="button" className='empty-btn' key={groupList.teamId} onClick={() => this.teamSelected(groupList.teamId)} >
+          ? <button type="button" className='empty-btn' key={groupList.teamId}>
             <div className='team-wrapper-edit selected my-1 mx-auto d-flex justify-content-start'>
-              <input value={teamId} defaultChecked={this.state.isChecked} onChange={this.toggleChange} className='checkbox' type="checkbox" id={groupList.teamId} name="teams" />
+              <input className='checkbox' type="checkbox" id={groupList.teamId} name="teams" />
               <label className='d-flex' htmlFor={groupList.teamId}>
                 <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
                 <h1 className='team-name'>{groupList.countryName}</h1>
@@ -152,6 +101,7 @@ export default class Groups extends React.Component {
     );
   }
 
+  // checks hash routing and loads correct page
   renderGroup() {
     const route = parseRoute(window.location.hash);
     if (route.params.get('group') === 'A') {
@@ -181,14 +131,9 @@ export default class Groups extends React.Component {
   }
 
   render() {
-    // const { teams } = this.context;
-    // console.log('groups render:', this.state.checkedCount === 0);
-    // console.log('groups render:', this.state.groupStage[0]);
-    // console.log('isEditing State:', this.state.isEditing);
     const groupClicked = this.renderGroup();
     return (
       <>
-        {/* {this.state.openModal && this.handleModal()} */}
         <div className='second-nav-bg d-flex justify-content-center'>
           <GroupsNav />
         </div>
@@ -200,13 +145,12 @@ export default class Groups extends React.Component {
         </div>
         {(!this.state.isEditing)
           ? <div className='d-flex justify-content-center'>
-            <button onClick={() => this.setState({ isEditing: [] })} className='btn btn-primary'>Start New Prediction</button>
+            <button onClick={() => this.setState({ isEditing: true })} className='btn btn-primary'>Start New Prediction</button>
           </div>
-          : null
+          : <div className='fixed-bottom'>
+            {this.state.isEditing && this.handleEditing()}
+          </div>
         }
-        <div className='fixed-bottom'>
-          { this.state.isEditing && this.handleEditing()}
-        </div>
       </>
     );
   }
