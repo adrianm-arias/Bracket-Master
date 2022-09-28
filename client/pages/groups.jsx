@@ -7,8 +7,60 @@ export default class Groups extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isEditing: false
+      isChecked: false,
+      isEditing: false,
+      groupStage: [
+        {
+          a1: ''
+        },
+        {
+          a2: ''
+        },
+        {
+          b1: ''
+        },
+        {
+          b2: ''
+        },
+        {
+          c1: null
+        },
+        {
+          c2: null
+        },
+        {
+          d1: null
+        },
+        {
+          d2: null
+        }
+      ]
     };
+  }
+
+  teamSelected(teamId) {
+
+    // if (!this.state.isChecked) {
+    //   this.setState({
+    //     groupStage: [{ a1: teamId }]
+    //   });
+    //   console.log(this.state.groupStage[0]);
+    // } else {
+    //   this.setState({
+    //     groupStage: [{ a1: null }]
+    //   });
+    //   console.log(this.state.groupStage[0]);
+    // }
+    const groupStageCopy = [...this.state.groupStage];
+
+    for (let i = 0; i < groupStageCopy.length; i++) {
+      const test = groupStageCopy[i][Object.keys(groupStageCopy[i])[0]];
+      if (test === '') {
+        groupStageCopy[i][Object.keys(groupStageCopy[i])[0]] = teamId;
+        // console.log('groupCopy', groupStageCopy[i]);
+        break;
+      }
+    }
   }
 
   renderTeams(letter) {
@@ -21,13 +73,13 @@ export default class Groups extends React.Component {
         group.push(teams[i]);
       }
     }
+
     // Render the team info
     const groupRender = group.map(groupList => {
-      // const teamId = groupList.teamId - 1;
       const StringId = groupList.teamId.toString();
       return (
         (this.state.isEditing)
-          ? <button type="button" className='empty-btn' key={groupList.teamId}>
+          ? <button type="button" className='empty-btn' key={groupList.teamId} onClick={() => this.teamSelected(groupList.teamId)}>
             <div className='team-wrapper-edit selected my-1 mx-auto d-flex justify-content-start'>
               <input className='checkbox' type="checkbox" id={groupList.teamId} name="teams" />
               <label className='d-flex' htmlFor={groupList.teamId}>
