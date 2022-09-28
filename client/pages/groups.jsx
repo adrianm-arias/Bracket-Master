@@ -7,59 +7,53 @@ export default class Groups extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: false,
+      groupCountA: 0,
       isEditing: false,
-      groupStage: [
-        {
-          a1: ''
-        },
-        {
-          a2: ''
-        },
-        {
-          b1: ''
-        },
-        {
-          b2: ''
-        },
-        {
-          c1: null
-        },
-        {
-          c2: null
-        },
-        {
-          d1: null
-        },
-        {
-          d2: null
-        }
-      ]
+      groupStage: {
+        a1: '',
+        a2: '',
+        b1: '',
+        b2: '',
+        c1: '',
+        d1: ''
+      }
+
     };
   }
 
-  teamSelected(teamId) {
+  teamSelected(teamId, event) {
 
-    // if (!this.state.isChecked) {
-    //   this.setState({
-    //     groupStage: [{ a1: teamId }]
-    //   });
-    //   console.log(this.state.groupStage[0]);
-    // } else {
-    //   this.setState({
-    //     groupStage: [{ a1: null }]
-    //   });
-    //   console.log(this.state.groupStage[0]);
+    // if (this.state.groupCount === 2) {
+    //   event.target.checked = false;
+    //   return;
     // }
-    const groupStageCopy = [...this.state.groupStage];
 
-    for (let i = 0; i < groupStageCopy.length; i++) {
-      const test = groupStageCopy[i][Object.keys(groupStageCopy[i])[0]];
-      if (test === '') {
-        groupStageCopy[i][Object.keys(groupStageCopy[i])[0]] = teamId;
-        // console.log('groupCopy', groupStageCopy[i]);
-        break;
+    if (event.target.checked) {
+      const groupStageCopy = { ...this.state.groupStage };
+
+      for (const property in groupStageCopy) {
+        if (groupStageCopy[property] === '') {
+          groupStageCopy[property] = teamId;
+          break;
+        }
       }
+      this.setState({
+        groupStage: groupStageCopy,
+        groupCount: this.state.groupCount + 1
+      });
+    } else {
+      const groupStageCopy = { ...this.state.groupStage };
+
+      for (const property in groupStageCopy) {
+        if (groupStageCopy[property] === teamId) {
+          groupStageCopy[property] = '';
+          break;
+        }
+      }
+      this.setState({
+        groupStage: groupStageCopy,
+        groupCount: this.state.groupCount - 1
+      });
     }
   }
 
@@ -79,15 +73,13 @@ export default class Groups extends React.Component {
       const StringId = groupList.teamId.toString();
       return (
         (this.state.isEditing)
-          ? <button type="button" className='empty-btn' key={groupList.teamId} onClick={() => this.teamSelected(groupList.teamId)}>
-            <div className='team-wrapper-edit selected my-1 mx-auto d-flex justify-content-start'>
-              <input className='checkbox' type="checkbox" id={groupList.teamId} name="teams" />
-              <label className='d-flex' htmlFor={groupList.teamId}>
-                <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
-                <h1 className='team-name'>{groupList.countryName}</h1>
-              </label>
-            </div>
-          </button>
+          ? <div className='team-wrapper-edit selected my-2 mx-auto d-flex justify-content-start' onChange={event => this.teamSelected(groupList.teamId, event)} key={groupList.teamId}>
+            <input className='checkbox' type="checkbox" id={groupList.teamId} name="teams" />
+            <label className='d-flex' htmlFor={groupList.teamId}>
+              <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
+              <h1 className='team-name'>{groupList.countryName}</h1>
+            </label>
+          </div>
           : <div className='accordion accordion-flush' id='accordionFlushExample' key={groupList.teamId}>
             <div className='accordion-item'>
               <h2 className='accordion-header' id={`flush-heading-${StringId}`}>
@@ -182,6 +174,9 @@ export default class Groups extends React.Component {
   }
 
   render() {
+    // console.log(this.state.groupStage);
+    // console.log(this.state.groupCount);
+
     const groupClicked = this.renderGroup();
     return (
       <>
