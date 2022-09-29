@@ -6,9 +6,12 @@ import AppContext from '../lib/app-context';
 export default class Groups extends React.Component {
   constructor(props) {
     super(props);
+    this.myRef = React.createRef();
     this.state = {
       isShowingAlert: false,
       groupCountA: 0,
+      groupCountB: 0,
+      groupCountC: 0,
       isEditing: false,
       groupStage: {
         a1: '',
@@ -16,22 +19,52 @@ export default class Groups extends React.Component {
         b1: '',
         b2: '',
         c1: '',
-        d1: ''
+        d1: '',
+        e1: '',
+        e2: '',
+        f1: '',
+        f2: '',
+        g1: '',
+        g2: '',
+        h1: '',
+        h2: ''
       }
 
     };
   }
 
+  componentDidUpdate() {
+    // console.log('component updated');
+    // this.myRef.current.id.checked = true;
+
+    // const groupStageCopy = { ...this.state.groupStage };
+
+    // for (const property in groupStageCopy) {
+    //   if (groupStageCopy[property] === this.myRef.current.id) {
+    //     groupStageCopy[property] = '';
+    //     break;
+    //   }
+    // }
+  }
+
   teamSelected(teamId, event) {
 
-    // if (this.state.groupCountA === 2) {
-    //   event.target.checked = false;
-    //   return;
-    // }
+    // const route = parseRoute(window.location.hash);
+    // console.log(this.myRef.current.id);
+    // const currentGroupState = `this.current.group${route.params.get('group')}`;
+    // console.log(this.myRef.current.id);
 
     if (event.target.checked) {
       const groupStageCopy = { ...this.state.groupStage };
       if (this.state.groupCountA === 2) {
+        this.setState({
+          isShowingAlert: true
+        });
+        setTimeout(() => {
+          this.setState({
+            isShowingAlert: false
+          });
+        }, 6000);
         event.target.checked = false;
         return;
       }
@@ -61,11 +94,13 @@ export default class Groups extends React.Component {
     }
   }
 
-  maxGroupSelect() {
+  maxSelectAlert() {
     return (
-      <div className="alert alert-warning alert-dismissible fade show alert-window float-end mt-3 me-3" role="alert">
-        <strong>You can only select 2 teams</strong>
-        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" />
+      <div className='d-flex justify-content-center'>
+        <div className='alert alert-warning alert-dismissible fade show alert-window mt-3' role='alert'>
+          <strong>You can only select 2 teams</strong>
+          <button type='button' className='btn-close' data-bs-dismiss='alert' aria-label='Close'/>
+        </div>
       </div>
     );
   }
@@ -87,7 +122,7 @@ export default class Groups extends React.Component {
       return (
         (this.state.isEditing)
           ? <div className='team-wrapper-edit selected my-2 mx-auto d-flex justify-content-start' onChange={event => this.teamSelected(groupList.teamId, event)} key={groupList.teamId}>
-            <input className='checkbox' type="checkbox" id={groupList.teamId} name="teams" />
+            <input className='checkbox' ref={this.myRef} type='checkbox' id={groupList.teamId} name={ groupList.countryName } />
             <label className='d-flex' htmlFor={groupList.teamId}>
               <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
               <h1 className='team-name'>{groupList.countryName}</h1>
@@ -187,8 +222,8 @@ export default class Groups extends React.Component {
   }
 
   render() {
+    // console.log(this.state.isShowingAlert);
     // console.log(this.state.groupStage);
-    // console.log(this.state.groupCountA);
 
     const groupClicked = this.renderGroup();
     return (
@@ -196,8 +231,7 @@ export default class Groups extends React.Component {
         <div className='second-nav-bg d-flex justify-content-center'>
           <GroupsNav />
         </div>
-        <this.maxGroupSelect />
-        <div className='mt-5 pt-5'>
+        <div className='mt-4 pt-4'>
           <h1 className='pt-teams text-center mx-auto mb-2 page-title'>{`Group ${groupClicked}`}</h1>
           <div className='d-flex justify-content-center my-4'>
             {this.renderTeams(groupClicked)}
@@ -210,6 +244,10 @@ export default class Groups extends React.Component {
           : <div className='fixed-bottom'>
             {this.state.isEditing && this.handleEditing()}
           </div>
+        }
+        {(!this.state.isShowingAlert)
+          ? null
+          : <this.maxSelectAlert />
         }
       </>
     );
