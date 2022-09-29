@@ -7,6 +7,7 @@ export default class Groups extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      isShowingAlert: false,
       groupCountA: 0,
       isEditing: false,
       groupStage: {
@@ -23,14 +24,17 @@ export default class Groups extends React.Component {
 
   teamSelected(teamId, event) {
 
-    // if (this.state.groupCount === 2) {
+    // if (this.state.groupCountA === 2) {
     //   event.target.checked = false;
     //   return;
     // }
 
     if (event.target.checked) {
       const groupStageCopy = { ...this.state.groupStage };
-
+      if (this.state.groupCountA === 2) {
+        event.target.checked = false;
+        return;
+      }
       for (const property in groupStageCopy) {
         if (groupStageCopy[property] === '') {
           groupStageCopy[property] = teamId;
@@ -39,7 +43,7 @@ export default class Groups extends React.Component {
       }
       this.setState({
         groupStage: groupStageCopy,
-        groupCount: this.state.groupCount + 1
+        groupCountA: this.state.groupCountA + 1
       });
     } else {
       const groupStageCopy = { ...this.state.groupStage };
@@ -52,9 +56,18 @@ export default class Groups extends React.Component {
       }
       this.setState({
         groupStage: groupStageCopy,
-        groupCount: this.state.groupCount - 1
+        groupCountA: this.state.groupCountA - 1
       });
     }
+  }
+
+  maxGroupSelect() {
+    return (
+      <div className="alert alert-warning alert-dismissible fade show alert-window float-end mt-3 me-3" role="alert">
+        <strong>You can only select 2 teams</strong>
+        <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close" />
+      </div>
+    );
   }
 
   renderTeams(letter) {
@@ -175,7 +188,7 @@ export default class Groups extends React.Component {
 
   render() {
     // console.log(this.state.groupStage);
-    // console.log(this.state.groupCount);
+    // console.log(this.state.groupCountA);
 
     const groupClicked = this.renderGroup();
     return (
@@ -183,6 +196,7 @@ export default class Groups extends React.Component {
         <div className='second-nav-bg d-flex justify-content-center'>
           <GroupsNav />
         </div>
+        <this.maxGroupSelect />
         <div className='mt-5 pt-5'>
           <h1 className='pt-teams text-center mx-auto mb-2 page-title'>{`Group ${groupClicked}`}</h1>
           <div className='d-flex justify-content-center my-4'>

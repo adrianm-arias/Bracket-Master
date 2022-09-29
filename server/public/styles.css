@@ -312,6 +312,13 @@ input:checked + label::before {
   content: "";
 }
 
+.alert-window {
+  background-color: rgba(248, 215, 218, 1);
+  color: #8a1538;
+  width: 30%;
+  border-color: #8a1538;
+}
+
 @media (max-width: 992px) {
   .nav-position {
     display: block;
