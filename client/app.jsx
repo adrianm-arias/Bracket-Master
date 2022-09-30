@@ -5,9 +5,9 @@ import Home from './pages/home';
 import Groups from './pages/groups';
 import Bracket from './pages/bracket';
 import Teams from './pages/teams';
-import Login from './pages/login';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
+import Login from './pages/login';
 
 export default class App extends React.Component {
   constructor(props) {

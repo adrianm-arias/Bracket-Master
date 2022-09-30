@@ -5,6 +5,14 @@
   font-size: 1.3rem;
 }
 
+body {
+  /* background-color: #d9d9d91e; */
+}
+
+p {
+  font-family: "Noto Sans", sans-serif;
+}
+
 .logo-icon {
   width: 85px;
 }
@@ -119,6 +127,18 @@ div::-webkit-scrollbar {
   border-radius: 1rem;
 }
 
+.team-wrapper-edit {
+  background-color: #d9d9d971;
+  width: 30rem;
+
+  /* padding: 1rem 6rem; */
+  border-radius: 1rem;
+}
+
+/* .selected {
+  background-color: red;
+} */
+
 .team-flag {
   height: 30px;
   width: 55px;
@@ -144,6 +164,8 @@ div::-webkit-scrollbar {
 .team-title-link {
   color: black;
   text-decoration: none;
+  width: 475px;
+  margin-bottom: 0.5rem;
 }
 
 .team-title-link:hover {
@@ -152,9 +174,7 @@ div::-webkit-scrollbar {
 
 .page-title {
   font-size: 3rem;
-  font-family:
-    Poppins,
-    sans-serif;
+  font-family: Poppins, sans-serif;
   font-weight: 500;
   text-transform: capitalize;
 }
@@ -178,16 +198,125 @@ div::-webkit-scrollbar {
   font-family: Poppins, sans-serif;
 }
 
-.btn-main {
+.btn-primary {
   background-color: #6aaae4;
   border: none;
-  font-family: "Noto Sans", sans-serif;
+  font-family: Poppins, sans-serif;
+}
+
+.fa-link {
+  text-decoration: none;
+  color: #6aaae4;
+}
+
+.w {
+  background-color: #20c997;
+}
+
+.l {
+  background-color: #dc3545;
+}
+
+.d {
+  background-color: #ffc107;
+}
+
+.match-icon {
+  color: black;
+
+  /* background-color: green; */
+  width: 30px;
+  height: 30px;
+  margin: 0 0.5rem;
+  border-radius: 4rem;
+  padding: 1rem;
+}
+
+.match-icon-text {
+  margin: 0;
+  text-transform: uppercase;
   font-weight: 500;
+}
+
+.fa-link:hover {
+  text-decoration: none;
+  color: #012a36;
+}
+
+.empty-btn {
+  border: none;
+  background-color: transparent;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.modal-bg {
+  background-color: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.modal-content {
+  padding: 1rem 2rem;
+  background-color: white;
+  max-width: 600px;
+  width: 80%;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.75);
+}
+
+.accordion-button-bg {
+  background-color: red;
+}
+
+.editing-wrapper {
+  position: relative;
+  color: white;
+  background-color: #8a1538;
+  padding: 0 5rem;
+  margin-bottom: 5.5rem;
+}
+
+.editing-wrapper-title {
+  font-weight: 600;
+}
+
+.editing-icons {
+  font-size: 1.4rem;
   color: white;
 }
 
-.btn-primary:hover {
-  background-color: #6aa9e488;
+label {
+  -webkit-font-smoothing: antialiased;
+  width: 30rem;
+  padding: 1rem 6rem;
+  border-radius: 1rem;
+}
+
+input[type="checkbox"] {
+  display: none;
+}
+
+input:checked + label {
+  background-color: rgba(106, 170, 228, 0.5);
+}
+
+input:checked + label::before {
+  content: "";
+}
+
+.alert-window {
+  background-color: rgba(248, 215, 218, 1);
+  color: #8a1538;
+  width: 30%;
+  border-color: #8a1538;
 }
 
 @media (max-width: 992px) {
@@ -203,47 +332,62 @@ div::-webkit-scrollbar {
 
   .team-wrapper {
     max-width: 100%;
-    padding: 0.8rem 3rem;
+    padding: 1rem 6rem;
+  }
+
+  @media (max-width: 576px) {
+    .logo-text {
+      font-size: 1.1rem;
+    }
+
+    .logo-icon {
+      width: 75px;
+    }
+
+    .footer-icon-xs {
+      color: white;
+      font-size: 1.5rem;
+      padding: 0.3rem 0.6rem;
+      margin: 0 0.5em;
+    }
+
+    .team-wrapper {
+      max-width: 375px;
+      padding: 0.8rem 2rem;
+    }
+
+    .team-flag {
+      height: 25px;
+      width: 50px;
+    }
+
+    .team-name {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 500;
+      font-family: Poppins, sans-serif;
+    }
+
+    .group-wrapper {
+      max-width: 45%;
+      padding: 0.6rem 1rem;
+      border-radius: 1rem;
+      margin-left: 1.3rem;
+    }
+
+    .team-title-link {
+      width: 420px;
+    }
   }
 }
 
-@media (max-width: 576px) {
-  .logo-text {
-    font-size: 1.1rem;
-  }
-
-  .logo-icon {
-    width: 75px;
-  }
-
-  .footer-icon-xs {
-    color: white;
-    font-size: 1.5rem;
-    padding: 0.3rem 0.6rem;
-    margin: 0 0.5em;
-  }
-
+@media (max-width: 375px) {
   .team-wrapper {
-    max-width: 90%;
+    width: 300px;
     padding: 0.8rem 2rem;
   }
 
-  .team-flag {
-    height: 25px;
-    width: 50px;
-  }
-
-  .team-name {
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: 500;
-    font-family: Poppins, sans-serif;
-  }
-
-  .group-wrapper {
-    max-width: 45%;
-    padding: 0.6rem 1rem;
-    border-radius: 1rem;
-    margin-left: 1.3rem;
+  .team-title-link {
+    width: 340px;
   }
 }
