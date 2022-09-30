@@ -8,10 +8,9 @@ export default class Groups extends React.Component {
     super(props);
     this.myRef = React.createRef();
     this.state = {
+      route: parseRoute(window.location.hash),
       isShowingAlert: false,
-      groupCountA: 0,
-      groupCountB: 0,
-      groupCountC: 0,
+      groupCount: 0,
       isEditing: false,
       groupStage: {
         a1: '',
@@ -19,7 +18,9 @@ export default class Groups extends React.Component {
         b1: '',
         b2: '',
         c1: '',
+        c2: '',
         d1: '',
+        d2: '',
         e1: '',
         e2: '',
         f1: '',
@@ -33,30 +34,24 @@ export default class Groups extends React.Component {
     };
   }
 
-  componentDidUpdate() {
-    // console.log('component updated');
-    // this.myRef.current.id.checked = true;
-
-    // const groupStageCopy = { ...this.state.groupStage };
-
-    // for (const property in groupStageCopy) {
-    //   if (groupStageCopy[property] === this.myRef.current.id) {
-    //     groupStageCopy[property] = '';
-    //     break;
-    //   }
-    // }
+  componentDidMount() {
+    window.addEventListener('hashchange', event => {
+      const newRoute = parseRoute(window.location.hash);
+      this.setState({
+        route: newRoute,
+        groupCount: 0
+      });
+    });
   }
 
   teamSelected(teamId, event) {
 
-    // const route = parseRoute(window.location.hash);
-    // console.log(this.myRef.current.id);
-    // const currentGroupState = `this.current.group${route.params.get('group')}`;
-    // console.log(this.myRef.current.id);
+    const groupStageCopy = { ...this.state.groupStage };
 
     if (event.target.checked) {
-      const groupStageCopy = { ...this.state.groupStage };
-      if (this.state.groupCountA === 2) {
+
+      // checks is max group selection is reached
+      if (this.state.groupCount === 2) {
         this.setState({
           isShowingAlert: true
         });
@@ -68,6 +63,7 @@ export default class Groups extends React.Component {
         event.target.checked = false;
         return;
       }
+      // loops through groupStage object looking for next available empty property
       for (const property in groupStageCopy) {
         if (groupStageCopy[property] === '') {
           groupStageCopy[property] = teamId;
@@ -76,10 +72,10 @@ export default class Groups extends React.Component {
       }
       this.setState({
         groupStage: groupStageCopy,
-        groupCountA: this.state.groupCountA + 1
+        groupCount: this.state.groupCount + 1
       });
+      // loops through groupStage object looking for a matching teamId to remove from current property
     } else {
-      const groupStageCopy = { ...this.state.groupStage };
 
       for (const property in groupStageCopy) {
         if (groupStageCopy[property] === teamId) {
@@ -89,7 +85,7 @@ export default class Groups extends React.Component {
       }
       this.setState({
         groupStage: groupStageCopy,
-        groupCountA: this.state.groupCountA - 1
+        groupCount: this.state.groupCount - 1
       });
     }
   }
@@ -98,11 +94,22 @@ export default class Groups extends React.Component {
     return (
       <div className='d-flex justify-content-center'>
         <div className='alert alert-warning alert-dismissible fade show alert-window mt-3' role='alert'>
-          <strong>You can only select 2 teams</strong>
+          <strong>Only select 2 teams per group</strong>
           <button type='button' className='btn-close' data-bs-dismiss='alert' aria-label='Close'/>
         </div>
       </div>
     );
+  }
+
+  verifyCheck(teamId) {
+    const groupStage = this.state.groupStage;
+
+    for (const property in groupStage) {
+      if (groupStage[property] === teamId) {
+        return true;
+      }
+    }
+    return false;
   }
 
   renderTeams(letter) {
@@ -122,7 +129,7 @@ export default class Groups extends React.Component {
       return (
         (this.state.isEditing)
           ? <div className='team-wrapper-edit selected my-2 mx-auto d-flex justify-content-start' onChange={event => this.teamSelected(groupList.teamId, event)} key={groupList.teamId}>
-            <input className='checkbox' ref={this.myRef} type='checkbox' id={groupList.teamId} name={ groupList.countryName } />
+            <input className='checkbox' type='checkbox' id={groupList.teamId} name={groupList.countryName} defaultChecked={this.verifyCheck(groupList.teamId) }/>
             <label className='d-flex' htmlFor={groupList.teamId}>
               <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
               <h1 className='team-name'>{groupList.countryName}</h1>
@@ -194,7 +201,7 @@ export default class Groups extends React.Component {
 
   // checks hash routing and loads correct page
   renderGroup() {
-    const route = parseRoute(window.location.hash);
+    const { route } = this.state;
     if (route.params.get('group') === 'A') {
       return 'A';
     }
@@ -222,9 +229,6 @@ export default class Groups extends React.Component {
   }
 
   render() {
-    // console.log(this.state.isShowingAlert);
-    // console.log(this.state.groupStage);
-
     const groupClicked = this.renderGroup();
     return (
       <>
