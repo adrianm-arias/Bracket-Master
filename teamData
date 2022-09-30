@@ -1,0 +1,457 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 14.3 (Ubuntu 14.3-0ubuntu0.22.04.1)
+-- Dumped by pg_dump version 14.3 (Ubuntu 14.3-0ubuntu0.22.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: brackets; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.brackets (
+    "bracketId" integer NOT NULL,
+    "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+    "userId" integer NOT NULL,
+    "bracketName" text NOT NULL
+);
+
+
+ALTER TABLE public.brackets OWNER TO dev;
+
+--
+-- Name: brackets_bracketId_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public."brackets_bracketId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."brackets_bracketId_seq" OWNER TO dev;
+
+--
+-- Name: brackets_bracketId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public."brackets_bracketId_seq" OWNED BY public.brackets."bracketId";
+
+
+--
+-- Name: groupStage; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public."groupStage" (
+    "groupStageId" integer NOT NULL,
+    "bracketId" integer NOT NULL,
+    "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+    a1 integer NOT NULL,
+    a2 integer NOT NULL,
+    b1 integer NOT NULL,
+    b2 integer NOT NULL,
+    c1 integer NOT NULL,
+    c2 integer NOT NULL,
+    d1 integer NOT NULL,
+    d2 integer NOT NULL,
+    e1 integer NOT NULL,
+    e2 integer NOT NULL,
+    f1 integer NOT NULL,
+    f2 integer NOT NULL,
+    g1 integer NOT NULL,
+    g2 integer NOT NULL,
+    h1 integer NOT NULL,
+    h2 integer NOT NULL
+);
+
+
+ALTER TABLE public."groupStage" OWNER TO dev;
+
+--
+-- Name: groupStage_groupStageId_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public."groupStage_groupStageId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."groupStage_groupStageId_seq" OWNER TO dev;
+
+--
+-- Name: groupStage_groupStageId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public."groupStage_groupStageId_seq" OWNED BY public."groupStage"."groupStageId";
+
+
+--
+-- Name: knockoutStage; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public."knockoutStage" (
+    "knockoutStageId" integer NOT NULL,
+    "bracketId" integer NOT NULL,
+    game49 integer NOT NULL,
+    game50 integer NOT NULL,
+    game51 integer NOT NULL,
+    game52 integer NOT NULL,
+    game53 integer NOT NULL,
+    game54 integer NOT NULL,
+    game55 integer NOT NULL,
+    game56 integer NOT NULL,
+    game57 integer NOT NULL,
+    game58 integer NOT NULL,
+    game59 integer NOT NULL,
+    game60 integer NOT NULL,
+    game61 integer NOT NULL,
+    game62 integer NOT NULL,
+    game63 integer NOT NULL
+);
+
+
+ALTER TABLE public."knockoutStage" OWNER TO dev;
+
+--
+-- Name: knockoutStage_knockoutStageId_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public."knockoutStage_knockoutStageId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."knockoutStage_knockoutStageId_seq" OWNER TO dev;
+
+--
+-- Name: knockoutStage_knockoutStageId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public."knockoutStage_knockoutStageId_seq" OWNED BY public."knockoutStage"."knockoutStageId";
+
+
+--
+-- Name: teams; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.teams (
+    "teamId" integer NOT NULL,
+    "countryName" text NOT NULL,
+    "countryFlag" text NOT NULL,
+    coach text NOT NULL,
+    "fifaRank" integer NOT NULL,
+    "websiteLink" text NOT NULL,
+    "prevWC" text NOT NULL,
+    "fifthGame" character(1) NOT NULL,
+    "fourthGame" character(1) NOT NULL,
+    "thirdGame" character(1) NOT NULL,
+    "secondGame" character(1) NOT NULL,
+    "firstGame" character(1) NOT NULL,
+    "group" character(1) NOT NULL
+);
+
+
+ALTER TABLE public.teams OWNER TO dev;
+
+--
+-- Name: teams_teamId_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public."teams_teamId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."teams_teamId_seq" OWNER TO dev;
+
+--
+-- Name: teams_teamId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public."teams_teamId_seq" OWNED BY public.teams."teamId";
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: dev
+--
+
+CREATE TABLE public.users (
+    "userId" integer NOT NULL,
+    "firstName" text NOT NULL,
+    email text NOT NULL,
+    password text NOT NULL
+);
+
+
+ALTER TABLE public.users OWNER TO dev;
+
+--
+-- Name: users_userId_seq; Type: SEQUENCE; Schema: public; Owner: dev
+--
+
+CREATE SEQUENCE public."users_userId_seq"
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."users_userId_seq" OWNER TO dev;
+
+--
+-- Name: users_userId_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dev
+--
+
+ALTER SEQUENCE public."users_userId_seq" OWNED BY public.users."userId";
+
+
+--
+-- Name: brackets bracketId; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.brackets ALTER COLUMN "bracketId" SET DEFAULT nextval('public."brackets_bracketId_seq"'::regclass);
+
+
+--
+-- Name: groupStage groupStageId; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public."groupStage" ALTER COLUMN "groupStageId" SET DEFAULT nextval('public."groupStage_groupStageId_seq"'::regclass);
+
+
+--
+-- Name: knockoutStage knockoutStageId; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public."knockoutStage" ALTER COLUMN "knockoutStageId" SET DEFAULT nextval('public."knockoutStage_knockoutStageId_seq"'::regclass);
+
+
+--
+-- Name: teams teamId; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.teams ALTER COLUMN "teamId" SET DEFAULT nextval('public."teams_teamId_seq"'::regclass);
+
+
+--
+-- Name: users userId; Type: DEFAULT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.users ALTER COLUMN "userId" SET DEFAULT nextval('public."users_userId_seq"'::regclass);
+
+
+--
+-- Data for Name: brackets; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.brackets ("bracketId", "createdAt", "userId", "bracketName") FROM stdin;
+\.
+
+
+--
+-- Data for Name: groupStage; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public."groupStage" ("groupStageId", "bracketId", "createdAt", a1, a2, b1, b2, c1, c2, d1, d2, e1, e2, f1, f2, g1, g2, h1, h2) FROM stdin;
+\.
+
+
+--
+-- Data for Name: knockoutStage; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public."knockoutStage" ("knockoutStageId", "bracketId", game49, game50, game51, game52, game53, game54, game55, game56, game57, game58, game59, game60, game61, game62, game63) FROM stdin;
+\.
+
+
+--
+-- Data for Name: teams; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.teams ("teamId", "countryName", "countryFlag", coach, "fifaRank", "websiteLink", "prevWC", "fifthGame", "fourthGame", "thirdGame", "secondGame", "firstGame", "group") FROM stdin;
+10	Saudi Arabia	/images/flags/saudi-arabia.png	Hervé Renard	53	https://www.saff.com.sa/en/	Group Stage	l	w	d	l	l	C
+11	Mexico	/images/flags/mexico.png	Gerardo Martino	12	https://fmf.mx/	Round of 16	l	d	w	d	l	C
+32	South Korea	/images/flags/korea-republic.png	Paulo Bento	28	https://www.kfa.or.kr/	Group Stage	d	w	w	w	l	H
+12	Poland	/images/flags/poland.png	Czesław Michniewicz	26	https://pzpn.pl/en	Group Stage	w	w	l	d	l	C
+13	France	/images/flags/france.png	Didier Deschamp	4	https://uk.fff.fr/	Winner	w	l	d	d	l	D
+14	Australia	/images/flags/australia.png	Graham Arnold	39	https://www.footballaustralia.com.au/	n/a	l	l	w	w	w	D
+9	Argentina	/images/flags/argentina.png	Lionel Scaloni	3	https://www.afa.com.ar/es/	Round of 16	w	w	d	w	w	C
+1	Qatar	/images/flags/qatar.png	Félix Sánchez	48	https://www.qfa.qa/	n/a	d	d	d	w	d	A
+15	Denmark	/images/flags/denmark.png	Kasper Hjulmand	10	https://www.dbu.dk/	Round of 16	w	w	w	l	w	D
+3	Senegal	/images/flags/senegal.png	Aliou Cissé	18	http://www.fsfoot.sn/	Group Stage	w	w	d	l	w	A
+2	Ecuador	/images/flags/ecuador.png	Gustavo Alfaro	44	https://www.fef.ec/la-tri/	n/a	l	d	w	d	w	A
+4	Netherlands	/images/flags/netherlands.png	Louis van Gaal	8	https://www.knvb.com/dutch-football/	n/a	d	w	w	d	w	A
+5	England	/images/flags/england.png	Gareth Southgate	5	https://www.englandfootball.com/mens-senior-team/home	4th Place	w	l	d	d	l	B
+6	Iran	/images/flags/iran.png	Carlos Queiroz	22	http://ffiri.ir/en	Group Stage	w	w	l	w	l	B
+7	USA	/images/flags/usa.png	Gregg Berhalter	14	https://www.ussoccer.com/teams/usmnt	n/a	l	w	d	w	d	B
+8	Wales	/images/flags/wales.png	Rob Page	19	https://www.faw.cymru/en/	n/a	l	w	l	d	l	B
+16	Tunisia	/images/flags/tunisia.png	Jalel kadri	30	https://www.ftf.org.tn/fr/	Group Stage	d	w	d	w	w	D
+17	Spain	/images/flags/spain.png	Luis Enrique	6	https://www.rfef.es/es	Round of 16	w	d	d	w	w	E
+18	Costa Rica	/images/flags/costa-rica.png	Luis Fernando Suarez	34	https://www.fedefutbol.com/	Group Stage	w	w	l	w	w	E
+19	Germany	/images/flags/germany.png	Hansi flick	11	https://www.dfb.de/en/en-start/	Group Stage	d	d	d	d	w	E
+20	Japan	/images/flags/japan.png	Hejime moriyasu	24	http://www.jfa.jp/eng/	Round of 16	w	l	w	d	w	E
+22	Canada	/images/flags/canada.png	John herdman	43	https://canadasoccer.com/	n/a	l	d	l	d	l	F
+21	Belgium	/images/flags/belgium.png	Roberto Martinez	2	https://www.rbfa.be/	3rd Place	w	l	w	d	w	F
+23	Morocco	/images/flags/morocco.png	Walid regragui	23	https://www.cafonline.com/member-associations/mar/	Group Stage	d	w	l	w	w	F
+24	Croatia	/images/flags/croatia.png	Zlatko dalić	15	https://hns-cff.hr/en/	2nd Place	w	l	d	w	w	F
+25	Brazil	/images/flags/brazil.png	Tite	1	https://www.cbf.com.br/	Quarter Finals	w	w	w	w	w	G
+26	Serbia	/images/flags/serbia.png	Dragan Stojković	25	www.fss.rs/	Group Stage	l	l	w	l	d	G
+27	Switzerland	/images/flags/switzerland.png	Murat Yakin	16	www.football.ch	Round of 16	d	l	l	l	w	G
+28	Cameroon	/images/flags/cameroon.png	Rigobert Song	38	www.fecafoot-officiel.com	n/a	w	l	w	l	w	G
+29	Portugal	/images/flags/portugal.png	Fernando Santos	9	https://www.cbf.com.br/	Round of 16	w	w	w	w	w	H
+30	Ghana	/images/flags/ghana.png	Otto Addo	60	https://www.ghanafa.org/	n/a	d	w	d	l	w	H
+31	Uruguay	/images/flags/Uruguay.png	Diego Alonso	13	https://www.auf.org.uy/	Quarter Finals	w	w	w	d	w	H
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: dev
+--
+
+COPY public.users ("userId", "firstName", email, password) FROM stdin;
+\.
+
+
+--
+-- Name: brackets_bracketId_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public."brackets_bracketId_seq"', 1, false);
+
+
+--
+-- Name: groupStage_groupStageId_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public."groupStage_groupStageId_seq"', 1, false);
+
+
+--
+-- Name: knockoutStage_knockoutStageId_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public."knockoutStage_knockoutStageId_seq"', 1, false);
+
+
+--
+-- Name: teams_teamId_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public."teams_teamId_seq"', 32, true);
+
+
+--
+-- Name: users_userId_seq; Type: SEQUENCE SET; Schema: public; Owner: dev
+--
+
+SELECT pg_catalog.setval('public."users_userId_seq"', 1, false);
+
+
+--
+-- Name: brackets brackets_pk; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.brackets
+    ADD CONSTRAINT brackets_pk PRIMARY KEY ("bracketId");
+
+
+--
+-- Name: groupStage groupStage_pk; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public."groupStage"
+    ADD CONSTRAINT "groupStage_pk" PRIMARY KEY ("groupStageId");
+
+
+--
+-- Name: knockoutStage knockoutStage_pk; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public."knockoutStage"
+    ADD CONSTRAINT "knockoutStage_pk" PRIMARY KEY ("knockoutStageId");
+
+
+--
+-- Name: teams teams_pk; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.teams
+    ADD CONSTRAINT teams_pk PRIMARY KEY ("teamId");
+
+
+--
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users users_pk; Type: CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pk PRIMARY KEY ("userId");
+
+
+--
+-- Name: brackets brackets_fk0; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public.brackets
+    ADD CONSTRAINT brackets_fk0 FOREIGN KEY ("userId") REFERENCES public.users("userId");
+
+
+--
+-- Name: groupStage groupStage_fk0; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public."groupStage"
+    ADD CONSTRAINT "groupStage_fk0" FOREIGN KEY ("bracketId") REFERENCES public.brackets("bracketId");
+
+
+--
+-- Name: knockoutStage knockoutStage_fk0; Type: FK CONSTRAINT; Schema: public; Owner: dev
+--
+
+ALTER TABLE ONLY public."knockoutStage"
+    ADD CONSTRAINT "knockoutStage_fk0" FOREIGN KEY ("bracketId") REFERENCES public.brackets("bracketId");
+
+
+--
+-- PostgreSQL database dump complete
+--
+
