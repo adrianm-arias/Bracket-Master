@@ -5,7 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
-// const errorMiddleware = require('./error-middleware');
+const errorMiddleware = require('./error-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -18,6 +18,8 @@ const app = express();
 
 const jsonMiddleware = express.json();
 app.use(jsonMiddleware);
+
+app.use(staticMiddleware);
 
 app.post('/api/sign-up', (req, res, next) => {
   const { username, password, firstName } = req.body;
@@ -43,13 +45,15 @@ app.post('/api/sign-up', (req, res, next) => {
 });
 
 app.post('/api/sign-in', (req, res, next) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
+  const { username, password: userPassword } = req.body;
+
+  if (!username || !userPassword) {
     throw new ClientError(401, 'invalid login');
   }
   const sql = `
     select "userId",
-           "password"
+           "password",
+           "firstName"
       from "users"
      where "username" = $1
   `;
@@ -60,15 +64,14 @@ app.post('/api/sign-in', (req, res, next) => {
       if (!user) {
         throw new ClientError(401, 'invalid login');
       }
-      // console.log(user);
-      const { userId, hashedPassword } = user;
+      const { userId, password, firstName } = user;
       return argon2
-        .verify(hashedPassword, password)
+        .verify(password, userPassword)
         .then(isMatching => {
           if (!isMatching) {
             throw new ClientError(401, 'invalid login');
           }
-          const payload = { userId, username };
+          const payload = { userId, username, firstName };
           const token = jwt.sign(payload, process.env.TOKEN_SECRET);
           res.json({ token, user: payload });
         });
@@ -94,7 +97,7 @@ app.get('/api/teams', (req, res, next) => {
     });
 });
 
-app.use(staticMiddleware);
+app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
   process.stdout.write(`\n\napp listening on port ${process.env.PORT}\n\n`);

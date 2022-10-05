@@ -319,6 +319,10 @@ input:checked + label::before {
   border-color: #8a1538;
 }
 
+.auth-input {
+  width: 27rem;
+}
+
 @media (max-width: 992px) {
   .nav-position {
     display: block;
@@ -335,49 +339,53 @@ input:checked + label::before {
     padding: 1rem 6rem;
   }
 
-  @media (max-width: 576px) {
-    .logo-text {
-      font-size: 1.1rem;
-    }
+  .auth-input {
+    width: 20rem;
+  }
+}
 
-    .logo-icon {
-      width: 75px;
-    }
+@media (max-width: 576px) {
+  .logo-text {
+    font-size: 1.1rem;
+  }
 
-    .footer-icon-xs {
-      color: white;
-      font-size: 1.5rem;
-      padding: 0.3rem 0.6rem;
-      margin: 0 0.5em;
-    }
+  .logo-icon {
+    width: 75px;
+  }
 
-    .team-wrapper {
-      max-width: 375px;
-      padding: 0.8rem 2rem;
-    }
+  .footer-icon-xs {
+    color: white;
+    font-size: 1.5rem;
+    padding: 0.3rem 0.6rem;
+    margin: 0 0.5em;
+  }
 
-    .team-flag {
-      height: 25px;
-      width: 50px;
-    }
+  .team-wrapper {
+    max-width: 375px;
+    padding: 0.8rem 2rem;
+  }
 
-    .team-name {
-      margin: 0;
-      font-size: 1.5rem;
-      font-weight: 500;
-      font-family: Poppins, sans-serif;
-    }
+  .team-flag {
+    height: 25px;
+    width: 50px;
+  }
 
-    .group-wrapper {
-      max-width: 45%;
-      padding: 0.6rem 1rem;
-      border-radius: 1rem;
-      margin-left: 1.3rem;
-    }
+  .team-name {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    font-family: Poppins, sans-serif;
+  }
 
-    .team-title-link {
-      width: 420px;
-    }
+  .group-wrapper {
+    max-width: 45%;
+    padding: 0.6rem 1rem;
+    border-radius: 1rem;
+    margin-left: 1.3rem;
+  }
+
+  .team-title-link {
+    width: 420px;
   }
 }
 

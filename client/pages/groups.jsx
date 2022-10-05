@@ -6,8 +6,8 @@ import AppContext from '../lib/app-context';
 export default class Groups extends React.Component {
   constructor(props) {
     super(props);
-    this.myRef = React.createRef();
     this.state = {
+      teams: [],
       route: parseRoute(window.location.hash),
       isShowingAlert: false,
       groupCount: 0,
@@ -30,7 +30,6 @@ export default class Groups extends React.Component {
         h1: '',
         h2: ''
       }
-
     };
   }
 
@@ -42,6 +41,16 @@ export default class Groups extends React.Component {
         groupCount: 0
       });
     });
+    fetch('/api/teams')
+      .then(response => response.json())
+      .then(teamData => {
+        this.setState({
+          teams: teamData
+        });
+      })
+      .catch(error => {
+        console.error('error:', error);
+      });
   }
 
   teamSelected(teamId, event) {
@@ -113,8 +122,8 @@ export default class Groups extends React.Component {
   }
 
   renderTeams(letter) {
-    const { teams } = this.context;
-
+    const teams = this.state.teams;
+    // console.log(this.state.teams);
     // checks which group needs to be rendered
     const group = [];
     for (let i = 0; i < teams.length; i++) {
