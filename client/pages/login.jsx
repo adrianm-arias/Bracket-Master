@@ -7,10 +7,6 @@ export default class Login extends React.Component {
   render() {
     const { user, route, handleSignIn } = this.context;
 
-    // const welcomeMessage = route.path === 'sign-in'
-    //   ? 'Please log in to continue'
-    //   : 'Create an account to get started';
-
     if (user) return <Redirect to="" />;
 
     return (

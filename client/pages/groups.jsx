@@ -7,6 +7,10 @@ export default class Groups extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      brackets: {
+        userId: '',
+        bracketName: ''
+      },
       teams: [],
       route: parseRoute(window.location.hash),
       isShowingAlert: false,
@@ -34,6 +38,7 @@ export default class Groups extends React.Component {
   }
 
   componentDidMount() {
+
     window.addEventListener('hashchange', event => {
       const newRoute = parseRoute(window.location.hash);
       this.setState({
@@ -50,6 +55,41 @@ export default class Groups extends React.Component {
       })
       .catch(error => {
         console.error('error:', error);
+      });
+
+    const updateEditState = JSON.parse(window.localStorage.getItem('editing-state'));
+    this.setState({
+      isEditing: updateEditState
+    });
+
+    const updateBracketState = JSON.parse(window.localStorage.getItem('brackets-state'));
+    this.setState({
+      brackets: updateBracketState
+    });
+
+    const updateGroupsState = JSON.parse(window.localStorage.getItem('groupStage-state'));
+    this.setState({
+      groupStage: updateGroupsState
+    });
+  }
+
+  handleSave() {
+    // const { action } = this.props;
+    const req = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    };
+    fetch('/api/groups', req)
+      .then(res => res.json())
+      .then(result => {
+        // if (action === 'sign-up') {
+        //   window.location.hash = 'sign-in';
+        // } else if (result.user && result.token) {
+        //   this.props.onSignIn(result);
+        // }
       });
   }
 
@@ -123,7 +163,6 @@ export default class Groups extends React.Component {
 
   renderTeams(letter) {
     const teams = this.state.teams;
-    // console.log(this.state.teams);
     // checks which group needs to be rendered
     const group = [];
     for (let i = 0; i < teams.length; i++) {
@@ -194,14 +233,21 @@ export default class Groups extends React.Component {
     return (
       <div className='editing-wrapper d-flex justify-content-between'>
         <div className='mt-2'>
-          <p className=''>Currently Editing: <span className='editing-wrapper-title'>Bracket 1</span></p>
+          <p className=''>Currently Editing: <span className='editing-wrapper-title'>{ this.state.brackets.bracketName }</span></p>
         </div>
         <div className='mt-1 d-flex'>
           <button className='empty-btn'>
             <i className='bi bi-check-circle-fill editing-icons px-3' />
           </button>
           <button className='empty-btn'>
-            <i onClick={() => this.setState({ isEditing: null })} className='bi bi-dash-circle-fill editing-icons px-3' />
+            <i onClick={() => this.setState({
+              isEditing: false,
+              brackets: {
+                userId: '',
+                bracketName: ''
+              }
+            })}
+            className='bi bi-dash-circle-fill editing-icons px-3' />
           </button>
         </div>
       </div>
@@ -237,7 +283,17 @@ export default class Groups extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    localStorage.setItem('editing-state', JSON.stringify(this.state.isEditing));
+    localStorage.setItem('brackets-state', JSON.stringify(this.state.brackets));
+    localStorage.setItem('groupStage-state', JSON.stringify(this.state.groupStage));
+  }
+
   render() {
+    // const test = window.localStorage.getItem('editing State');
+    // console.log('render:', this.state.isEditing);
+    const { user } = this.context;
+
     const groupClicked = this.renderGroup();
     return (
       <>
@@ -252,10 +308,17 @@ export default class Groups extends React.Component {
         </div>
         {(!this.state.isEditing)
           ? <div className='d-flex justify-content-center'>
-            <button onClick={() => this.setState({ isEditing: true })} className='btn btn-primary'>Start New Prediction</button>
+            <button onClick={() => this.setState({
+              isEditing: true,
+              brackets: {
+                userId: user.userId,
+                bracketName: 'New Bracket'
+              }
+            })}
+            className='btn btn-primary'>Start New Prediction</button>
           </div>
           : <div className='fixed-bottom'>
-            {this.state.isEditing && this.handleEditing()}
+            { this.handleEditing() }
           </div>
         }
         {(!this.state.isShowingAlert)

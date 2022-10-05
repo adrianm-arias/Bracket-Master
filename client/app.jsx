@@ -90,10 +90,10 @@ export default class App extends React.Component {
   }
 
   render() {
+    // console.log('user logged in:', this.state.user);
 
     const { user, isAuthorizing, route } = this.state;
     const { handleSignIn, handleSignOut } = this;
-    // console.log('checking this:', this);
     const contextValue = { user, isAuthorizing, route, handleSignIn, handleSignOut };
     return (
       <AppContext.Provider value={contextValue}>
