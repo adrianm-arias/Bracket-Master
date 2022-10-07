@@ -13,6 +13,7 @@ export default class Groups extends React.Component {
       },
       teams: [],
       route: parseRoute(window.location.hash),
+      confirmSave: false,
       isShowingAlert: false,
       groupCount: 0,
       isEditing: false,
@@ -35,6 +36,7 @@ export default class Groups extends React.Component {
         h2: ''
       }
     };
+    this.handleGroupSave = this.handleGroupSave.bind(this);
   }
 
   componentDidMount() {
@@ -73,28 +75,61 @@ export default class Groups extends React.Component {
     });
   }
 
-  handleSave() {
-    // const { action } = this.props;
-    const req = {
+  handleGroupSave() {
+
+    fetch('/api/brackets', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(this.state)
-    };
-    fetch('/api/groups', req)
+      body: JSON.stringify(this.state.brackets)
+    })
       .then(res => res.json())
       .then(result => {
-        // if (action === 'sign-up') {
-        //   window.location.hash = 'sign-in';
-        // } else if (result.user && result.token) {
-        //   this.props.onSignIn(result);
-        // }
+        const groupStageCopy = { ...this.state.groupStage };
+        groupStageCopy.bracketId = result.bracketId;
+        this.setState({
+          groupStage: groupStageCopy
+        });
+        fetch('api/groups', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(groupStageCopy)
+        })
+          .then(res => res.json())
+          .then(result => {
+            this.setState({
+              confirmSave: true
+            });
+            setTimeout(() => {
+              this.setState({
+                confirmSave: false
+              });
+            }, 5000);
+          })
+          .catch(error => {
+            console.error('error:', error);
+          });
+      })
+      .catch(error => {
+        console.error('error:', error);
       });
   }
 
-  teamSelected(teamId, event) {
+  confirmSaveAlert() {
+    return (
+      <div className='d-flex justify-content-center'>
+        <div className='alert alert-success alert-dismissible fade show  mt-3' role='alert'>
+          <strong>Predictions Saved</strong>
+          <button type='button' className='btn-close' data-bs-dismiss='alert' aria-label='Close' />
+        </div>
+      </div>
+    );
+  }
 
+  teamSelected(teamId, event) {
     const groupStageCopy = { ...this.state.groupStage };
 
     if (event.target.checked) {
@@ -237,7 +272,7 @@ export default class Groups extends React.Component {
         </div>
         <div className='mt-1 d-flex'>
           <button className='empty-btn'>
-            <i className='bi bi-check-circle-fill editing-icons px-3' />
+            <i className='bi bi-check-circle-fill editing-icons px-3' onClick={ this.handleGroupSave } />
           </button>
           <button className='empty-btn'>
             <i onClick={() => this.setState({
@@ -245,6 +280,24 @@ export default class Groups extends React.Component {
               brackets: {
                 userId: '',
                 bracketName: ''
+              },
+              groupStage: {
+                a1: '',
+                a2: '',
+                b1: '',
+                b2: '',
+                c1: '',
+                c2: '',
+                d1: '',
+                d2: '',
+                e1: '',
+                e2: '',
+                f1: '',
+                f2: '',
+                g1: '',
+                g2: '',
+                h1: '',
+                h2: ''
               }
             })}
             className='bi bi-dash-circle-fill editing-icons px-3' />
@@ -290,8 +343,6 @@ export default class Groups extends React.Component {
   }
 
   render() {
-    // const test = window.localStorage.getItem('editing State');
-    // console.log('render:', this.state.isEditing);
     const { user } = this.context;
 
     const groupClicked = this.renderGroup();
@@ -324,6 +375,10 @@ export default class Groups extends React.Component {
         {(!this.state.isShowingAlert)
           ? null
           : <this.maxSelectAlert />
+        }
+        {(!this.state.confirmSave)
+          ? null
+          : <this.confirmSaveAlert />
         }
       </>
     );
