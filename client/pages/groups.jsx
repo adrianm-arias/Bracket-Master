@@ -76,11 +76,13 @@ export default class Groups extends React.Component {
   }
 
   handleGroupSave() {
+    const token = window.localStorage.getItem('react-jwt');
 
     fetch('/api/brackets', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-access-token': token
       },
       body: JSON.stringify(this.state.brackets)
     })
@@ -94,7 +96,8 @@ export default class Groups extends React.Component {
         fetch('api/groups', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'x-access-token': token
           },
           body: JSON.stringify(groupStageCopy)
         })
@@ -108,9 +111,6 @@ export default class Groups extends React.Component {
                 confirmSave: false
               });
             }, 5000);
-          })
-          .catch(error => {
-            console.error('error:', error);
           });
       })
       .catch(error => {

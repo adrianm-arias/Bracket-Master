@@ -6,9 +6,6 @@ export default class Header extends React.Component {
   render() {
     const { handleSignOut, route, user } = this.context;
 
-    // const alternateNavLink = !user ? 'Sign In' : 'Sign Out';
-    // const alternateHandle = !user ? 'Sign In' : handleSignOut;
-
     return (
       <header>
         <nav className='navbar fixed-top navbar-expand-lg navbar-dark nav-bg '>

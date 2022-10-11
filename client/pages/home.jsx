@@ -5,8 +5,6 @@ export default class Home extends React.Component {
 
   render() {
     const { user } = this.context;
-    // const { firstName } = user;
-    // console.log(user[firstName]);
 
     if (!user) {
       return (

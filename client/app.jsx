@@ -52,7 +52,6 @@ export default class App extends React.Component {
     const { user, token } = result;
     window.localStorage.setItem('react-jwt', token);
     this.setState({ user });
-    // console.log(this.state.user);
   }
 
   handleSignOut() {
@@ -90,8 +89,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    // console.log('user logged in:', this.state.user);
-
     const { user, isAuthorizing, route } = this.state;
     const { handleSignIn, handleSignOut } = this;
     const contextValue = { user, isAuthorizing, route, handleSignIn, handleSignOut };

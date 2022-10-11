@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const ClientError = require('./client-error');
 const staticMiddleware = require('./static-middleware');
 const errorMiddleware = require('./error-middleware');
+const authorizationMiddleware = require('./authorization-middleware');
 
 const db = new pg.Pool({
   connectionString: process.env.DATABASE_URL,
@@ -79,6 +80,28 @@ app.post('/api/sign-in', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/teams', (req, res, next) => {
+  const sql = `
+    select *
+      from "teams"
+     order by "teamId"
+  `;
+  db.query(sql)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
+});
+
+// Every route after middleware requires a token.
+
+app.use(authorizationMiddleware);
+
 app.post('/api/brackets', (req, res, next) => {
   const { userId, bracketName } = req.body;
   if (!userId || !bracketName) {
@@ -95,12 +118,7 @@ app.post('/api/brackets', (req, res, next) => {
       const [brackets] = result.rows;
       res.status(201).json(brackets);
     })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
-    });
+    .catch(err => next(err));
 });
 
 app.post('/api/groups', (req, res, next) => {
@@ -119,30 +137,7 @@ app.post('/api/groups', (req, res, next) => {
       const [groupSelection] = result.rows;
       res.status(201).json(groupSelection);
     })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
-    });
-});
-
-app.get('/api/teams', (req, res, next) => {
-  const sql = `
-    select *
-      from "teams"
-     order by "teamId"
-  `;
-  db.query(sql)
-    .then(result => {
-      res.json(result.rows);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({
-        error: 'an unexpected error occurred'
-      });
-    });
+    .catch(err => next(err));
 });
 
 app.use(errorMiddleware);
