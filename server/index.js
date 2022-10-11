@@ -47,7 +47,6 @@ app.post('/api/sign-up', (req, res, next) => {
 
 app.post('/api/sign-in', (req, res, next) => {
   const { username, password: userPassword } = req.body;
-
   if (!username || !userPassword) {
     throw new ClientError(401, 'invalid login');
   }
@@ -96,6 +95,24 @@ app.get('/api/teams', (req, res, next) => {
         error: 'an unexpected error occurred'
       });
     });
+});
+
+app.get('/api/brackets/:userId', (req, res, next) => {
+  const userId = Number(req.params.userId);
+  if (!userId) {
+    throw new ClientError(400, 'Please Sign in');
+  }
+  const sql = `
+    select *
+      from "brackets"
+      where "userId" = $1
+  `;
+  const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
 });
 
 // Every route after middleware requires a token.

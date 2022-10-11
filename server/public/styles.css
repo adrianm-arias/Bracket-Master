@@ -5,10 +5,6 @@
   font-size: 1.3rem;
 }
 
-body {
-  /* background-color: #d9d9d91e; */
-}
-
 p {
   font-family: "Noto Sans", sans-serif;
 }
@@ -130,14 +126,8 @@ div::-webkit-scrollbar {
 .team-wrapper-edit {
   background-color: #d9d9d971;
   width: 30rem;
-
-  /* padding: 1rem 6rem; */
   border-radius: 1rem;
 }
-
-/* .selected {
-  background-color: red;
-} */
 
 .team-flag {
   height: 30px;
@@ -223,8 +213,6 @@ div::-webkit-scrollbar {
 
 .match-icon {
   color: black;
-
-  /* background-color: green; */
   width: 30px;
   height: 30px;
   margin: 0 0.5rem;
@@ -323,6 +311,34 @@ input:checked + label::before {
   width: 27rem;
 }
 
+.edit-bracket-wrapper {
+  background-color: #d9d9d971;
+  width: 35rem;
+  padding: 0.6rem 1rem;
+  border-radius: 1rem;
+}
+
+.bracket-name {
+  margin: 0;
+
+  /* padding-right: 16rem; */
+  font-size: 1.5rem;
+  font-weight: 400;
+  font-family: Poppins, sans-serif;
+}
+
+.editing-delete-icon {
+  font-size: 1.5rem;
+  color: #8a1538;
+  padding-right: 1rem;
+}
+
+.editing-icon {
+  font-size: 1.3rem;
+  color: black;
+  padding: 0 1rem;
+}
+
 @media (max-width: 992px) {
   .nav-position {
     display: block;
@@ -386,6 +402,12 @@ input:checked + label::before {
 
   .team-title-link {
     width: 420px;
+  }
+
+  .edit-bracket-wrapper {
+    width: 20rem;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
   }
 }
 
