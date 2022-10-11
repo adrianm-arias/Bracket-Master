@@ -6,9 +6,14 @@ import AppContext from '../lib/app-context';
 export default class Groups extends React.Component {
   constructor(props) {
     super(props);
-    this.myRef = React.createRef();
     this.state = {
+      brackets: {
+        userId: '',
+        bracketName: ''
+      },
+      teams: [],
       route: parseRoute(window.location.hash),
+      confirmSave: false,
       isShowingAlert: false,
       groupCount: 0,
       isEditing: false,
@@ -30,11 +35,12 @@ export default class Groups extends React.Component {
         h1: '',
         h2: ''
       }
-
     };
+    this.handleGroupSave = this.handleGroupSave.bind(this);
   }
 
   componentDidMount() {
+
     window.addEventListener('hashchange', event => {
       const newRoute = parseRoute(window.location.hash);
       this.setState({
@@ -42,10 +48,88 @@ export default class Groups extends React.Component {
         groupCount: 0
       });
     });
+    fetch('/api/teams')
+      .then(response => response.json())
+      .then(teamData => {
+        this.setState({
+          teams: teamData
+        });
+      })
+      .catch(error => {
+        console.error('error:', error);
+      });
+
+    const updateEditState = JSON.parse(window.localStorage.getItem('editing-state'));
+    this.setState({
+      isEditing: updateEditState
+    });
+
+    const updateBracketState = JSON.parse(window.localStorage.getItem('brackets-state'));
+    this.setState({
+      brackets: updateBracketState
+    });
+
+    const updateGroupsState = JSON.parse(window.localStorage.getItem('groupStage-state'));
+    this.setState({
+      groupStage: updateGroupsState
+    });
+  }
+
+  handleGroupSave() {
+    const token = window.localStorage.getItem('react-jwt');
+
+    fetch('/api/brackets', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      },
+      body: JSON.stringify(this.state.brackets)
+    })
+      .then(res => res.json())
+      .then(result => {
+        const groupStageCopy = { ...this.state.groupStage };
+        groupStageCopy.bracketId = result.bracketId;
+        this.setState({
+          groupStage: groupStageCopy
+        });
+        fetch('api/groups', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-access-token': token
+          },
+          body: JSON.stringify(groupStageCopy)
+        })
+          .then(res => res.json())
+          .then(result => {
+            this.setState({
+              confirmSave: true
+            });
+            setTimeout(() => {
+              this.setState({
+                confirmSave: false
+              });
+            }, 5000);
+          });
+      })
+      .catch(error => {
+        console.error('error:', error);
+      });
+  }
+
+  confirmSaveAlert() {
+    return (
+      <div className='d-flex justify-content-center'>
+        <div className='alert alert-success alert-dismissible fade show  mt-3' role='alert'>
+          <strong>Predictions Saved</strong>
+          <button type='button' className='btn-close' data-bs-dismiss='alert' aria-label='Close' />
+        </div>
+      </div>
+    );
   }
 
   teamSelected(teamId, event) {
-
     const groupStageCopy = { ...this.state.groupStage };
 
     if (event.target.checked) {
@@ -113,8 +197,7 @@ export default class Groups extends React.Component {
   }
 
   renderTeams(letter) {
-    const { teams } = this.context;
-
+    const teams = this.state.teams;
     // checks which group needs to be rendered
     const group = [];
     for (let i = 0; i < teams.length; i++) {
@@ -185,14 +268,39 @@ export default class Groups extends React.Component {
     return (
       <div className='editing-wrapper d-flex justify-content-between'>
         <div className='mt-2'>
-          <p className=''>Currently Editing: <span className='editing-wrapper-title'>Bracket 1</span></p>
+          <p className=''>Currently Editing: <span className='editing-wrapper-title'>{ this.state.brackets.bracketName }</span></p>
         </div>
         <div className='mt-1 d-flex'>
           <button className='empty-btn'>
-            <i className='bi bi-check-circle-fill editing-icons px-3' />
+            <i className='bi bi-check-circle-fill editing-icons px-3' onClick={ this.handleGroupSave } />
           </button>
           <button className='empty-btn'>
-            <i onClick={() => this.setState({ isEditing: null })} className='bi bi-dash-circle-fill editing-icons px-3' />
+            <i onClick={() => this.setState({
+              isEditing: false,
+              brackets: {
+                userId: '',
+                bracketName: ''
+              },
+              groupStage: {
+                a1: '',
+                a2: '',
+                b1: '',
+                b2: '',
+                c1: '',
+                c2: '',
+                d1: '',
+                d2: '',
+                e1: '',
+                e2: '',
+                f1: '',
+                f2: '',
+                g1: '',
+                g2: '',
+                h1: '',
+                h2: ''
+              }
+            })}
+            className='bi bi-dash-circle-fill editing-icons px-3' />
           </button>
         </div>
       </div>
@@ -228,7 +336,15 @@ export default class Groups extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    localStorage.setItem('editing-state', JSON.stringify(this.state.isEditing));
+    localStorage.setItem('brackets-state', JSON.stringify(this.state.brackets));
+    localStorage.setItem('groupStage-state', JSON.stringify(this.state.groupStage));
+  }
+
   render() {
+    const { user } = this.context;
+
     const groupClicked = this.renderGroup();
     return (
       <>
@@ -243,15 +359,26 @@ export default class Groups extends React.Component {
         </div>
         {(!this.state.isEditing)
           ? <div className='d-flex justify-content-center'>
-            <button onClick={() => this.setState({ isEditing: true })} className='btn btn-primary'>Start New Prediction</button>
+            <button onClick={() => this.setState({
+              isEditing: true,
+              brackets: {
+                userId: user.userId,
+                bracketName: 'New Bracket'
+              }
+            })}
+            className='btn btn-primary'>Start New Prediction</button>
           </div>
           : <div className='fixed-bottom'>
-            {this.state.isEditing && this.handleEditing()}
+            { this.handleEditing() }
           </div>
         }
         {(!this.state.isShowingAlert)
           ? null
           : <this.maxSelectAlert />
+        }
+        {(!this.state.confirmSave)
+          ? null
+          : <this.confirmSaveAlert />
         }
       </>
     );

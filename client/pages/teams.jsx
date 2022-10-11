@@ -2,9 +2,28 @@ import React from 'react';
 import AppContext from '../lib/app-context';
 
 export default class Teams extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      teams: []
+    };
+  }
+
+  componentDidMount() {
+    fetch('/api/teams')
+      .then(response => response.json())
+      .then(teamData => {
+        this.setState({
+          teams: teamData
+        });
+      })
+      .catch(error => {
+        console.error('error:', error);
+      });
+  }
 
   renderGroup(letter) {
-    const { teams } = this.context;
+    const teams = this.state.teams;
     const group = [];
     for (let i = 0; i < teams.length; i++) {
       if (teams[i].group === letter) {

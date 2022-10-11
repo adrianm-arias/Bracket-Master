@@ -8,14 +8,19 @@ import Teams from './pages/teams';
 import parseRoute from './lib/parse-route';
 import AppContext from './lib/app-context';
 import Login from './pages/login';
+import jwtDecode from 'jwt-decode';
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: null,
+      isAuthorizing: true,
       teams: [],
       route: parseRoute(window.location.hash)
     };
+    this.handleSignIn = this.handleSignIn.bind(this);
+    this.handleSignOut = this.handleSignOut.bind(this);
   }
 
   componentDidMount() {
@@ -35,11 +40,28 @@ export default class App extends React.Component {
       .catch(error => {
         console.error('error:', error);
       });
+    const token = window.localStorage.getItem('react-jwt');
+    const user = token ? jwtDecode(token) : null;
+    this.setState({
+      user,
+      isAuthorizing: false
+    });
+  }
+
+  handleSignIn(result) {
+    const { user, token } = result;
+    window.localStorage.setItem('react-jwt', token);
+    this.setState({ user });
+  }
+
+  handleSignOut() {
+    window.localStorage.removeItem('react-jwt');
+    this.setState({ user: null });
   }
 
   renderPage() {
     const { route } = this.state;
-    if (route.path === 'home') {
+    if (route.path === '') {
       return (
         <Home />
       );
@@ -59,7 +81,7 @@ export default class App extends React.Component {
         <Teams />
       );
     }
-    if (route.path === 'login') {
+    if (route.path === 'sign-up' || route.path === 'sign-in') {
       return (
         <Login />
       );
@@ -67,8 +89,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { teams } = this.state;
-    const contextValue = { teams };
+    const { user, isAuthorizing, route } = this.state;
+    const { handleSignIn, handleSignOut } = this;
+    const contextValue = { user, isAuthorizing, route, handleSignIn, handleSignOut };
     return (
       <AppContext.Provider value={contextValue}>
         <>
