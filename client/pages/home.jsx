@@ -6,7 +6,7 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      brackets: [],
+      myBrackets: [],
       route: parseRoute(window.location.hash),
       groupStage: {
         a1: '',
@@ -36,25 +36,11 @@ export default class Home extends React.Component {
         route: newRoute
       });
     });
-
-    const { user } = this.context;
-
-    if (!user) return null;
-
-    fetch(`/api/brackets/${user.userId}`)
-      .then(res => res.json())
-      .then(bracket => {
-        this.setState({
-          brackets: bracket
-        });
-      });
-
   }
 
   renderUserBrackets() {
-
-    const userData = this.state.brackets;
-    const mapList = userData.map(data => {
+    const { myBrackets } = this.context;
+    const mapList = myBrackets.map(data => {
       return (
         <div className='d-flex justify-content-center' key={data.bracketId}>
           <button className='empty-btn'>
@@ -76,9 +62,9 @@ export default class Home extends React.Component {
 
   render() {
     const { user } = this.context;
-    // const bracket1 = this.state.brackets[0];
+    // const bracket1 = this.state.brackets;
     // console.log(bracket1.bracketName);
-    // console.log(bracket1);
+    // console.log('render state bracket:', bracket1);
 
     if (!user) {
       return (
