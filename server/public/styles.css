@@ -281,6 +281,11 @@ div::-webkit-scrollbar {
   color: white;
 }
 
+a {
+  color: black;
+  text-decoration: none;
+}
+
 label {
   -webkit-font-smoothing: antialiased;
   width: 30rem;
@@ -320,8 +325,6 @@ input:checked + label::before {
 
 .bracket-name {
   margin: 0;
-
-  /* padding-right: 16rem; */
   font-size: 1.5rem;
   font-weight: 400;
   font-family: Poppins, sans-serif;
@@ -337,6 +340,10 @@ input:checked + label::before {
   font-size: 1.3rem;
   color: black;
   padding: 0 1rem;
+}
+
+.prediction-btn {
+  padding: 0.6rem 2rem;
 }
 
 @media (max-width: 992px) {

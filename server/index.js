@@ -106,8 +106,27 @@ app.get('/api/brackets/:userId', (req, res, next) => {
     select *
       from "brackets"
       where "userId" = $1
+      order by "createdAt" desc;
   `;
   const params = [userId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
+app.get('/api/brackets/groups/:bracketId', (req, res, next) => {
+  const bracketId = Number(req.params.bracketId);
+  if (!bracketId) {
+    throw new ClientError(400, 'Please Sign in');
+  }
+  const sql = `
+    select *
+      from "groupStage"
+      where "bracketId" = $1
+  `;
+  const params = [bracketId];
   db.query(sql, params)
     .then(result => {
       res.json(result.rows);
@@ -149,6 +168,42 @@ app.post('/api/groups', (req, res, next) => {
     returning *
   `;
   const params = [a1, a2, b1, b2, bracketId, c1, c2, d1, d2, e1, e2, f1, f2, g1, g2, h1, h2];
+  db.query(sql, params)
+    .then(result => {
+      const [groupSelection] = result.rows;
+      res.status(201).json(groupSelection);
+    })
+    .catch(err => next(err));
+});
+
+app.patch('/api/groups/:groupStageId', (req, res, next) => {
+  const groupStageId = Number(req.params.groupStageId);
+  if (!groupStageId) {
+    throw new ClientError(400, 'groupStage ID are required fields');
+  }
+  const { a1, a2, b1, b2, c1, c2, d1, d2, e1, e2, f1, f2, g1, g2, h1, h2 } = req.body;
+  const sql = `
+    update "groupStage"
+      set "a1" = $1,
+          "a2" = $2,
+          "b1" = $3,
+          "b2" = $4,
+          "c1" = $5,
+          "c2" = $6,
+          "d1" = $7,
+          "d2" = $8,
+          "e1" = $9,
+          "e2" = $10,
+          "f1" = $11,
+          "f2" = $12,
+          "g1" = $13,
+          "g2" = $14,
+          "h1" = $15,
+          "h2" = $16
+    where "groupStageId" = $17
+    returning *
+  `;
+  const params = [a1, a2, b1, b2, c1, c2, d1, d2, e1, e2, f1, f2, g1, g2, h1, h2, groupStageId];
   db.query(sql, params)
     .then(result => {
       const [groupSelection] = result.rows;

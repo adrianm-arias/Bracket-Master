@@ -37,13 +37,15 @@ export default class App extends React.Component {
       user,
       isAuthorizing: false
     });
-    fetch(`/api/brackets/${user.userId}`)
-      .then(res => res.json())
-      .then(bracket => {
-        this.setState({
-          myBrackets: bracket
+    if (user) {
+      fetch(`/api/brackets/${user.userId}`)
+        .then(res => res.json())
+        .then(bracket => {
+          this.setState({
+            myBrackets: bracket
+          });
         });
-      });
+    }
   }
 
   handleSignIn(result) {
