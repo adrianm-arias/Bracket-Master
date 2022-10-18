@@ -17,6 +17,7 @@ export default class Groups extends React.Component {
       isShowingAlert: false,
       groupCount: 0,
       isEditing: false,
+      newBracket: false,
       groupStage: {
         a1: '',
         a2: '',
@@ -40,7 +41,6 @@ export default class Groups extends React.Component {
   }
 
   componentDidMount() {
-
     window.addEventListener('hashchange', event => {
       const newRoute = parseRoute(window.location.hash);
       this.setState({
@@ -73,49 +73,103 @@ export default class Groups extends React.Component {
     this.setState({
       groupStage: updateGroupsState
     });
+
+    const updateNewBracketState = JSON.parse(window.localStorage.getItem('newBracket-state'));
+    this.setState({
+      newBracket: updateNewBracketState
+    });
+
+    const { user } = this.context;
+    const route = this.state.route;
+
+    if (route.params.get('bracketId')) {
+      fetch(`/api/brackets/groups/${route.params.get('bracketId')}`)
+        .then(response => response.json())
+        .then(groupData => {
+          this.setState({
+            brackets: {
+              userId: user.userId,
+              bracketName: route.params.get('bracketName')
+            },
+            isEditing: true,
+            groupStage: groupData[0]
+          });
+        })
+        .catch(error => {
+          console.error('error:', error);
+        });
+    }
   }
 
   handleGroupSave() {
     const token = window.localStorage.getItem('react-jwt');
 
-    fetch('/api/brackets', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': token
-      },
-      body: JSON.stringify(this.state.brackets)
-    })
-      .then(res => res.json())
-      .then(result => {
-        const groupStageCopy = { ...this.state.groupStage };
-        groupStageCopy.bracketId = result.bracketId;
-        this.setState({
-          groupStage: groupStageCopy
-        });
-        fetch('api/groups', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'x-access-token': token
-          },
-          body: JSON.stringify(groupStageCopy)
-        })
-          .then(res => res.json())
-          .then(result => {
-            this.setState({
-              confirmSave: true
-            });
-            setTimeout(() => {
-              this.setState({
-                confirmSave: false
-              });
-            }, 5000);
-          });
+    if (this.state.newBracket) {
+      fetch('/api/brackets', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify(this.state.brackets)
       })
-      .catch(error => {
-        console.error('error:', error);
-      });
+        .then(res => res.json())
+        .then(result => {
+          const groupStageCopy = { ...this.state.groupStage };
+          groupStageCopy.bracketId = result.bracketId;
+          this.setState({
+            groupStage: groupStageCopy
+          });
+          fetch('api/groups', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': token
+            },
+            body: JSON.stringify(groupStageCopy)
+          })
+            .then(res => res.json())
+            .then(result => {
+              this.setState({
+                confirmSave: true
+              });
+              setTimeout(() => {
+                this.setState({
+                  confirmSave: false
+                });
+              }, 5000);
+            });
+        })
+        .catch(error => {
+          console.error('error:', error);
+        });
+    } else {
+
+      const groupStage = this.state.groupStage;
+
+      fetch(`api/groups/${groupStage.groupStageId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify(groupStage)
+      })
+        .then(res => res.json())
+        .then(result => {
+          this.setState({
+            confirmSave: true
+          });
+          setTimeout(() => {
+            this.setState({
+              confirmSave: false
+            });
+          }, 5000);
+        })
+        .catch(error => {
+          console.error('error:', error);
+        });
+    }
   }
 
   confirmSaveAlert() {
@@ -190,7 +244,9 @@ export default class Groups extends React.Component {
 
     for (const property in groupStage) {
       if (groupStage[property] === teamId) {
-        return true;
+        if (property.length < 3) {
+          return true;
+        }
       }
     }
     return false;
@@ -277,6 +333,7 @@ export default class Groups extends React.Component {
           <button className='empty-btn'>
             <i onClick={() => this.setState({
               isEditing: false,
+              newBracket: false,
               brackets: {
                 userId: '',
                 bracketName: ''
@@ -340,10 +397,12 @@ export default class Groups extends React.Component {
     localStorage.setItem('editing-state', JSON.stringify(this.state.isEditing));
     localStorage.setItem('brackets-state', JSON.stringify(this.state.brackets));
     localStorage.setItem('groupStage-state', JSON.stringify(this.state.groupStage));
+    localStorage.setItem('newBracket-state', JSON.stringify(this.state.newBracket));
+
   }
 
   render() {
-    const { user } = this.context;
+    const { user, myBrackets } = this.context;
 
     const groupClicked = this.renderGroup();
     return (
@@ -358,15 +417,20 @@ export default class Groups extends React.Component {
           </div>
         </div>
         {(!this.state.isEditing)
-          ? <div className='d-flex justify-content-center'>
+          ? <div className='d-flex flex-md-row flex-column align-items-center justify-content-center'>
             <button onClick={() => this.setState({
               isEditing: true,
+              newBracket: true,
               brackets: {
                 userId: user.userId,
                 bracketName: 'New Bracket'
               }
             })}
-            className='btn btn-primary'>Start New Prediction</button>
+            className='btn btn-primary prediction-btn mx-2 my-2'>Start New Prediction</button>
+            {(myBrackets.length !== 0)
+              ? <button className='btn btn-primary prediction-btn mx-2 my-2' onClick={() => { window.location.hash = ''; }}>Edit Previous Prediction</button>
+              : null
+            }
           </div>
           : <div className='fixed-bottom'>
             { this.handleEditing() }

@@ -16,6 +16,5 @@ export default function GroupsNav(props) {
         <a className={`${route.params.get('group') === 'H' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=H'>Group H</a>
       </div>
     </div>
-
   );
 }

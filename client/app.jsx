@@ -16,11 +16,12 @@ export default class App extends React.Component {
     this.state = {
       user: null,
       isAuthorizing: true,
-      teams: [],
+      myBrackets: [],
       route: parseRoute(window.location.hash)
     };
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
+
   }
 
   componentDidMount() {
@@ -30,22 +31,21 @@ export default class App extends React.Component {
         route: newRoute
       });
     });
-    fetch('/api/teams')
-      .then(response => response.json())
-      .then(teamData => {
-        this.setState({
-          teams: teamData
-        });
-      })
-      .catch(error => {
-        console.error('error:', error);
-      });
     const token = window.localStorage.getItem('react-jwt');
     const user = token ? jwtDecode(token) : null;
     this.setState({
       user,
       isAuthorizing: false
     });
+    if (user) {
+      fetch(`/api/brackets/${user.userId}`)
+        .then(res => res.json())
+        .then(bracket => {
+          this.setState({
+            myBrackets: bracket
+          });
+        });
+    }
   }
 
   handleSignIn(result) {
@@ -89,9 +89,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { user, isAuthorizing, route } = this.state;
+    const { user, isAuthorizing, route, myBrackets } = this.state;
     const { handleSignIn, handleSignOut } = this;
-    const contextValue = { user, isAuthorizing, route, handleSignIn, handleSignOut };
+    const contextValue = { user, isAuthorizing, route, myBrackets, handleSignIn, handleSignOut };
     return (
       <AppContext.Provider value={contextValue}>
         <>

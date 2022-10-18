@@ -10,7 +10,7 @@ export default class Footer extends React.Component {
       <footer className='navbar fixed-bottom navbar-expand-lg navbar-dark nav-bg py-2'>
         <div className='container-xxl d-flex flex-column'>
           <div className='pb-3'>
-            <a href='#home'><i className={`${route.path === 'home' ? 'bi bi-house-door footer-icon-xs active' : 'bi bi-house-door footer-icon-xs'}`} /></a>
+            <a href=''><i className={`${route.path === '' ? 'bi bi-house-door footer-icon-xs active' : 'bi bi-house-door footer-icon-xs'}`} /></a>
 
             <a href='#bracket'><i className={`${route.path === 'bracket' ? 'bi bi-layout-three-columns footer-icon-xs active' : 'bi bi-layout-three-columns footer-icon-xs'}`} /></a>
 
