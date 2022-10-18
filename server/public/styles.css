@@ -9,6 +9,10 @@ p {
   font-family: "Noto Sans", sans-serif;
 }
 
+i {
+  cursor: pointer;
+}
+
 .logo-icon {
   width: 85px;
 }
@@ -365,6 +369,17 @@ input:checked + label::before {
   .auth-input {
     width: 20rem;
   }
+}
+
+.delete-btn {
+  background-color: #8a1538;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.cancel-btn {
+  background-color: white;
+  padding: 0.5rem 1rem;
 }
 
 @media (max-width: 576px) {
