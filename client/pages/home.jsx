@@ -38,6 +38,7 @@ export default class Home extends React.Component {
   handleBracketDelete() {
     const token = window.localStorage.getItem('react-jwt');
     const bracketId = this.state.bracketId;
+    const { removeBracket } = this.context;
 
     fetch(`/api/brackets/${bracketId}`, {
       method: 'DELETE',
@@ -47,12 +48,12 @@ export default class Home extends React.Component {
       }
     })
       .then(result => {
-        // console.log('checking if function is being called');
         this.setState({
           confirmDelete: false,
           bracketName: '',
           bracketId: null
         });
+        removeBracket(bracketId);
       })
       .catch(error => {
         console.error('error:', error);
@@ -93,7 +94,6 @@ export default class Home extends React.Component {
 
   render() {
     const { user } = this.context;
-    // console.log(this.state);
 
     if (!user) {
       return (

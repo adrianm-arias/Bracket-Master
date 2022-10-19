@@ -21,6 +21,7 @@ export default class App extends React.Component {
     };
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
+    this.removeBracket = this.removeBracket.bind(this);
 
   }
 
@@ -52,6 +53,18 @@ export default class App extends React.Component {
     const { user, token } = result;
     window.localStorage.setItem('react-jwt', token);
     this.setState({ user });
+  }
+
+  removeBracket(bracketId) {
+    const bracketsCopy = [...this.state.myBrackets];
+    for (let i = 0; i < bracketsCopy.length; i++) {
+      if (bracketId === bracketsCopy[i].bracketId) {
+        bracketsCopy.splice(i, 1);
+      }
+    }
+    this.setState({
+      myBrackets: bracketsCopy
+    });
   }
 
   handleSignOut() {
@@ -90,8 +103,8 @@ export default class App extends React.Component {
 
   render() {
     const { user, isAuthorizing, route, myBrackets } = this.state;
-    const { handleSignIn, handleSignOut } = this;
-    const contextValue = { user, isAuthorizing, route, myBrackets, handleSignIn, handleSignOut };
+    const { handleSignIn, handleSignOut, removeBracket } = this;
+    const contextValue = { user, isAuthorizing, route, myBrackets, handleSignIn, handleSignOut, removeBracket };
     return (
       <AppContext.Provider value={contextValue}>
         <>
