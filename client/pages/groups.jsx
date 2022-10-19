@@ -120,7 +120,7 @@ export default class Groups extends React.Component {
           this.setState({
             groupStage: groupStageCopy
           });
-          fetch('api/groups', {
+          fetch('/api/groups', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -147,7 +147,7 @@ export default class Groups extends React.Component {
 
       const groupStage = this.state.groupStage;
 
-      fetch(`api/groups/${groupStage.groupStageId}`, {
+      fetch(`/api/groups/${groupStage.groupStageId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

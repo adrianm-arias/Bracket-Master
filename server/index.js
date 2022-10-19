@@ -212,6 +212,47 @@ app.patch('/api/groups/:groupStageId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.delete('/api/brackets/:bracketId', (req, res, next) => {
+  const bracketId = Number(req.params.bracketId);
+  if (!bracketId) {
+    throw new ClientError(400, 'bracket ID are required fields');
+  }
+  const sql = `
+    delete from "groupStage"
+ where "bracketId" = $1
+  `;
+  const params = [bracketId];
+  db.query(sql, params)
+    .then(result => {
+      const sql = `
+    delete from "brackets"
+ where "bracketId" = $1
+  `;
+      const params = [bracketId];
+      db.query(sql, params)
+        .then(result => {
+          const [bracketSelection] = result.rows;
+          res.status(201).json(bracketSelection);
+        })
+        .catch(err => next(err));
+    })
+    .catch(err => next(err));
+});
+
+// app.delete('/api/brackets/:bracketId', (req, res, next) => {
+//   const bracketId = Number(req.params.bracketId);
+//   if (!bracketId) {
+//     throw new ClientError(400, 'bracket ID are required fields');
+//   }
+//   const sql = `
+//     delete from "brackets"
+//  where "bracketId" = $1
+//   `;
+//   const params = [bracketId];
+//   db.query(sql, params)
+//     .catch(err => next(err));
+// });
+
 app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () => {
