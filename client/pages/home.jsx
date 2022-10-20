@@ -97,8 +97,11 @@ export default class Home extends React.Component {
 
     if (!user) {
       return (
-        <div>
-          <h1>Log in to cast your predictions</h1>
+        <div className='d-flex justify-content-center my-5 px-4'>
+          <div className='d-flex flex-column justify-content-center'>
+            <h1 className='my-4 py-4 text-center'>Log in to cast your predictions</h1>
+            <button className='btn btn-primary mb-3 px-4 py-2' onClick={() => { window.location.hash = 'sign-in'; }}>Login</button>
+          </div>
         </div>
       );
     }
