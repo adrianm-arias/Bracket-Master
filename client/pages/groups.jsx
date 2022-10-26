@@ -410,6 +410,9 @@ export default class Groups extends React.Component {
     localStorage.setItem('groupStage-state', JSON.stringify(this.state.groupStage));
     localStorage.setItem('newBracket-state', JSON.stringify(this.state.newBracket));
     localStorage.setItem('groupCount-state', JSON.stringify(this.state.groupCount));
+
+    // console.log('CDU: checking if this prints after group page switch', this.state.groupCount);
+
   }
 
   render() {
