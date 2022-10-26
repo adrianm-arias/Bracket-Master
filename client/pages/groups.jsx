@@ -41,14 +41,26 @@ export default class Groups extends React.Component {
   }
 
   componentDidMount() {
-    // const AlternateGroupCount = (!this.state.newBracket) ? 0 : 2;
 
     window.addEventListener('hashchange', event => {
       const newRoute = parseRoute(window.location.hash);
       this.setState({
         route: newRoute
-        // groupCount: AlternateGroupCount
       });
+
+      const groupTarget = newRoute.params.get('group').toLowerCase();
+      const groupStage = this.state.groupStage;
+      let count = 0;
+
+      for (const property in groupStage) {
+        if (property.startsWith(`${groupTarget}`) && groupStage[property] !== '' && property.length < 3) {
+          count += 1;
+        }
+      }
+      this.setState({
+        groupCount: count
+      });
+
     });
     fetch('/api/teams')
       .then(response => response.json())
@@ -410,9 +422,6 @@ export default class Groups extends React.Component {
     localStorage.setItem('groupStage-state', JSON.stringify(this.state.groupStage));
     localStorage.setItem('newBracket-state', JSON.stringify(this.state.newBracket));
     localStorage.setItem('groupCount-state', JSON.stringify(this.state.groupCount));
-
-    // console.log('CDU: checking if this prints after group page switch', this.state.groupCount);
-
   }
 
   render() {
