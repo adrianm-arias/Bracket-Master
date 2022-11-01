@@ -41,12 +41,26 @@ export default class Groups extends React.Component {
   }
 
   componentDidMount() {
+
     window.addEventListener('hashchange', event => {
       const newRoute = parseRoute(window.location.hash);
       this.setState({
-        route: newRoute,
-        groupCount: 0
+        route: newRoute
       });
+
+      const groupTarget = newRoute.params.get('group').toLowerCase();
+      const groupStage = this.state.groupStage;
+      let count = 0;
+
+      for (const property in groupStage) {
+        if (property.startsWith(`${groupTarget}`) && groupStage[property] !== '' && property.length < 3) {
+          count += 1;
+        }
+      }
+      this.setState({
+        groupCount: count
+      });
+
     });
     fetch('/api/teams')
       .then(response => response.json())
@@ -79,6 +93,11 @@ export default class Groups extends React.Component {
       newBracket: updateNewBracketState
     });
 
+    const updateGroupCount = JSON.parse(window.localStorage.getItem('groupCount-state'));
+    this.setState({
+      groupCount: updateGroupCount
+    });
+
     const { user } = this.context;
     const route = this.state.route;
 
@@ -92,7 +111,8 @@ export default class Groups extends React.Component {
               bracketName: route.params.get('bracketName')
             },
             isEditing: true,
-            groupStage: groupData[0]
+            groupStage: groupData[0],
+            groupCount: 2
           });
         })
         .catch(error => {
@@ -186,8 +206,10 @@ export default class Groups extends React.Component {
   teamSelected(teamId, event) {
     const groupStageCopy = { ...this.state.groupStage };
 
-    if (event.target.checked) {
+    const { route } = this.state;
+    const groupTarget = route.params.get('group').toLowerCase();
 
+    if (event.target.checked) {
       // checks is max group selection is reached
       if (this.state.groupCount === 2) {
         this.setState({
@@ -203,7 +225,7 @@ export default class Groups extends React.Component {
       }
       // loops through groupStage object looking for next available empty property
       for (const property in groupStageCopy) {
-        if (groupStageCopy[property] === '') {
+        if (groupStageCopy[property] === '' && property.startsWith(`${groupTarget}`)) {
           groupStageCopy[property] = teamId;
           break;
         }
@@ -334,6 +356,7 @@ export default class Groups extends React.Component {
             <i onClick={() => this.setState({
               isEditing: false,
               newBracket: false,
+              groupCount: 0,
               brackets: {
                 userId: '',
                 bracketName: ''
@@ -398,11 +421,26 @@ export default class Groups extends React.Component {
     localStorage.setItem('brackets-state', JSON.stringify(this.state.brackets));
     localStorage.setItem('groupStage-state', JSON.stringify(this.state.groupStage));
     localStorage.setItem('newBracket-state', JSON.stringify(this.state.newBracket));
-
+    localStorage.setItem('groupCount-state', JSON.stringify(this.state.groupCount));
   }
 
   render() {
     const { user, myBrackets } = this.context;
+
+    const alternateButtonText = (!user) ? 'Login to start a new prediction' : 'Start a new prediction';
+    const alternateButtonAction = (!user)
+      ? () => { window.location.hash = 'sign-in'; }
+      : () => {
+          this.setState({
+            isEditing: true,
+            newBracket: true,
+            brackets: {
+              userId: user.userId,
+              bracketName: 'New Bracket'
+            }
+          });
+          window.location.hash = 'groups?group=A';
+        };
 
     const groupClicked = this.renderGroup();
     return (
@@ -418,15 +456,8 @@ export default class Groups extends React.Component {
         </div>
         {(!this.state.isEditing)
           ? <div className='d-flex flex-md-row flex-column align-items-center justify-content-center'>
-            <button onClick={() => this.setState({
-              isEditing: true,
-              newBracket: true,
-              brackets: {
-                userId: user.userId,
-                bracketName: 'New Bracket'
-              }
-            })}
-            className='btn btn-primary prediction-btn mx-2 my-2'>Start New Prediction</button>
+            <button onClick={alternateButtonAction}
+            className='btn btn-primary prediction-btn mx-2 my-2'>{alternateButtonText}</button>
             {(myBrackets.length !== 0)
               ? <button className='btn btn-primary prediction-btn mx-2 my-2' onClick={() => { window.location.hash = ''; }}>Edit Previous Prediction</button>
               : null
