@@ -1,6 +1,6 @@
 import React from 'react';
 import parseRoute from '../lib/parse-route';
-import GroupsNav from '../components/second-nav';
+import GroupsNav from '../components/groups-nav';
 import AppContext from '../lib/app-context';
 
 export default class Groups extends React.Component {
@@ -48,18 +48,19 @@ export default class Groups extends React.Component {
         route: newRoute
       });
 
-      const groupTarget = newRoute.params.get('group').toLowerCase();
-      const groupStage = this.state.groupStage;
-      let count = 0;
-
-      for (const property in groupStage) {
-        if (property.startsWith(`${groupTarget}`) && groupStage[property] !== '' && property.length < 3) {
-          count += 1;
+      if (this.state.isEditing) {
+        const groupTarget = newRoute.params.get('group').toLowerCase();
+        const groupStage = this.state.groupStage;
+        let count = 0;
+        for (const property in groupStage) {
+          if (property.startsWith(`${groupTarget}`) && groupStage[property] !== '' && property.length < 3) {
+            count += 1;
+          }
         }
+        this.setState({
+          groupCount: count
+        });
       }
-      this.setState({
-        groupCount: count
-      });
 
     });
     fetch('/api/teams')
