@@ -350,6 +350,10 @@ input:checked + label::before {
   padding: 0.6rem 2rem;
 }
 
+input {
+  visibility: hidden;
+}
+
 @media (max-width: 992px) {
   .nav-position {
     display: block;

@@ -9,7 +9,7 @@ export default function KnockoutNav(props) {
         <a className={`${route.params.get('round') === 'roundof16' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#bracket?round=roundof16'>Round of 16</a>
         <a className={`${route.params.get('round') === 'quarters' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#bracket?round=quarters'>Quarter Finals</a>
         <a className={`${route.params.get('round') === 'semis' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#bracket?round=semis'>Semi Finals</a>
-        <a className={`${route.params.get('round') === 'finals' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#bracket?round=finals'>Final</a>
+        <a className={`${route.params.get('round') === 'final' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#bracket?round=final'>Final</a>
       </div>
     </div>
   );

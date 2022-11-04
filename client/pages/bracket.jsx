@@ -35,6 +35,7 @@ export default class Brackets extends React.Component {
         h2: ''
       }
     };
+    this.renderSixteen = this.renderSixteen.bind(this);
   }
 
   componentDidMount() {
@@ -104,6 +105,76 @@ export default class Brackets extends React.Component {
     }
   }
 
+  renderSixteen() {
+    return (
+      <div>
+        <div>
+          <h1>Round of 16</h1>
+        </div>
+        <fieldset>
+          <div className='d-flex flex-column'>
+            <div>
+              <input className='' type='radio' name='group1' id='a1' value='name' />
+              <label htmlFor='a1' className=''>
+                <h2>A1</h2>
+              </label>
+            </div>
+            <div>
+              <input className='' type='radio' name='group1' id='b2' value='name' />
+              <label htmlFor='b2' className=''>
+                <h2>B2</h2>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div className='d-flex flex-column'>
+            <div>
+              <input className='' type='radio' name='group2' id='b1' value='name' />
+              <label htmlFor='b1' className=''>
+                <h2>B1</h2>
+              </label>
+            </div>
+            <div>
+              <input className='' type='radio' name='group2' id='a2' value='name' />
+              <label htmlFor='a2' className=''>
+                <h2>A2</h2>
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    );
+  }
+
+  renderPage() {
+    const { route } = this.state;
+    const bracketRound = route.params.get('round');
+    if (bracketRound === 'roundof16') {
+      return (
+        <>
+          {this.renderSixteen() }
+        </>
+      );
+
+    }
+    if (bracketRound === 'quarters') {
+      return (
+        <h1>Quarter Finals</h1>
+      );
+    }
+    if (bracketRound === 'semis') {
+      return (
+        <h1>Semi Finals</h1>
+      );
+    }
+    if (bracketRound === 'final') {
+      return (
+        <h1>Final</h1>
+      );
+    }
+  }
+
   componentDidUpdate() {
     // localStorage.setItem('editing-state', JSON.stringify(this.state.isEditing));
     // localStorage.setItem('brackets-state', JSON.stringify(this.state.brackets));
@@ -120,9 +191,7 @@ export default class Brackets extends React.Component {
         <div className='second-nav-bg d-flex justify-content-center'>
           <KnockoutNav />
         </div>
-        <div>
-          <h1>Brackets Page</h1>
-        </div>
+        { this.renderPage() }
       </>
     );
   }
