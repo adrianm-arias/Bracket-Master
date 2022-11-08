@@ -292,7 +292,7 @@ export default class Groups extends React.Component {
         (this.state.isEditing)
           ? <div className='team-wrapper-edit selected my-2 mx-auto d-flex justify-content-start' onChange={event => this.teamSelected(groupList.teamId, event)} key={groupList.teamId}>
             <input className='checkbox' type='checkbox' id={groupList.teamId} name={groupList.countryName} defaultChecked={this.verifyCheck(groupList.teamId) }/>
-            <label className='d-flex' htmlFor={groupList.teamId}>
+            <label className='d-flex group-selection-box' htmlFor={groupList.teamId}>
               <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
               <h1 className='team-name'>{groupList.countryName}</h1>
             </label>

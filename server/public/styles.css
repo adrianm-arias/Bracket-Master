@@ -292,6 +292,9 @@ a {
 
 label {
   -webkit-font-smoothing: antialiased;
+}
+
+.group-selection-box {
   width: 30rem;
   padding: 1rem 6rem;
   border-radius: 1rem;
@@ -350,8 +353,82 @@ input:checked + label::before {
   padding: 0.6rem 2rem;
 }
 
-input {
+input[type="radio"] {
   visibility: hidden;
+  background-color: red;
+}
+
+.knockout-selection-box {
+  width: 100%;
+  padding: 0.8rem 1.4rem;
+  border-radius: 1rem;
+}
+
+.knockout-round-title {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.ko-wrapper-team-name {
+  border-radius: 2rem;
+}
+
+.ko-team-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.ko-header-wrapper {
+  width: 80%;
+}
+
+.bg-knockout {
+  background-color: rgba(232, 232, 232, 0.5);
+  width: 80%;
+  border-radius: 1rem;
+  padding: 0.6rem 1.2rem;
+}
+
+.ko-icons {
+  font-size: 1.5rem;
+  color: #6aaae4;
+}
+
+.divider {
+  background-color: rgba(217, 217, 217, 0.6);
+  height: 3px;
+  margin: 0;
+  padding: 0;
+}
+
+.div-switch {
+  height: 35px;
+  background-color: #465c69;
+  width: 100px;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.btn-switch {
+  color: white;
+  height: 35px;
+  width: 60px;
+  border-radius: 2rem;
+}
+
+.ko-east {
+  background-color: #6aaae4;
+  border: solid 2px #6aaae4;
+  position: absolute;
+  left: 0;
+}
+
+.ko-west {
+  background-color: #6aaae4;
+  border: solid 2px #6aaae4;
+  position: absolute;
+  right: 0;
 }
 
 @media (max-width: 992px) {
