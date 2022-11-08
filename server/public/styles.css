@@ -380,12 +380,12 @@ input[type="radio"] {
 }
 
 .ko-header-wrapper {
-  width: 80%;
+  width: 60%;
 }
 
 .bg-knockout {
   background-color: rgba(232, 232, 232, 0.5);
-  width: 80%;
+  width: 60%;
   border-radius: 1rem;
   padding: 0.6rem 1.2rem;
 }
@@ -405,7 +405,7 @@ input[type="radio"] {
 .div-switch {
   height: 35px;
   background-color: #465c69;
-  width: 100px;
+  width: 120px;
   border-radius: 1rem;
   position: relative;
 }
@@ -418,17 +418,35 @@ input[type="radio"] {
 }
 
 .ko-east {
-  background-color: #6aaae4;
-  border: solid 2px #6aaae4;
   position: absolute;
   left: 0;
+  border: none;
 }
 
 .ko-west {
-  background-color: #6aaae4;
-  border: solid 2px #6aaae4;
   position: absolute;
   right: 0;
+  border: none;
+}
+
+.switch-on {
+  background-color: #6aaae4;
+  border: solid 2px #6aaae4;
+}
+
+.switch-off {
+  background-color: #465c69;
+}
+
+.delete-btn {
+  background-color: #8a1538;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.cancel-btn {
+  background-color: white;
+  padding: 0.5rem 1rem;
 }
 
 @media (max-width: 992px) {
@@ -450,17 +468,14 @@ input[type="radio"] {
   .auth-input {
     width: 20rem;
   }
-}
 
-.delete-btn {
-  background-color: #8a1538;
-  color: white;
-  padding: 0.5rem 1rem;
-}
+  .ko-header-wrapper {
+    width: 70%;
+  }
 
-.cancel-btn {
-  background-color: white;
-  padding: 0.5rem 1rem;
+  .bg-knockout {
+    width: 70%;
+  }
 }
 
 @media (max-width: 576px) {
@@ -511,6 +526,14 @@ input[type="radio"] {
     width: 20rem;
     padding: 0.5rem 1rem;
     border-radius: 1rem;
+  }
+
+  .ko-header-wrapper {
+    width: 80%;
+  }
+
+  .bg-knockout {
+    width: 80%;
   }
 }
 

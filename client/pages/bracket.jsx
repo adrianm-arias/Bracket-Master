@@ -37,6 +37,9 @@ export default class Brackets extends React.Component {
       }
     };
     this.renderSixteen = this.renderSixteen.bind(this);
+    this.renderSemi = this.renderSemi.bind(this);
+    this.renderFinal = this.renderFinal.bind(this);
+    this.renderQuarter = this.renderQuarter.bind(this);
     this.handleToggleClick = this.handleToggleClick.bind(this);
 
   }
@@ -59,31 +62,6 @@ export default class Brackets extends React.Component {
       .catch(error => {
         console.error('error:', error);
       });
-
-    // const updateEditState = JSON.parse(window.localStorage.getItem('editing-state'));
-    // this.setState({
-    //   isEditing: updateEditState
-    // });
-
-    // const updateBracketState = JSON.parse(window.localStorage.getItem('brackets-state'));
-    // this.setState({
-    //   brackets: updateBracketState
-    // });
-
-    // const updateGroupsState = JSON.parse(window.localStorage.getItem('groupStage-state'));
-    // this.setState({
-    //   groupStage: updateGroupsState
-    // });
-
-    // const updateNewBracketState = JSON.parse(window.localStorage.getItem('newBracket-state'));
-    // this.setState({
-    //   newBracket: updateNewBracketState
-    // });
-
-    // const updateGroupCount = JSON.parse(window.localStorage.getItem('groupCount-state'));
-    // this.setState({
-    //   groupCount: updateGroupCount
-    // });
 
     const { user } = this.context;
     const route = this.state.route;
@@ -114,8 +92,77 @@ export default class Brackets extends React.Component {
     });
   }
 
-  renderSixteen() {
-    const altSwitchText = this.state.toggleBracket ? 'WEST' : 'EAST';
+  renderFinal() {
+
+    return (
+      <div className='d-flex flex-column align-items-center pt-5'>
+        <div className='d-flex ko-header-wrapper justify-content-end'>
+          <div>
+            <i className="bi bi-plus-circle px-2 ko-icons" />
+            <i className="bi bi-shuffle px-2  ko-icons" />
+          </div>
+        </div>
+        <div className='bg-knockout my-2'>
+          <div>
+            <h1 className='knockout-round-title text-center'>Final</h1>
+          </div>
+          <div className='d-flex flex-column mb-2'>
+            <input type="radio" id="w61" name="game63" value="name" />
+            <label htmlFor="w61" className='knockout-selection-box'><h2 className='ko-team-title'>W61</h2></label>
+          </div>
+          <div className='divider' />
+          <div className='d-flex flex-column mb-2'>
+            <input type="radio" id="w62" name="game63" value="name" />
+            <label htmlFor="w62" className='knockout-selection-box'><h2 className='ko-team-title'>W62</h2></label>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderSemi() {
+
+    return (
+      <div className='d-flex flex-column align-items-center pt-5'>
+        <div className='d-flex ko-header-wrapper justify-content-end'>
+          <div>
+            <i className="bi bi-plus-circle px-2 ko-icons" />
+            <i className="bi bi-shuffle px-2  ko-icons" />
+          </div>
+        </div>
+        <div className='bg-knockout my-2'>
+          <div>
+            <h1 className='knockout-round-title text-center'>Semi Finals</h1>
+          </div>
+          <div className='d-flex flex-column mb-2'>
+            <input type="radio" id="w57" name="game61" value="name" />
+            <label htmlFor="w57" className='knockout-selection-box'><h2 className='ko-team-title'>W57</h2></label>
+          </div>
+          <div className='divider' />
+          <div className='d-flex flex-column mb-2'>
+            <input type="radio" id="w58" name="game61" value="name" />
+            <label htmlFor="w58" className='knockout-selection-box'><h2 className='ko-team-title'>W58</h2></label>
+          </div>
+        </div>
+        <div className='bg-knockout my-2'>
+          <div>
+            <h1 className='knockout-round-title text-center'>Semi Finals</h1>
+          </div>
+          <div className='d-flex flex-column mb-2'>
+            <input type="radio" id="w59" name="game62" value="name" />
+            <label htmlFor="w59" className='knockout-selection-box'><h2 className='ko-team-title'>W59</h2></label>
+          </div>
+          <div className='divider' />
+          <div className='d-flex flex-column mb-2'>
+            <input type="radio" id="w60" name="game62" value="name" />
+            <label htmlFor="w60" className='knockout-selection-box'><h2 className='ko-team-title'>W60</h2></label>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  renderQuarter() {
     // renders east bracket games
     if (!this.state.toggleBracket) {
       return (
@@ -123,8 +170,112 @@ export default class Brackets extends React.Component {
           <div className='d-flex ko-header-wrapper justify-content-between'>
             <div className='div-switch'>
               <button
-                className={`btn-switch ${!this.state.toggleBracket ? 'ko-east' : 'ko-west'}`}
-                onClick={this.handleToggleClick}>{altSwitchText}</button>
+                className={`btn-switch ko-east ${!this.state.toggleBracket ? 'switch-on' : 'switch-off'}`}
+                onClick={this.handleToggleClick}>EAST</button>
+              <button
+                className={`btn-switch ko-west ${!this.state.toggleBracket ? 'switch-off' : 'switch-on'}`}
+                onClick={this.handleToggleClick}>WEST</button>
+            </div>
+            <div>
+              <i className="bi bi-plus-circle px-2 ko-icons" />
+              <i className="bi bi-shuffle px-2  ko-icons" />
+            </div>
+          </div>
+          <div className='bg-knockout my-2'>
+            <div>
+              <h1 className={`knockout-round-title ${!this.state.toggleBracket ? 'text-start' : 'text-end'}`}>Quarter Finals</h1>
+            </div>
+            <div className='d-flex flex-column mb-2'>
+              <input type="radio" id="w49" name="game57" value="name" />
+              <label htmlFor="w49" className='knockout-selection-box'><h2 className='ko-team-title'>W49</h2></label>
+            </div>
+            <div className='divider' />
+            <div className='d-flex flex-column mb-2'>
+              <input type="radio" id="w50" name="game57" value="name" />
+              <label htmlFor="w50" className='knockout-selection-box'><h2 className='ko-team-title'>W50</h2></label>
+            </div>
+          </div>
+          <div className='bg-knockout my-2'>
+            <div>
+              <h1 className={`knockout-round-title ${!this.state.toggleBracket ? 'text-start' : 'text-end'}`}>Quarter Finals</h1>
+            </div>
+            <div className='d-flex flex-column mb-2'>
+              <input type="radio" id="w53" name="game58" value="name" />
+              <label htmlFor="w53" className='knockout-selection-box'><h2 className='ko-team-title'>W53</h2></label>
+            </div>
+            <div className='divider' />
+            <div className='d-flex flex-column mb-2'>
+              <input type="radio" id="w54" name="game58" value="name" />
+              <label htmlFor="w54" className='knockout-selection-box'><h2 className='ko-team-title'>W54</h2></label>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    // renders west bracket games
+    if (this.state.toggleBracket) {
+      return (
+        <div className='d-flex flex-column align-items-center pt-5'>
+          <div className='d-flex ko-header-wrapper justify-content-between'>
+            <div className='div-switch'>
+              <button
+                className={`btn-switch ko-east ${!this.state.toggleBracket ? 'switch-on' : 'switch-off'}`}
+                onClick={this.handleToggleClick}>EAST</button>
+              <button
+                className={`btn-switch ko-west ${!this.state.toggleBracket ? 'switch-off' : 'switch-on'}`}
+                onClick={this.handleToggleClick}>WEST</button>
+            </div>
+            <div>
+              <i className="bi bi-plus-circle px-2 ko-icons" />
+              <i className="bi bi-shuffle px-2  ko-icons" />
+            </div>
+          </div>
+          <div className='bg-knockout my-2'>
+            <div>
+              <h1 className={`knockout-round-title ${!this.state.toggleBracket ? 'text-start' : 'text-end'}`}>Quarter Finals</h1>
+            </div>
+            <div className='d-flex flex-column mb-2'>
+              <input type="radio" id="w51" name="game59" value="name" />
+              <label htmlFor="w51" className='knockout-selection-box'><h2 className='ko-team-title'>W51</h2></label>
+            </div>
+            <div className='divider' />
+            <div className='d-flex flex-column mb-2'>
+              <input type="radio" id="w52" name="game59" value="name" />
+              <label htmlFor="w52" className='knockout-selection-box'><h2 className='ko-team-title'>W52</h2></label>
+            </div>
+          </div>
+          <div className='bg-knockout my-2'>
+            <div>
+              <h1 className={`knockout-round-title ${!this.state.toggleBracket ? 'text-start' : 'text-end'}`}>Quarter Finals</h1>
+            </div>
+            <div className='d-flex flex-column mb-2'>
+              <input type="radio" id="w55" name="game60" value="name" />
+              <label htmlFor="w55" className='knockout-selection-box'><h2 className='ko-team-title'>W55</h2></label>
+            </div>
+            <div className='divider' />
+            <div className='d-flex flex-column mb-2'>
+              <input type="radio" id="w56" name="game60" value="name" />
+              <label htmlFor="w56" className='knockout-selection-box'><h2 className='ko-team-title'>W56</h2></label>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  }
+
+  renderSixteen() {
+    // renders east bracket games
+    if (!this.state.toggleBracket) {
+      return (
+        <div className='d-flex flex-column align-items-center pt-5'>
+          <div className='d-flex ko-header-wrapper justify-content-between'>
+            <div className='div-switch'>
+              <button
+                className={`btn-switch ko-east ${!this.state.toggleBracket ? 'switch-on' : 'switch-off'}`}
+                  onClick={this.handleToggleClick}>EAST</button>
+              <button
+                className={`btn-switch ko-west ${!this.state.toggleBracket ? 'switch-off' : 'switch-on'}`}
+                onClick={this.handleToggleClick}>WEST</button>
             </div>
             <div>
               <i className="bi bi-plus-circle px-2 ko-icons" />
@@ -197,8 +348,11 @@ export default class Brackets extends React.Component {
           <div className='d-flex ko-header-wrapper justify-content-between'>
             <div className='div-switch'>
               <button
-                className={`btn-switch ${!this.state.toggleBracket ? 'ko-east' : 'ko-west'}`}
-                onClick={this.handleToggleClick}>{altSwitchText}</button>
+                className={`btn-switch ko-east ${!this.state.toggleBracket ? 'switch-on' : 'switch-off'}`}
+                onClick={this.handleToggleClick}>EAST</button>
+              <button
+                className={`btn-switch ko-west ${!this.state.toggleBracket ? 'switch-off' : 'switch-on'}`}
+                onClick={this.handleToggleClick}>WEST</button>
             </div>
             <div>
               <i className="bi bi-plus-circle px-2 ko-icons" />
@@ -279,31 +433,28 @@ export default class Brackets extends React.Component {
     }
     if (bracketRound === 'quarters') {
       return (
-        <h1>Quarter Finals</h1>
+        <>
+          {this.renderQuarter()}
+        </>
       );
     }
     if (bracketRound === 'semis') {
       return (
-        <h1>Semi Finals</h1>
+        <>
+          {this.renderSemi()}
+        </>
       );
     }
     if (bracketRound === 'final') {
       return (
-        <h1>Final</h1>
+        <>
+          {this.renderFinal()}
+        </>
       );
     }
   }
 
-  componentDidUpdate() {
-    // localStorage.setItem('editing-state', JSON.stringify(this.state.isEditing));
-    // localStorage.setItem('brackets-state', JSON.stringify(this.state.brackets));
-    // localStorage.setItem('groupStage-state', JSON.stringify(this.state.groupStage));
-    // localStorage.setItem('newBracket-state', JSON.stringify(this.state.newBracket));
-    // localStorage.setItem('groupCount-state', JSON.stringify(this.state.groupCount));
-  }
-
   render() {
-    // console.log(this.state);
 
     return (
       <>
