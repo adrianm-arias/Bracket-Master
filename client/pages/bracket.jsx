@@ -2,7 +2,8 @@ import React from 'react';
 import KnockoutNav from '../components/knockout-nav';
 import parseRoute from '../lib/parse-route';
 import AppContext from '../lib/app-context';
-import RoundKo from '../components/ko-round-ko';
+import RoundKo from '../components/ko-round';
+import KoSwitch from '../components/ko-switch';
 
 export default class Brackets extends React.Component {
   constructor(props) {
@@ -85,10 +86,7 @@ export default class Brackets extends React.Component {
     return (
       <div className='d-flex flex-column align-items-center pt-5'>
         <div className='d-flex ko-header-wrapper justify-content-end'>
-          <div>
-            <i className="bi bi-plus-circle px-2 ko-icons" />
-            <i className="bi bi-shuffle px-2  ko-icons" />
-          </div>
+          <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} hide='d-none' />
         </div>
         <RoundKo teamOne='w61' teamTwo='w62' name='game63' round='Final' toggle={this.state.toggleBracket} />
       </div>
@@ -100,10 +98,7 @@ export default class Brackets extends React.Component {
     return (
       <div className='d-flex flex-column align-items-center pt-5'>
         <div className='d-flex ko-header-wrapper justify-content-end'>
-          <div>
-            <i className="bi bi-plus-circle px-2 ko-icons" />
-            <i className="bi bi-shuffle px-2  ko-icons" />
-          </div>
+          <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} hide='d-none' />
         </div>
         <RoundKo teamOne='w57' teamTwo='w58' name='game61' round='Semi Finals' toggle={this.state.toggleBracket} />
         <RoundKo teamOne='w59' teamTwo='w60' name='game62' round='Semi Finals' toggle={this.state.toggleBracket} />
@@ -117,18 +112,7 @@ export default class Brackets extends React.Component {
       return (
         <div className='d-flex flex-column align-items-center pt-5'>
           <div className='d-flex ko-header-wrapper justify-content-between'>
-            <div className='div-switch'>
-              <button
-                className={`btn-switch ko-east ${!this.state.toggleBracket ? 'switch-on' : 'switch-off'}`}
-                onClick={this.handleToggleClick}>EAST</button>
-              <button
-                className={`btn-switch ko-west ${!this.state.toggleBracket ? 'switch-off' : 'switch-on'}`}
-                onClick={this.handleToggleClick}>WEST</button>
-            </div>
-            <div>
-              <i className="bi bi-plus-circle px-2 ko-icons" />
-              <i className="bi bi-shuffle px-2  ko-icons" />
-            </div>
+            <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
           <RoundKo teamOne='w49' teamTwo='w50' name='game57' round='Quarter Finals' toggle={this.state.toggleBracket} />
           <RoundKo teamOne='w53' teamTwo='w54' name='game58' round='Quarter Finals' toggle={this.state.toggleBracket} />
@@ -140,18 +124,7 @@ export default class Brackets extends React.Component {
       return (
         <div className='d-flex flex-column align-items-center pt-5'>
           <div className='d-flex ko-header-wrapper justify-content-between'>
-            <div className='div-switch'>
-              <button
-                className={`btn-switch ko-east ${!this.state.toggleBracket ? 'switch-on' : 'switch-off'}`}
-                onClick={this.handleToggleClick}>EAST</button>
-              <button
-                className={`btn-switch ko-west ${!this.state.toggleBracket ? 'switch-off' : 'switch-on'}`}
-                onClick={this.handleToggleClick}>WEST</button>
-            </div>
-            <div>
-              <i className="bi bi-plus-circle px-2 ko-icons" />
-              <i className="bi bi-shuffle px-2  ko-icons" />
-            </div>
+            <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
           <RoundKo teamOne='w51' teamTwo='w52' name='game59' round='Quarter Finals' toggle={this.state.toggleBracket} />
           <RoundKo teamOne='w55' teamTwo='w56' name='game60' round='Quarter Finals' toggle={this.state.toggleBracket} />
@@ -166,18 +139,7 @@ export default class Brackets extends React.Component {
       return (
         <div className='d-flex flex-column align-items-center pt-5'>
           <div className='d-flex ko-header-wrapper justify-content-between'>
-            <div className='div-switch'>
-              <button
-                className={`btn-switch ko-east ${!this.state.toggleBracket ? 'switch-on' : 'switch-off'}`}
-                  onClick={this.handleToggleClick}>EAST</button>
-              <button
-                className={`btn-switch ko-west ${!this.state.toggleBracket ? 'switch-off' : 'switch-on'}`}
-                onClick={this.handleToggleClick}>WEST</button>
-            </div>
-            <div>
-              <i className="bi bi-plus-circle px-2 ko-icons" />
-              <i className="bi bi-shuffle px-2  ko-icons" />
-            </div>
+            <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
           <RoundKo teamOne='a1' teamTwo='b2' name='game49' round='Round of 16' toggle={this.state.toggleBracket}/>
           <RoundKo teamOne='c1' teamTwo='d2' name='game50' round='Round of 16' toggle={this.state.toggleBracket}/>
@@ -191,18 +153,7 @@ export default class Brackets extends React.Component {
       return (
         <div className='d-flex flex-column align-items-center pt-5'>
           <div className='d-flex ko-header-wrapper justify-content-between'>
-            <div className='div-switch'>
-              <button
-                className={`btn-switch ko-east ${!this.state.toggleBracket ? 'switch-on' : 'switch-off'}`}
-                onClick={this.handleToggleClick}>EAST</button>
-              <button
-                className={`btn-switch ko-west ${!this.state.toggleBracket ? 'switch-off' : 'switch-on'}`}
-                onClick={this.handleToggleClick}>WEST</button>
-            </div>
-            <div>
-              <i className="bi bi-plus-circle px-2 ko-icons" />
-              <i className="bi bi-shuffle px-2  ko-icons" />
-            </div>
+            <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
           <RoundKo teamOne='d1' teamTwo='c2' name='game51' round='Round of 16' toggle={this.state.toggleBracket} />
           <RoundKo teamOne='b1' teamTwo='a2' name='game52' round='Round of 16' toggle={this.state.toggleBracket} />

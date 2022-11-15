@@ -5,6 +5,10 @@
   font-size: 1.3rem;
 }
 
+.hidden {
+  display: none !important;
+}
+
 p {
   font-family: "Noto Sans", sans-serif;
 }
