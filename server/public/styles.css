@@ -5,6 +5,10 @@
   font-size: 1.3rem;
 }
 
+.hidden {
+  display: none !important;
+}
+
 p {
   font-family: "Noto Sans", sans-serif;
 }
@@ -292,6 +296,9 @@ a {
 
 label {
   -webkit-font-smoothing: antialiased;
+}
+
+.group-selection-box {
   width: 30rem;
   padding: 1rem 6rem;
   border-radius: 1rem;
@@ -350,6 +357,103 @@ input:checked + label::before {
   padding: 0.6rem 2rem;
 }
 
+input[type="radio"] {
+  visibility: hidden;
+  background-color: red;
+}
+
+.knockout-selection-box {
+  width: 100%;
+  padding: 0.8rem 1.4rem;
+  border-radius: 1rem;
+}
+
+.knockout-round-title {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+}
+
+.ko-wrapper-team-name {
+  border-radius: 2rem;
+}
+
+.ko-team-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.ko-header-wrapper {
+  width: 60%;
+}
+
+.bg-knockout {
+  background-color: rgba(232, 232, 232, 0.5);
+  width: 60%;
+  border-radius: 1rem;
+  padding: 0.6rem 1.2rem;
+}
+
+.ko-icons {
+  font-size: 1.5rem;
+  color: #6aaae4;
+}
+
+.divider {
+  background-color: rgba(217, 217, 217, 0.6);
+  height: 3px;
+  margin: 0;
+  padding: 0;
+}
+
+.div-switch {
+  height: 35px;
+  background-color: #465c69;
+  width: 120px;
+  border-radius: 1rem;
+  position: relative;
+}
+
+.btn-switch {
+  color: white;
+  height: 35px;
+  width: 60px;
+  border-radius: 2rem;
+}
+
+.ko-east {
+  position: absolute;
+  left: 0;
+  border: none;
+}
+
+.ko-west {
+  position: absolute;
+  right: 0;
+  border: none;
+}
+
+.switch-on {
+  background-color: #6aaae4;
+  border: solid 2px #6aaae4;
+}
+
+.switch-off {
+  background-color: #465c69;
+}
+
+.delete-btn {
+  background-color: #8a1538;
+  color: white;
+  padding: 0.5rem 1rem;
+}
+
+.cancel-btn {
+  background-color: white;
+  padding: 0.5rem 1rem;
+}
+
 @media (max-width: 992px) {
   .nav-position {
     display: block;
@@ -369,17 +473,14 @@ input:checked + label::before {
   .auth-input {
     width: 20rem;
   }
-}
 
-.delete-btn {
-  background-color: #8a1538;
-  color: white;
-  padding: 0.5rem 1rem;
-}
+  .ko-header-wrapper {
+    width: 70%;
+  }
 
-.cancel-btn {
-  background-color: white;
-  padding: 0.5rem 1rem;
+  .bg-knockout {
+    width: 70%;
+  }
 }
 
 @media (max-width: 576px) {
@@ -430,6 +531,14 @@ input:checked + label::before {
     width: 20rem;
     padding: 0.5rem 1rem;
     border-radius: 1rem;
+  }
+
+  .ko-header-wrapper {
+    width: 80%;
+  }
+
+  .bg-knockout {
+    width: 80%;
   }
 }
 
