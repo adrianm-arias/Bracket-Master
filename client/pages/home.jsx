@@ -77,7 +77,7 @@ export default class Home extends React.Component {
         <div className='d-flex justify-content-center' key={data.bracketId}>
           <div className='edit-bracket-wrapper my-1 mx-auto d-flex justify-content-start align-items-center position-relative'>
             <i className='bi bi-pencil-fill editing-icon' />
-            <a href={`#groups?group=A&bracketId=${data.bracketId}&bracketName=${data.bracketName}`}>
+            <a href={`#groups?group=a&bracketId=${data.bracketId}&bracketName=${data.bracketName}`}>
               <h1 className='bracket-name'>{data.bracketName}</h1>
             </a>
             <div className='position-absolute end-0'>
