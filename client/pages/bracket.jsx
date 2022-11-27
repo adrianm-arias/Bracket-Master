@@ -164,7 +164,7 @@ export default class Brackets extends React.Component {
         <div className='d-flex ko-header-wrapper justify-content-end py-1'>
           <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} hide='d-none' />
         </div>
-        <RoundKo teamOne='w61' teamTwo='w62' name='game63' round='Final' toggle={this.state.toggleBracket} teamSel={this.teamSelected} />
+        <RoundKo teamOne='w61' teamTwo='w62' name='game63' round='Final' toggle={this.state.toggleBracket} teamSel={this.teamSelected} check={this.verifyCheck} />
       </div>
     );
   }
@@ -176,8 +176,8 @@ export default class Brackets extends React.Component {
         <div className='d-flex ko-header-wrapper justify-content-end py-1'>
           <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} hide='d-none' />
         </div>
-        <RoundKo teamOne='w57' teamTwo='w58' name='game61' round='Semi Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} />
-        <RoundKo teamOne='w59' teamTwo='w60' name='game62' round='Semi Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} />
+        <RoundKo teamOne='w57' teamTwo='w58' name='game61' round='Semi Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} check={this.verifyCheck} />
+        <RoundKo teamOne='w59' teamTwo='w60' name='game62' round='Semi Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} check={this.verifyCheck} />
       </div>
     );
   }
@@ -190,8 +190,8 @@ export default class Brackets extends React.Component {
           <div className='d-flex ko-header-wrapper justify-content-between py-1' key='east'>
             <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
-          <RoundKo teamOne='w49' teamTwo='w50' name='game57' round='Quarter Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} />
-          <RoundKo teamOne='w53' teamTwo='w54' name='game58' round='Quarter Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} />
+          <RoundKo teamOne='w49' teamTwo='w50' name='game57' round='Quarter Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} check={this.verifyCheck} />
+          <RoundKo teamOne='w53' teamTwo='w54' name='game58' round='Quarter Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} check={this.verifyCheck} />
         </div>
       );
     }
@@ -202,14 +202,19 @@ export default class Brackets extends React.Component {
           <div className='d-flex ko-header-wrapper justify-content-between py-1'>
             <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
-          <RoundKo teamOne='w51' teamTwo='w52' name='game59' round='Quarter Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} />
-          <RoundKo teamOne='w55' teamTwo='w56' name='game60' round='Quarter Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} />
+          <RoundKo teamOne='w51' teamTwo='w52' name='game59' round='Quarter Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} check={this.verifyCheck} />
+          <RoundKo teamOne='w55' teamTwo='w56' name='game60' round='Quarter Finals' toggle={this.state.toggleBracket} teamSel={this.teamSelected} check={this.verifyCheck} />
         </div>
       );
     }
   }
 
   renderSixteen() {
+    const { teams } = this.context;
+
+    // const { teams } = this.state.teams[0];
+    // console.log('renderGroup:', group[0]);
+    // console.log('contextRender:', teams[16].coach);
     // renders east bracket games
     if (!this.state.toggleBracket) {
       return (
@@ -217,10 +222,10 @@ export default class Brackets extends React.Component {
           <div className='d-flex ko-header-wrapper justify-content-between py-1'>
             <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
-          <RoundKo teamOne='a1' teamTwo='b2' name='game49' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck}/>
-          <RoundKo teamOne='c1' teamTwo='d2' name='game50' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck}/>
-          <RoundKo teamOne='e1' teamTwo='f2' name='game51' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck}/>
-          <RoundKo teamOne='g1' teamTwo='h2' name='game52' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck}/>
+          <RoundKo teamOne='a1' teamTwo='b2' name='game49' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} teamRender={teams}/>
+          <RoundKo teamOne='c1' teamTwo='d2' name='game50' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing}/>
+          <RoundKo teamOne='e1' teamTwo='f2' name='game53' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing}/>
+          <RoundKo teamOne='g1' teamTwo='h2' name='game54' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing}/>
         </div>
       );
     }
@@ -231,10 +236,10 @@ export default class Brackets extends React.Component {
           <div className='d-flex ko-header-wrapper justify-content-between py-1'>
             <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
-          <RoundKo teamOne='d1' teamTwo='c2' name='game51' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck}/>
-          <RoundKo teamOne='b1' teamTwo='a2' name='game52' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck}/>
-          <RoundKo teamOne='f1' teamTwo='e2' name='game55' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck}/>
-          <RoundKo teamOne='h1' teamTwo='g2' name='game56' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck}/>
+          <RoundKo teamOne='d1' teamTwo='c2' name='game51' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing}/>
+          <RoundKo teamOne='b1' teamTwo='a2' name='game52' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing}/>
+          <RoundKo teamOne='f1' teamTwo='e2' name='game55' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing}/>
+          <RoundKo teamOne='h1' teamTwo='g2' name='game56' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing}/>
         </div>
       );
     }

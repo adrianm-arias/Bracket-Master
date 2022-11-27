@@ -17,6 +17,7 @@ export default class App extends React.Component {
       user: null,
       isAuthorizing: true,
       myBrackets: [],
+      teams: [],
       route: parseRoute(window.location.hash)
     };
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -47,6 +48,16 @@ export default class App extends React.Component {
           });
         });
     }
+    fetch('/api/teams')
+      .then(response => response.json())
+      .then(teamData => {
+        this.setState({
+          teams: teamData
+        });
+      })
+      .catch(error => {
+        console.error('error:', error);
+      });
   }
 
   handleSignIn(result) {
@@ -102,9 +113,9 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { user, isAuthorizing, route, myBrackets } = this.state;
+    const { user, isAuthorizing, route, myBrackets, teams } = this.state;
     const { handleSignIn, handleSignOut, removeBracket } = this;
-    const contextValue = { user, isAuthorizing, route, myBrackets, handleSignIn, handleSignOut, removeBracket };
+    const contextValue = { user, isAuthorizing, route, myBrackets, handleSignIn, handleSignOut, removeBracket, teams };
     return (
       <AppContext.Provider value={contextValue}>
         <>
