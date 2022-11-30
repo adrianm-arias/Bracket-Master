@@ -116,6 +116,7 @@ export default class App extends React.Component {
     const { user, isAuthorizing, route, myBrackets, teams } = this.state;
     const { handleSignIn, handleSignOut, removeBracket } = this;
     const contextValue = { user, isAuthorizing, route, myBrackets, handleSignIn, handleSignOut, removeBracket, teams };
+
     return (
       <AppContext.Provider value={contextValue}>
         <>
