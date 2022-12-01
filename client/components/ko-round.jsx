@@ -24,7 +24,7 @@ export default function RoundKo(props) {
       <fieldset>
         <div className='d-flex flex-column mb-2' onChange={event => props.teamSel(props.teamIdOne, event)}>
           <input type="radio" id={props.teamIdOne} name={props.name} value=''
-            defaultChecked={props.check(props.teamIdOne)}
+            defaultChecked={(!props.editing ? false : props.check(props.teamIdOne))}
           />
           <label htmlFor={props.teamIdOne} className='d-flex knockout-selection-box'>
             {teamOneData}

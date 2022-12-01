@@ -90,28 +90,6 @@ export default class Brackets extends React.Component {
     this.setState({
       knockoutStage: updateKoState
     });
-
-    // const { user } = this.context;
-    // const route = parseRoute(window.location.hash);
-
-    // if (route.params.get('bracketId')) {
-    //   fetch(`/api/brackets/groups/${route.params.get('bracketId')}`)
-    //     .then(response => response.json())
-    //     .then(groupData => {
-    //       this.setState({
-    //         brackets: {
-    //           userId: user.userId,
-    //           bracketName: route.params.get('bracketName')
-    //         },
-    //         isEditing: true,
-    //         groupStage: groupData[0],
-    //         groupCount: 2
-    //       });
-    //     })
-    //     .catch(error => {
-    //       console.error('error:', error);
-    //     });
-    // }
   }
 
   handleToggleClick() {
@@ -136,14 +114,46 @@ export default class Brackets extends React.Component {
   }
 
   verifyCheck(teamId) {
-    const koStage = this.state.knockoutStage;
-    // console.log(teamId);
 
-    for (const property in koStage) {
-      if (koStage[property] === teamId) {
-        // console.log(property);
-        // console.log(koStage[property]);
-        return true;
+    const koStage = this.state.knockoutStage;
+    const route = parseRoute(window.location.hash);
+    const bracketRound = route.params.get('round');
+
+    if (bracketRound === 'roundof16') {
+      for (const property in koStage) {
+        if (property === 'game49' || property === 'game50' || property === 'game51' || property === 'game52' ||
+            property === 'game53' || property === 'game54' || property === 'game55' || property === 'game56') {
+          if (koStage[property] === teamId) {
+            return true;
+          }
+        }
+      }
+    }
+    if (bracketRound === 'quarters') {
+      for (const property in koStage) {
+        if (property === 'game57' || property === 'game58' || property === 'game59' || property === 'game60') {
+          if (koStage[property] === teamId) {
+            return true;
+          }
+        }
+      }
+    }
+    if (bracketRound === 'semis') {
+      for (const property in koStage) {
+        if (property === 'game61' || property === 'game62') {
+          if (koStage[property] === teamId) {
+            return true;
+          }
+        }
+      }
+    }
+    if (bracketRound === 'final') {
+      for (const property in koStage) {
+        if (property === 'game63') {
+          if (koStage[property] === teamId) {
+            return true;
+          }
+        }
       }
     }
   }
@@ -160,11 +170,10 @@ export default class Brackets extends React.Component {
           <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} hide='d-none' />
         </div>
         <RoundKo
-          teamOne={(koStage.game61 === '') ? 'w61' : teams[koStage.game61 - 1].countryName} teamOneFlag={(koStage.game61 === '') ? 'empty' : teams[koStage.game61 - 1].countryFlag}
-          teamTwo={(koStage.game62 === '') ? 'w62' : teams[koStage.game62 - 1].countryName} teamTwoFlag={(koStage.game62 === '') ? 'empty' : teams[koStage.game62 - 1].countryFlag}
-          teamIdOne={(koStage.game61 === '') ? 'empty' : teams[koStage.game61 - 1].teamId}
-          teamIdTwo={(koStage.game62 === '') ? 'empty' : teams[koStage.game62 - 1].teamId}
-          // teamOne='w61' teamTwo='w62'
+          teamOne={(koStage.game61 === '') ? 'w61' : teams[koStage.game61 - 1].countryName} teamOneFlag={(koStage.game61 === '') ? null : teams[koStage.game61 - 1].countryFlag}
+          teamTwo={(koStage.game62 === '') ? 'w62' : teams[koStage.game62 - 1].countryName} teamTwoFlag={(koStage.game62 === '') ? null : teams[koStage.game62 - 1].countryFlag}
+          teamIdOne={(koStage.game61 === '') ? 'w61' : teams[koStage.game61 - 1].teamId}
+          teamIdTwo={(koStage.game62 === '') ? 'w62' : teams[koStage.game62 - 1].teamId}
           name='game63' round='Final' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket} />
       </div>
     );
@@ -182,18 +191,16 @@ export default class Brackets extends React.Component {
           <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} hide='d-none' />
         </div>
         <RoundKo
-          teamOne={(koStage.game57 === '') ? 'w57' : teams[koStage.game57 - 1].countryName} teamOneFlag={(koStage.game57 === '') ? 'empty' : teams[koStage.game57 - 1].countryFlag}
-          teamTwo={(koStage.game58 === '') ? 'w58' : teams[koStage.game58 - 1].countryName} teamTwoFlag={(koStage.game58 === '') ? 'empty' : teams[koStage.game58 - 1].countryFlag}
-          teamIdOne={(koStage.game57 === '') ? 'empty' : teams[koStage.game57 - 1].teamId}
-          teamIdTwo={(koStage.game58 === '') ? 'empty' : teams[koStage.game58 - 1].teamId}
-          // teamOne='w57' teamTwo='w58'
+          teamOne={(koStage.game57 === '') ? 'w57' : teams[koStage.game57 - 1].countryName} teamOneFlag={(koStage.game57 === '') ? null : teams[koStage.game57 - 1].countryFlag}
+          teamTwo={(koStage.game58 === '') ? 'w58' : teams[koStage.game58 - 1].countryName} teamTwoFlag={(koStage.game58 === '') ? null : teams[koStage.game58 - 1].countryFlag}
+          teamIdOne={(koStage.game57 === '') ? 'w57' : teams[koStage.game57 - 1].teamId}
+          teamIdTwo={(koStage.game58 === '') ? 'w58' : teams[koStage.game58 - 1].teamId}
           name='game61' round='Semi Finals' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket} />
         <RoundKo
-          teamOne={(koStage.game59 === '') ? 'w59' : teams[koStage.game59 - 1].countryName} teamOneFlag={(koStage.game59 === '') ? 'empty' : teams[koStage.game59 - 1].countryFlag}
-          teamTwo={(koStage.game60 === '') ? 'w60' : teams[koStage.game60 - 1].countryName} teamTwoFlag={(koStage.game60 === '') ? 'empty' : teams[koStage.game60 - 1].countryFlag}
-          teamIdOne={(koStage.game59 === '') ? 'empty' : teams[koStage.game59 - 1].teamId}
-          teamIdTwo={(koStage.game60 === '') ? 'empty' : teams[koStage.game60 - 1].teamId}
-          // teamOne='w59' teamTwo='w60'
+          teamOne={(koStage.game59 === '') ? 'w59' : teams[koStage.game59 - 1].countryName} teamOneFlag={(koStage.game59 === '') ? null : teams[koStage.game59 - 1].countryFlag}
+          teamTwo={(koStage.game60 === '') ? 'w60' : teams[koStage.game60 - 1].countryName} teamTwoFlag={(koStage.game60 === '') ? null : teams[koStage.game60 - 1].countryFlag}
+          teamIdOne={(koStage.game59 === '') ? 'w59' : teams[koStage.game59 - 1].teamId}
+          teamIdTwo={(koStage.game60 === '') ? 'w60' : teams[koStage.game60 - 1].teamId}
           name='game62' round='Semi Finals' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket} />
       </div>
     );
@@ -215,16 +222,14 @@ export default class Brackets extends React.Component {
           <RoundKo
             teamOne={(koStage.game49 === '') ? 'w49' : teams[koStage.game49 - 1].countryName} teamOneFlag={(koStage.game49 === '') ? null : teams[koStage.game49 - 1].countryFlag}
             teamTwo={(koStage.game50 === '') ? 'w50' : teams[koStage.game50 - 1].countryName} teamTwoFlag={(koStage.game50 === '') ? null : teams[koStage.game50 - 1].countryFlag}
-            teamIdOne={(koStage.game49 === '') ? 'empty' : teams[koStage.game49 - 1].teamId}
-            teamIdTwo={(koStage.game50 === '') ? 'empty' : teams[koStage.game50 - 1].teamId}
-            // teamOne='w49' teamTwo='w50'
+            teamIdOne={(koStage.game49 === '') ? 'w49' : teams[koStage.game49 - 1].teamId}
+            teamIdTwo={(koStage.game50 === '') ? 'w50' : teams[koStage.game50 - 1].teamId}
             name='game57' round='Quarter Finals' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket} />
           <RoundKo
             teamOne={(koStage.game53 === '') ? 'w53' : teams[koStage.game53 - 1].countryName} teamOneFlag={(koStage.game53 === '') ? null : teams[koStage.game53 - 1].countryFlag}
             teamTwo={(koStage.game54 === '') ? 'w54' : teams[koStage.game54 - 1].countryName} teamTwoFlag={(koStage.game54 === '') ? null : teams[koStage.game54 - 1].countryFlag}
-            teamIdOne={(koStage.game53 === '') ? 'empty' : teams[koStage.game53 - 1].teamId}
-            teamIdTwo={(koStage.game54 === '') ? 'empty' : teams[koStage.game54 - 1].teamId}
-            // teamOne='w53' teamTwo='w54'
+            teamIdOne={(koStage.game53 === '') ? 'w53' : teams[koStage.game53 - 1].teamId}
+            teamIdTwo={(koStage.game54 === '') ? 'w54' : teams[koStage.game54 - 1].teamId}
             name='game58' round='Quarter Finals' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket} />
         </div>
       );
@@ -239,16 +244,14 @@ export default class Brackets extends React.Component {
           <RoundKo
             teamOne={(koStage.game51 === '') ? 'w51' : teams[koStage.game51 - 1].countryName} teamOneFlag={(koStage.game51 === '') ? null : teams[koStage.game51 - 1].countryFlag}
             teamTwo={(koStage.game52 === '') ? 'w52' : teams[koStage.game52 - 1].countryName} teamTwoFlag={(koStage.game52 === '') ? null : teams[koStage.game52 - 1].countryFlag}
-            teamIdOne={(koStage.game51 === '') ? 'empty' : teams[koStage.game51 - 1].teamId}
-            teamIdTwo={(koStage.game52 === '') ? 'empty' : teams[koStage.game52 - 1].teamId}
-            // teamOne='w51' teamTwo='w52'
+            teamIdOne={(koStage.game51 === '') ? 'w51' : teams[koStage.game51 - 1].teamId}
+            teamIdTwo={(koStage.game52 === '') ? 'w52' : teams[koStage.game52 - 1].teamId}
             name='game59' round='Quarter Finals' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket} />
           <RoundKo
             teamOne={(koStage.game55 === '') ? 'w55' : teams[koStage.game55 - 1].countryName} teamOneFlag={(koStage.game55 === '') ? null : teams[koStage.game55 - 1].countryFlag}
             teamTwo={(koStage.game56 === '') ? 'w56' : teams[koStage.game56 - 1].countryName} teamTwoFlag={(koStage.game56 === '') ? null : teams[koStage.game56 - 1].countryFlag}
-            teamIdOne={(koStage.game55 === '') ? 'empty' : teams[koStage.game55 - 1].teamId}
-            teamIdTwo={(koStage.game56 === '') ? 'empty' : teams[koStage.game56 - 1].teamId}
-            // teamOne='w55' teamTwo='w56'
+            teamIdOne={(koStage.game55 === '') ? 'w55' : teams[koStage.game55 - 1].teamId}
+            teamIdTwo={(koStage.game56 === '') ? 'w56' : teams[koStage.game56 - 1].teamId}
             name='game60' round='Quarter Finals' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket} />
         </div>
       );
@@ -260,7 +263,6 @@ export default class Brackets extends React.Component {
     if (teams.length === 0) return null;
 
     const groupStage = this.state.groupStage;
-    // console.log('team:', teams);
 
     // renders west bracket games
     if (!this.state.toggleBracket) {
@@ -272,26 +274,26 @@ export default class Brackets extends React.Component {
           <RoundKo
             teamOne={(groupStage.a1 === '') ? 'a1' : teams[groupStage.a1 - 1].countryName} teamOneFlag={ (groupStage.a1 === '') ? null : teams[groupStage.a1 - 1].countryFlag }
             teamTwo={(groupStage.b2 === '') ? 'b2' : teams[groupStage.b2 - 1].countryName} teamTwoFlag={ (groupStage.b2 === '') ? null : teams[groupStage.b2 - 1].countryFlag }
-            teamIdOne={(groupStage.a1 === '') ? 'empty' : teams[groupStage.a1 - 1].teamId}
-            teamIdTwo={(groupStage.b2 === '') ? 'empty' : teams[groupStage.b2 - 1].teamId}
+            teamIdOne={(groupStage.a1 === '') ? 'a1' : teams[groupStage.a1 - 1].teamId}
+            teamIdTwo={(groupStage.b2 === '') ? 'b2' : teams[groupStage.b2 - 1].teamId}
             name='game49' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket} />
           <RoundKo
             teamOne={(groupStage.c1 === '') ? 'c1' : teams[groupStage.c1 - 1].countryName} teamOneFlag={(groupStage.c1 === '') ? null : teams[groupStage.c1 - 1].countryFlag}
             teamTwo={(groupStage.d2 === '') ? 'd2' : teams[groupStage.d2 - 1].countryName} teamTwoFlag={(groupStage.d2 === '') ? null : teams[groupStage.d2 - 1].countryFlag}
-            teamIdOne={(groupStage.c1 === '') ? 'empty' : teams[groupStage.c1 - 1].teamId}
-            teamIdTwo={(groupStage.d2 === '') ? 'empty' : teams[groupStage.d2 - 1].teamId}
+            teamIdOne={(groupStage.c1 === '') ? 'c1' : teams[groupStage.c1 - 1].teamId}
+            teamIdTwo={(groupStage.d2 === '') ? 'd2' : teams[groupStage.d2 - 1].teamId}
             name='game50' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket}/>
           <RoundKo
             teamOne={(groupStage.e1 === '') ? 'e1' : teams[groupStage.e1 - 1].countryName} teamOneFlag={(groupStage.e2 === '') ? null : teams[groupStage.e1 - 1].countryFlag}
             teamTwo={(groupStage.f2 === '') ? 'f2' : teams[groupStage.f2 - 1].countryName} teamTwoFlag={(groupStage.f2 === '') ? null : teams[groupStage.f2 - 1].countryFlag}
-            teamIdOne={(groupStage.e1 === '') ? 'empty' : teams[groupStage.e1 - 1].teamId}
-            teamIdTwo={(groupStage.f2 === '') ? 'empty' : teams[groupStage.f2 - 1].teamId}
+            teamIdOne={(groupStage.e1 === '') ? 'e1' : teams[groupStage.e1 - 1].teamId}
+            teamIdTwo={(groupStage.f2 === '') ? 'f2' : teams[groupStage.f2 - 1].teamId}
             name='game53' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket}/>
           <RoundKo
             teamOne={(groupStage.g1 === '') ? 'g1' : teams[groupStage.g1 - 1].countryName} teamOneFlag={(groupStage.g1 === '') ? null : teams[groupStage.g1 - 1].countryFlag}
             teamTwo={(groupStage.h2 === '') ? 'h2' : teams[groupStage.h2 - 1].countryName} teamTwoFlag={(groupStage.h2 === '') ? null : teams[groupStage.h2 - 1].countryFlag}
-            teamIdOne={(groupStage.g1 === '') ? 'empty' : teams[groupStage.g1 - 1].teamId}
-            teamIdTwo={(groupStage.h2 === '') ? 'empty' : teams[groupStage.h2 - 1].teamId}
+            teamIdOne={(groupStage.g1 === '') ? 'g1' : teams[groupStage.g1 - 1].teamId}
+            teamIdTwo={(groupStage.h2 === '') ? 'h2' : teams[groupStage.h2 - 1].teamId}
             name='game54' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket}/>
         </div>
       );
@@ -304,28 +306,28 @@ export default class Brackets extends React.Component {
             <KoSwitch toggleState={this.state.toggleBracket} handleClick={this.handleToggleClick} />
           </div>
           <RoundKo
-            teamOne={(groupStage.d1 === '') ? 'd1' : teams[groupStage.d1 - 1].countryName} teamOneFlag={(groupStage.d1 === '') ? 'empty' : teams[groupStage.d1 - 1].countryFlag}
-            teamTwo={(groupStage.c2 === '') ? 'c2' : teams[groupStage.c2 - 1].countryName} teamTwoFlag={(groupStage.c2 === '') ? 'empty' : teams[groupStage.c2 - 1].countryFlag}
-            teamIdOne={(groupStage.d1 === '') ? 'empty' : teams[groupStage.d1 - 1].teamId}
-            teamIdTwo={(groupStage.c2 === '') ? 'empty' : teams[groupStage.c2 - 1].teamId}
+            teamOne={(groupStage.d1 === '') ? 'd1' : teams[groupStage.d1 - 1].countryName} teamOneFlag={(groupStage.d1 === '') ? null : teams[groupStage.d1 - 1].countryFlag}
+            teamTwo={(groupStage.c2 === '') ? 'c2' : teams[groupStage.c2 - 1].countryName} teamTwoFlag={(groupStage.c2 === '') ? null : teams[groupStage.c2 - 1].countryFlag}
+            teamIdOne={(groupStage.d1 === '') ? 'd1' : teams[groupStage.d1 - 1].teamId}
+            teamIdTwo={(groupStage.c2 === '') ? 'c2' : teams[groupStage.c2 - 1].teamId}
             name='game51' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket}/>
           <RoundKo
-            teamOne={(groupStage.b1 === '') ? 'b1' : teams[groupStage.b1 - 1].countryName} teamOneFlag={(groupStage.b1 === '') ? 'empty' : teams[groupStage.b1 - 1].countryFlag}
-            teamTwo={(groupStage.a2 === '') ? 'a2' : teams[groupStage.a2 - 1].countryName} teamTwoFlag={(groupStage.a2 === '') ? 'empty' : teams[groupStage.a2 - 1].countryFlag}
-            teamIdOne={(groupStage.b1 === '') ? 'empty' : teams[groupStage.b1 - 1].teamId}
-            teamIdTwo={(groupStage.a2 === '') ? 'empty' : teams[groupStage.a2 - 1].teamId}
+            teamOne={(groupStage.b1 === '') ? 'b1' : teams[groupStage.b1 - 1].countryName} teamOneFlag={(groupStage.b1 === '') ? null : teams[groupStage.b1 - 1].countryFlag}
+            teamTwo={(groupStage.a2 === '') ? 'a2' : teams[groupStage.a2 - 1].countryName} teamTwoFlag={(groupStage.a2 === '') ? null : teams[groupStage.a2 - 1].countryFlag}
+            teamIdOne={(groupStage.b1 === '') ? 'b1' : teams[groupStage.b1 - 1].teamId}
+            teamIdTwo={(groupStage.a2 === '') ? 'a2' : teams[groupStage.a2 - 1].teamId}
             name='game52' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket}/>
           <RoundKo
-            teamOne={(groupStage.f1 === '') ? 'f1' : teams[groupStage.f1 - 1].countryName} teamOneFlag={(groupStage.f1 === '') ? 'empty' : teams[groupStage.f1 - 1].countryFlag}
-            teamTwo={(groupStage.e2 === '') ? 'e2' : teams[groupStage.e2 - 1].countryName} teamTwoFlag={(groupStage.e2 === '') ? 'empty' : teams[groupStage.e2 - 1].countryFlag}
-            teamIdOne={(groupStage.f1 === '') ? 'empty' : teams[groupStage.f1 - 1].teamId}
-            teamIdTwo={(groupStage.e2 === '') ? 'empty' : teams[groupStage.e2 - 1].teamId}
+            teamOne={(groupStage.f1 === '') ? 'f1' : teams[groupStage.f1 - 1].countryName} teamOneFlag={(groupStage.f1 === '') ? null : teams[groupStage.f1 - 1].countryFlag}
+            teamTwo={(groupStage.e2 === '') ? 'e2' : teams[groupStage.e2 - 1].countryName} teamTwoFlag={(groupStage.e2 === '') ? null : teams[groupStage.e2 - 1].countryFlag}
+            teamIdOne={(groupStage.f1 === '') ? 'f1' : teams[groupStage.f1 - 1].teamId}
+            teamIdTwo={(groupStage.e2 === '') ? 'e2' : teams[groupStage.e2 - 1].teamId}
             name='game55' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket}/>
           <RoundKo
-            teamOne={(groupStage.h1 === '') ? 'h1' : teams[groupStage.h1 - 1].countryName} teamOneFlag={(groupStage.h1 === '') ? 'empty' : teams[groupStage.h1 - 1].countryFlag}
-            teamTwo={(groupStage.g2 === '') ? 'g2' : teams[groupStage.g2 - 1].countryName} teamTwoFlag={(groupStage.g2 === '') ? 'empty' : teams[groupStage.g2 - 1].countryFlag}
-            teamIdOne={(groupStage.h1 === '') ? 'empty' : teams[groupStage.h1 - 1].teamId}
-            teamIdTwo={(groupStage.g2 === '') ? 'empty' : teams[groupStage.g2 - 1].teamId}
+            teamOne={(groupStage.h1 === '') ? 'h1' : teams[groupStage.h1 - 1].countryName} teamOneFlag={(groupStage.h1 === '') ? null : teams[groupStage.h1 - 1].countryFlag}
+            teamTwo={(groupStage.g2 === '') ? 'g2' : teams[groupStage.g2 - 1].countryName} teamTwoFlag={(groupStage.g2 === '') ? null : teams[groupStage.g2 - 1].countryFlag}
+            teamIdOne={(groupStage.h1 === '') ? 'h1' : teams[groupStage.h1 - 1].teamId}
+            teamIdTwo={(groupStage.g2 === '') ? 'g2' : teams[groupStage.g2 - 1].teamId}
             name='game56' round='Round of 16' teamSel={this.teamSelected} check={this.verifyCheck} editing={this.state.isEditing} toggle={this.state.toggleBracket}/>
         </div>
       );
@@ -427,8 +429,6 @@ export default class Brackets extends React.Component {
   }
 
   render() {
-
-    // console.log('ko state;', this.state.knockoutStage);
 
     return (
       <>
