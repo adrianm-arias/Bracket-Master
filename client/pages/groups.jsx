@@ -226,7 +226,7 @@ export default class Groups extends React.Component {
       }
       // loops through groupStage object looking for next available empty property
       for (const property in groupStageCopy) {
-        if (groupStageCopy[property] === '' && property.startsWith(`${groupTarget}`)) {
+        if (groupStageCopy[property] === '' && property.startsWith(`${groupTarget}`) && property.length < 3) {
           groupStageCopy[property] = teamId;
           break;
         }
@@ -239,7 +239,7 @@ export default class Groups extends React.Component {
     } else {
 
       for (const property in groupStageCopy) {
-        if (groupStageCopy[property] === teamId) {
+        if (groupStageCopy[property] === teamId && property.length < 3) {
           groupStageCopy[property] = '';
           break;
         }

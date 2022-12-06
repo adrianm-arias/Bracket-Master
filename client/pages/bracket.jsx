@@ -57,6 +57,7 @@ export default class Brackets extends React.Component {
     this.handleToggleClick = this.handleToggleClick.bind(this);
     this.teamSelected = this.teamSelected.bind(this);
     this.verifyCheck = this.verifyCheck.bind(this);
+    this.handleGroupSave = this.handleGroupSave.bind(this);
   }
 
   componentDidMount() {
@@ -90,6 +91,23 @@ export default class Brackets extends React.Component {
     this.setState({
       knockoutStage: updateKoState
     });
+
+    const route = parseRoute(window.location.hash);
+
+    if (route.params.get('bracketId')) {
+      fetch(`/api/brackets/knockout/${route.params.get('bracketId')}`)
+        .then(response => response.json())
+        .then(koData => {
+          if (koData.length !== 0) {
+            this.setState({
+              knockoutStage: koData[0]
+            });
+          }
+        })
+        .catch(error => {
+          console.error('error:', error);
+        });
+    }
   }
 
   handleToggleClick() {
@@ -111,6 +129,17 @@ export default class Brackets extends React.Component {
         knockoutStage: koStageCopy
       });
     }
+  }
+
+  confirmSaveAlert() {
+    return (
+      <div className='d-flex justify-content-center'>
+        <div className='alert alert-success alert-dismissible fade show  mt-3' role='alert'>
+          <strong>Predictions Saved</strong>
+          <button type='button' className='btn-close' data-bs-dismiss='alert' aria-label='Close' />
+        </div>
+      </div>
+    );
   }
 
   verifyCheck(teamId) {
@@ -156,6 +185,35 @@ export default class Brackets extends React.Component {
         }
       }
     }
+  }
+
+  handleGroupSave() {
+    const token = window.localStorage.getItem('react-jwt');
+
+    const koStageCopy = { ...this.state.knockoutStage };
+    koStageCopy.bracketId = this.state.groupStage.bracketId;
+    fetch('/api/koStage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      },
+      body: JSON.stringify(koStageCopy)
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.setState({
+          confirmSave: true
+        });
+        setTimeout(() => {
+          this.setState({
+            confirmSave: false
+          });
+        }, 5000);
+      })
+      .catch(error => {
+        console.error('error:', error);
+      });
   }
 
   renderFinal() {
@@ -441,6 +499,10 @@ export default class Brackets extends React.Component {
           : <div className='fixed-bottom'>
             {this.handleEditing()}
           </div>
+        }
+        {(!this.state.confirmSave)
+          ? null
+          : <this.confirmSaveAlert />
         }
       </>
     );

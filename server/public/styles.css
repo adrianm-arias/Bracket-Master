@@ -296,6 +296,7 @@ a {
 
 label {
   -webkit-font-smoothing: antialiased;
+  cursor: pointer;
 }
 
 .group-selection-box {
