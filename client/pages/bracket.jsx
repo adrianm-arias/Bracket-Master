@@ -120,11 +120,7 @@ export default class Brackets extends React.Component {
     const koStageCopy = { ...this.state.knockoutStage };
 
     if (event.target.checked) {
-      for (const property in koStageCopy) {
-        if (property === event.target.name) {
-          koStageCopy[property] = teamId;
-        }
-      }
+      koStageCopy[event.target.name] = teamId;
       this.setState({
         knockoutStage: koStageCopy
       });
