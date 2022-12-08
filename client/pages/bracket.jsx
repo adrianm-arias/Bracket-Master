@@ -145,41 +145,16 @@ export default class Brackets extends React.Component {
     const bracketRound = route.params.get('round');
 
     if (bracketRound === 'roundof16') {
-      for (const property in koStage) {
-        if (property === 'game49' || property === 'game50' || property === 'game51' || property === 'game52' ||
-            property === 'game53' || property === 'game54' || property === 'game55' || property === 'game56') {
-          if (koStage[property] === teamId) {
-            return true;
-          }
-        }
-      }
+      return ['game49', 'game50', 'game51', 'game52', 'game53', 'game54', 'game55', 'game56'].some(property => koStage[property] === teamId);
     }
     if (bracketRound === 'quarters') {
-      for (const property in koStage) {
-        if (property === 'game57' || property === 'game58' || property === 'game59' || property === 'game60') {
-          if (koStage[property] === teamId) {
-            return true;
-          }
-        }
-      }
+      return ['game57', 'game58', 'game59', 'game60'].some(property => koStage[property] === teamId);
     }
     if (bracketRound === 'semis') {
-      for (const property in koStage) {
-        if (property === 'game61' || property === 'game62') {
-          if (koStage[property] === teamId) {
-            return true;
-          }
-        }
-      }
+      return ['game61', 'game62'].some(property => koStage[property] === teamId);
     }
     if (bracketRound === 'final') {
-      for (const property in koStage) {
-        if (property === 'game63') {
-          if (koStage[property] === teamId) {
-            return true;
-          }
-        }
-      }
+      return koStage.game63 === teamId;
     }
   }
 
