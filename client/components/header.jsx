@@ -28,7 +28,7 @@ export default class Header extends React.Component {
                 <a className={`${route.path === 'bracket' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#bracket?round=roundof16'>
                   <i className='bi bi-layout-three-columns nav-icon-xs' />
                   Bracket</a>
-                <a className={`${route.path === 'groups' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#groups?group=A'>
+                <a className={`${route.path === 'groups' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#groups?group=a'>
                   <i className='bi bi-grid nav-icon-xs' />
                   Groups</a>
                 <a className={`${route.path === 'teams' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#teams'>

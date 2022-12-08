@@ -6,10 +6,10 @@ export default function KoSwitch(props) {
       <div className={`div-switch ${props.hide}`}>
         <button
           className={`btn-switch ko-east ${!props.toggleState ? 'switch-on' : 'switch-off'}`}
-          onClick={props.handleClick}>EAST</button>
+          onClick={props.handleClick}>WEST</button>
         <button
           className={`btn-switch ko-west ${!props.toggleState ? 'switch-off' : 'switch-on'}`}
-          onClick={props.handleClick}>WEST</button>
+          onClick={props.handleClick}>EAST</button>
       </div>
       <div>
         <i className="bi bi-plus-circle px-2 ko-icons" />

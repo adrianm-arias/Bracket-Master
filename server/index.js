@@ -134,6 +134,24 @@ app.get('/api/brackets/groups/:bracketId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.get('/api/brackets/knockout/:bracketId', (req, res, next) => {
+  const bracketId = Number(req.params.bracketId);
+  if (!bracketId) {
+    throw new ClientError(400, 'Please Sign in');
+  }
+  const sql = `
+    select *
+      from "knockoutStage"
+      where "bracketId" = $1
+  `;
+  const params = [bracketId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 // Every route after middleware requires a token.
 
 app.use(authorizationMiddleware);
@@ -172,6 +190,25 @@ app.post('/api/groups', (req, res, next) => {
     .then(result => {
       const [groupSelection] = result.rows;
       res.status(201).json(groupSelection);
+    })
+    .catch(err => next(err));
+});
+
+app.post('/api/koStage', (req, res, next) => {
+  const { game49, game50, game51, game52, bracketId, game53, game54, game55, game56, game57, game58, game59, game60, game61, game62, game63 } = req.body;
+  if (!bracketId) {
+    throw new ClientError(400, 'bracket ID are required fields');
+  }
+  const sql = `
+    insert into "knockoutStage" ("game49", "game50", "game51", "game52", "bracketId", "game53", "game54", "game55", "game56", "game57", "game58", "game59", "game60", "game61", "game62", "game63")
+    values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+    returning *
+  `;
+  const params = [game49, game50, game51, game52, bracketId, game53, game54, game55, game56, game57, game58, game59, game60, game61, game62, game63];
+  db.query(sql, params)
+    .then(result => {
+      const [koSelection] = result.rows;
+      res.status(201).json(koSelection);
     })
     .catch(err => next(err));
 });
@@ -238,20 +275,6 @@ app.delete('/api/brackets/:bracketId', (req, res, next) => {
     })
     .catch(err => next(err));
 });
-
-// app.delete('/api/brackets/:bracketId', (req, res, next) => {
-//   const bracketId = Number(req.params.bracketId);
-//   if (!bracketId) {
-//     throw new ClientError(400, 'bracket ID are required fields');
-//   }
-//   const sql = `
-//     delete from "brackets"
-//  where "bracketId" = $1
-//   `;
-//   const params = [bracketId];
-//   db.query(sql, params)
-//     .catch(err => next(err));
-// });
 
 app.use(errorMiddleware);
 

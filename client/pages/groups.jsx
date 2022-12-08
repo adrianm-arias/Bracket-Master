@@ -49,7 +49,7 @@ export default class Groups extends React.Component {
       });
 
       if (this.state.isEditing) {
-        const groupTarget = newRoute.params.get('group').toLowerCase();
+        const groupTarget = newRoute.params.get('group');
         const groupStage = this.state.groupStage;
         let count = 0;
         for (const property in groupStage) {
@@ -208,7 +208,7 @@ export default class Groups extends React.Component {
     const groupStageCopy = { ...this.state.groupStage };
 
     const { route } = this.state;
-    const groupTarget = route.params.get('group').toLowerCase();
+    const groupTarget = route.params.get('group');
 
     if (event.target.checked) {
       // checks is max group selection is reached
@@ -226,7 +226,7 @@ export default class Groups extends React.Component {
       }
       // loops through groupStage object looking for next available empty property
       for (const property in groupStageCopy) {
-        if (groupStageCopy[property] === '' && property.startsWith(`${groupTarget}`)) {
+        if (groupStageCopy[property] === '' && property.startsWith(`${groupTarget}`) && property.length < 3) {
           groupStageCopy[property] = teamId;
           break;
         }
@@ -239,7 +239,7 @@ export default class Groups extends React.Component {
     } else {
 
       for (const property in groupStageCopy) {
-        if (groupStageCopy[property] === teamId) {
+        if (groupStageCopy[property] === teamId && property.length < 3) {
           groupStageCopy[property] = '';
           break;
         }
@@ -256,7 +256,7 @@ export default class Groups extends React.Component {
       <div className='d-flex justify-content-center'>
         <div className='alert alert-warning alert-dismissible fade show alert-window mt-3' role='alert'>
           <strong>Only select 2 teams per group</strong>
-          <button type='button' className='btn-close' data-bs-dismiss='alert' aria-label='Close'/>
+          <button type='button' className='btn-close' data-bs-dismiss='alert' aria-label='Close' />
         </div>
       </div>
     );
@@ -291,7 +291,7 @@ export default class Groups extends React.Component {
       return (
         (this.state.isEditing)
           ? <div className='team-wrapper-edit selected my-2 mx-auto d-flex justify-content-start' onChange={event => this.teamSelected(groupList.teamId, event)} key={groupList.teamId}>
-            <input className='checkbox' type='checkbox' id={groupList.teamId} name={groupList.countryName} defaultChecked={this.verifyCheck(groupList.teamId) }/>
+            <input className='checkbox' type='checkbox' id={groupList.teamId} name={groupList.countryName} defaultChecked={this.verifyCheck(groupList.teamId)} />
             <label className='d-flex group-selection-box' htmlFor={groupList.teamId}>
               <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryFlag}-flag`} />
               <h1 className='team-name'>{groupList.countryName}</h1>
@@ -347,11 +347,11 @@ export default class Groups extends React.Component {
     return (
       <div className='editing-wrapper d-flex justify-content-between'>
         <div className='mt-2'>
-          <p className=''>Currently Editing: <span className='editing-wrapper-title'>{ this.state.brackets.bracketName }</span></p>
+          <p className=''>Currently Editing: <span className='editing-wrapper-title'>{this.state.brackets.bracketName}</span></p>
         </div>
         <div className='mt-1 d-flex'>
           <button className='empty-btn'>
-            <i className='bi bi-check-circle-fill editing-icons px-3' onClick={ this.handleGroupSave } />
+            <i className='bi bi-check-circle-fill editing-icons px-3' onClick={this.handleGroupSave} />
           </button>
           <button className='empty-btn'>
             <i onClick={() => this.setState({
@@ -381,7 +381,7 @@ export default class Groups extends React.Component {
                 h2: ''
               }
             })}
-            className='bi bi-dash-circle-fill editing-icons px-3' />
+              className='bi bi-dash-circle-fill editing-icons px-3' />
           </button>
         </div>
       </div>
@@ -391,28 +391,28 @@ export default class Groups extends React.Component {
   // checks hash routing and loads correct page
   renderGroup() {
     const { route } = this.state;
-    if (route.params.get('group') === 'A') {
+    if (route.params.get('group') === 'a') {
       return 'A';
     }
-    if (route.params.get('group') === 'B') {
+    if (route.params.get('group') === 'b') {
       return 'B';
     }
-    if (route.params.get('group') === 'C') {
+    if (route.params.get('group') === 'c') {
       return 'C';
     }
-    if (route.params.get('group') === 'D') {
+    if (route.params.get('group') === 'd') {
       return 'D';
     }
-    if (route.params.get('group') === 'E') {
+    if (route.params.get('group') === 'e') {
       return 'E';
     }
-    if (route.params.get('group') === 'F') {
+    if (route.params.get('group') === 'f') {
       return 'F';
     }
-    if (route.params.get('group') === 'G') {
+    if (route.params.get('group') === 'g') {
       return 'G';
     }
-    if (route.params.get('group') === 'H') {
+    if (route.params.get('group') === 'h') {
       return 'H';
     }
   }
@@ -440,7 +440,7 @@ export default class Groups extends React.Component {
               bracketName: 'New Bracket'
             }
           });
-          window.location.hash = 'groups?group=A';
+          window.location.hash = 'groups?group=a';
         };
 
     const groupClicked = this.renderGroup();
@@ -458,14 +458,14 @@ export default class Groups extends React.Component {
         {(!this.state.isEditing)
           ? <div className='d-flex flex-md-row flex-column align-items-center justify-content-center'>
             <button onClick={alternateButtonAction}
-            className='btn btn-primary prediction-btn mx-2 my-2'>{alternateButtonText}</button>
+              className='btn btn-primary prediction-btn mx-2 my-2'>{alternateButtonText}</button>
             {(myBrackets.length !== 0)
               ? <button className='btn btn-primary prediction-btn mx-2 my-2' onClick={() => { window.location.hash = ''; }}>Edit Previous Prediction</button>
               : null
             }
           </div>
           : <div className='fixed-bottom'>
-            { this.handleEditing() }
+            {this.handleEditing()}
           </div>
         }
         {(!this.state.isShowingAlert)

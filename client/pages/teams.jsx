@@ -39,7 +39,7 @@ export default class Teams extends React.Component {
             <h2 className="accordion-header" id={`heading${StringId}`}>
               <button className="empty-btn" type="button" data-bs-toggle="collapse" data-bs-target={`#collapse-${StringId}`} aria-expanded="true" aria-controls={`collapse-${StringId}`}>
                 <div className='team-wrapper my-1 mx-auto d-flex justify-content-start'>
-                  <img className='team-flag me-4' src={groupList.countryFlag} alt="" />
+                  <img className='team-flag me-4' src={groupList.countryFlag} alt={`${groupList.countryName} Flag`} />
                   <h1 className='team-name'>{groupList.countryName}</h1>
                 </div>
               </button>
@@ -78,7 +78,7 @@ export default class Teams extends React.Component {
 
     return (
       <div className='d-flex flex-column align-items-center'>
-        <a className='team-title-link d-flex justify-content-start' href={`#groups?group=${letter}`}>
+        <a className='team-title-link d-flex justify-content-start' href={`#groups?group=${letter.toLowerCase()}`}>
           <div className='group-wrapper d-flex justify-content-center'>
             <h2 className='group-title'>group {letter}</h2>
           </div>

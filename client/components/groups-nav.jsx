@@ -6,14 +6,14 @@ export default function GroupsNav(props) {
   return (
     <div className='py-2 overflow-x'>
       <div className='container-xxl d-flex justify-content-start'>
-        <a className={`${route.params.get('group') === 'A' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=A'>Group A</a>
-        <a className={`${route.params.get('group') === 'B' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=B'>Group B</a>
-        <a className={`${route.params.get('group') === 'C' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=C'>Group C</a>
-        <a className={`${route.params.get('group') === 'D' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=D'>Group D</a>
-        <a className={`${route.params.get('group') === 'E' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=E'>Group E</a>
-        <a className={`${route.params.get('group') === 'F' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=F'>Group F</a>
-        <a className={`${route.params.get('group') === 'G' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=G'>Group G</a>
-        <a className={`${route.params.get('group') === 'H' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=H'>Group H</a>
+        <a className={`${route.params.get('group') === 'a' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=a'>Group A</a>
+        <a className={`${route.params.get('group') === 'b' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=b'>Group B</a>
+        <a className={`${route.params.get('group') === 'c' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=c'>Group C</a>
+        <a className={`${route.params.get('group') === 'd' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=d'>Group D</a>
+        <a className={`${route.params.get('group') === 'e' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=e'>Group E</a>
+        <a className={`${route.params.get('group') === 'f' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=f'>Group F</a>
+        <a className={`${route.params.get('group') === 'g' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=g'>Group G</a>
+        <a className={`${route.params.get('group') === 'h' ? 'group-link mx-2 active' : 'group-link mx-2'}`} aria-current='page' href='#groups?group=h'>Group H</a>
       </div>
     </div>
   );
