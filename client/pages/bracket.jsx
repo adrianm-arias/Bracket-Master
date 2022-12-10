@@ -18,6 +18,7 @@ export default class Brackets extends React.Component {
       isEditing: false,
       newBracket: false,
       toggleBracket: false,
+      confirmAutomate: false,
       groupStage: {
         a1: '',
         a2: '',
@@ -58,6 +59,7 @@ export default class Brackets extends React.Component {
     this.teamSelected = this.teamSelected.bind(this);
     this.verifyCheck = this.verifyCheck.bind(this);
     this.handleGroupSave = this.handleGroupSave.bind(this);
+    this.automateGroupStage = this.automateGroupStage.bind(this);
   }
 
   componentDidMount() {
@@ -425,6 +427,32 @@ export default class Brackets extends React.Component {
     );
   }
 
+  automateGroupStage() {
+    // console.log('automate modal works');
+    this.setState({
+      isEditing: true
+    });
+  }
+
+  confirmAutomate() {
+
+    return (
+      <div className="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to automate Group Stage predictions?</h1>
+              <div className="d-flex justify-content-center pt-5">
+                <button type="button" className="btn btn-secondary mx-3" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" className="btn btn-primary mx-3" onClick={() => this.automateGroupStage}>Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   componentDidUpdate() {
     localStorage.setItem('editing-state', JSON.stringify(this.state.isEditing));
     localStorage.setItem('brackets-state', JSON.stringify(this.state.brackets));
@@ -471,9 +499,9 @@ export default class Brackets extends React.Component {
             {this.handleEditing()}
           </div>
         }
-        {(!this.state.confirmSave)
+        {(this.state.confirmAutomate)
           ? null
-          : <this.confirmSaveAlert />
+          : <this.confirmAutomate />
         }
       </>
     );
