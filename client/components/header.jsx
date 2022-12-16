@@ -5,6 +5,7 @@ export default class Header extends React.Component {
 
   render() {
     const { handleSignOut, route, user } = this.context;
+    const alternateActionHref = (route.params.get('bracketId')) ? `#bracket?round=roundof16&bracketId=${route.params.get('bracketId')}` : '#bracket?round=roundof16';
 
     return (
       <header>
@@ -25,7 +26,7 @@ export default class Header extends React.Component {
                 <a className={`${route.path === '' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} aria-current='page' href=''>
                   <i className='bi bi-house-door nav-icon-xs' />
                   Home</a>
-                <a className={`${route.path === 'bracket' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#bracket?round=roundof16'>
+                <a className={`${route.path === 'bracket' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href={alternateActionHref}>
                   <i className='bi bi-layout-three-columns nav-icon-xs' />
                   Bracket</a>
                 <a className={`${route.path === 'groups' ? 'nav-link px-3 active' : 'nav-link ps-3'}`} href='#groups?group=a'>
