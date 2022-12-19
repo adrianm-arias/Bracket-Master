@@ -19,7 +19,7 @@ export default function RoundKo(props) {
   return (
     <div className='bg-knockout my-2' key={props.round}>
       <div>
-        <h1 className={`knockout-round-title ${!props.toggle ? 'text-start' : 'text-end'}`}>{`${props.round} ${props.name}`}</h1>
+        <h1 className={`knockout-round-title ${!props.toggle ? 'text-start' : 'text-end'}`}>{`${props.round}`}</h1>
       </div>
       <fieldset>
         <div className='d-flex flex-column mb-2' onChange={event => props.teamSel(props.teamIdOne, event)}>

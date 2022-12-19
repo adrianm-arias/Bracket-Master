@@ -254,6 +254,21 @@ app.delete('/api/brackets/:bracketId', (req, res, next) => {
   if (!bracketId) {
     throw new ClientError(400, 'bracket ID are required fields');
   }
+  const sqlKo = `
+    delete from "knockoutStage"
+    where "bracketId" = $1;
+  `;
+  const paramsKo = [bracketId];
+  db.query(sqlKo, paramsKo)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({
+        error: 'an unexpected error occurred'
+      });
+    });
   const sql = `
     delete from "groupStage"
  where "bracketId" = $1
@@ -272,8 +287,7 @@ app.delete('/api/brackets/:bracketId', (req, res, next) => {
           res.status(201).json(bracketSelection);
         })
         .catch(err => next(err));
-    })
-    .catch(err => next(err));
+    });
 });
 
 app.use(errorMiddleware);

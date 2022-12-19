@@ -161,35 +161,6 @@ export default class Brackets extends React.Component {
     }
   }
 
-  // handleGroupSave() {
-  //   const token = window.localStorage.getItem('react-jwt');
-
-  //   const koStageCopy = { ...this.state.knockoutStage };
-  //   koStageCopy.bracketId = this.state.groupStage.bracketId;
-  //   fetch('/api/koStage', {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'x-access-token': token
-  //     },
-  //     body: JSON.stringify(koStageCopy)
-  //   })
-  //     .then(res => res.json())
-  //     .then(result => {
-  //       this.setState({
-  //         confirmSave: true
-  //       });
-  //       setTimeout(() => {
-  //         this.setState({
-  //           confirmSave: false
-  //         });
-  //       }, 5000);
-  //     })
-  //     .catch(error => {
-  //       console.error('error:', error);
-  //     });
-  // }
-
   handleGroupSave() {
     const token = window.localStorage.getItem('react-jwt');
     if (this.state.newBracket) {
@@ -223,26 +194,30 @@ export default class Brackets extends React.Component {
               });
             });
           const koStageCopy = { ...this.state.knockoutStage };
-          koStageCopy.bracketId = groupStageCopy.bracketId;
-          fetch('/api/koStage', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-access-token': token
-            },
-            body: JSON.stringify(koStageCopy)
-          })
-            .then(res => res.json())
-            .then(result => {
-              setTimeout(() => {
-                this.setState({
-                  confirmSave: false
-                });
-              }, 5000);
+
+          if (koStageCopy.game49 !== '') {
+            const koStageCopy = { ...this.state.knockoutStage };
+            koStageCopy.bracketId = groupStageCopy.bracketId;
+            fetch('/api/koStage', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': token
+              },
+              body: JSON.stringify(koStageCopy)
             })
-            .catch(error => {
-              console.error('error:', error);
-            });
+              .then(res => res.json())
+              .then(result => {
+                setTimeout(() => {
+                  this.setState({
+                    confirmSave: false
+                  });
+                }, 5000);
+              })
+              .catch(error => {
+                console.error('error:', error);
+              });
+          }
         })
         .catch(error => {
           console.error('error:', error);
@@ -514,102 +489,53 @@ export default class Brackets extends React.Component {
   }
 
   automateGroupStage() {
-    function generateRandomInteger(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    const groupStageCopy = { ...this.state.groupStage };
+    function randomUniqueNum(range, outputCount) {
+
+      const arr = [];
+      for (let i = 1; i <= range; i++) {
+        arr.push(i);
+      }
+      const result = [];
+      for (let i = 1; i <= outputCount; i++) {
+        const random = Math.floor(Math.random() * (range - i));
+        result.push(arr[random]);
+        arr[random] = arr[range - i];
+      }
+      return result;
     }
 
-    const groupStageCopy = { ...this.state.groupStage };
-    const usedNumbers = [];
-    for (const property in groupStageCopy) {
-      if (property.startsWith('a')) {
-        const randomTeamId = generateRandomInteger(1, 4);
-        if (usedNumbers.includes(randomTeamId)) {
-          const randomTeamIdRedo = generateRandomInteger(1, 4);
-          groupStageCopy[property] = randomTeamIdRedo;
-          usedNumbers.push(randomTeamIdRedo);
-        } else {
-          groupStageCopy[property] = randomTeamId;
-          usedNumbers.push(randomTeamId);
-        }
-      }
-      if (property.startsWith('b')) {
-        const randomTeamId = generateRandomInteger(5, 8);
-        if (usedNumbers.includes(randomTeamId)) {
-          const randomTeamIdRedo = generateRandomInteger(5, 8);
-          groupStageCopy[property] = randomTeamIdRedo;
-          usedNumbers.push(randomTeamIdRedo);
-        } else {
-          groupStageCopy[property] = randomTeamId;
-          usedNumbers.push(randomTeamId);
-        }
-      }
-      if (property.startsWith('c')) {
-        const randomTeamId = generateRandomInteger(9, 12);
-        if (usedNumbers.includes(randomTeamId)) {
-          const randomTeamIdRedo = generateRandomInteger(9, 12);
-          groupStageCopy[property] = randomTeamIdRedo;
-          usedNumbers.push(randomTeamIdRedo);
-        } else {
-          groupStageCopy[property] = randomTeamId;
-          usedNumbers.push(randomTeamId);
-        }
-      }
-      if (property.startsWith('d')) {
-        const randomTeamId = generateRandomInteger(13, 16);
-        if (usedNumbers.includes(randomTeamId)) {
-          const randomTeamIdRedo = generateRandomInteger(13, 16);
-          groupStageCopy[property] = randomTeamIdRedo;
-          usedNumbers.push(randomTeamIdRedo);
-        } else {
-          groupStageCopy[property] = randomTeamId;
-          usedNumbers.push(randomTeamId);
-        }
-      }
-      if (property.startsWith('e')) {
-        const randomTeamId = generateRandomInteger(17, 20);
-        if (usedNumbers.includes(randomTeamId)) {
-          const randomTeamIdRedo = generateRandomInteger(17, 20);
-          groupStageCopy[property] = randomTeamIdRedo;
-          usedNumbers.push(randomTeamIdRedo);
-        } else {
-          groupStageCopy[property] = randomTeamId;
-          usedNumbers.push(randomTeamId);
-        }
-      }
-      if (property.startsWith('f')) {
-        const randomTeamId = generateRandomInteger(21, 24);
-        if (usedNumbers.includes(randomTeamId)) {
-          const randomTeamIdRedo = generateRandomInteger(21, 24);
-          groupStageCopy[property] = randomTeamIdRedo;
-          usedNumbers.push(randomTeamIdRedo);
-        } else {
-          groupStageCopy[property] = randomTeamId;
-          usedNumbers.push(randomTeamId);
-        }
-      }
-      if (property.startsWith('g')) {
-        const randomTeamId = generateRandomInteger(25, 28);
-        if (usedNumbers.includes(randomTeamId)) {
-          const randomTeamIdRedo = generateRandomInteger(25, 28);
-          groupStageCopy[property] = randomTeamIdRedo;
-          usedNumbers.push(randomTeamIdRedo);
-        } else {
-          groupStageCopy[property] = randomTeamId;
-          usedNumbers.push(randomTeamId);
-        }
-      }
-      if (property.startsWith('h')) {
-        const randomTeamId = generateRandomInteger(28, 32);
-        if (usedNumbers.includes(randomTeamId)) {
-          const randomTeamIdRedo = generateRandomInteger(28, 32);
-          groupStageCopy[property] = randomTeamIdRedo;
-          usedNumbers.push(randomTeamIdRedo);
-        } else {
-          groupStageCopy[property] = randomTeamId;
-          usedNumbers.push(randomTeamId);
-        }
-      }
-    }
+    const randomTeamIdA = randomUniqueNum(4, 2);
+    groupStageCopy.a1 = randomTeamIdA[0];
+    groupStageCopy.a2 = randomTeamIdA[1];
+
+    const randomTeamIdB = randomUniqueNum(4, 2);
+    groupStageCopy.b1 = randomTeamIdB[0] + 4;
+    groupStageCopy.b2 = randomTeamIdB[1] + 4;
+
+    const randomTeamIdC = randomUniqueNum(4, 2);
+    groupStageCopy.c1 = randomTeamIdC[0] + 8;
+    groupStageCopy.c2 = randomTeamIdC[1] + 8;
+
+    const randomTeamIdD = randomUniqueNum(4, 2);
+    groupStageCopy.d1 = randomTeamIdD[0] + 12;
+    groupStageCopy.d2 = randomTeamIdD[1] + 12;
+
+    const randomTeamIdE = randomUniqueNum(4, 2);
+    groupStageCopy.e1 = randomTeamIdE[0] + 16;
+    groupStageCopy.e2 = randomTeamIdE[1] + 16;
+
+    const randomTeamIdF = randomUniqueNum(4, 2);
+    groupStageCopy.f1 = randomTeamIdF[0] + 20;
+    groupStageCopy.f2 = randomTeamIdF[1] + 20;
+
+    const randomTeamIdG = randomUniqueNum(4, 2);
+    groupStageCopy.g1 = randomTeamIdG[0] + 24;
+    groupStageCopy.g2 = randomTeamIdG[1] + 24;
+
+    const randomTeamIdH = randomUniqueNum(4, 2);
+    groupStageCopy.h1 = randomTeamIdH[0] + 28;
+    groupStageCopy.h2 = randomTeamIdH[1] + 28;
 
     const { user } = this.context;
 
