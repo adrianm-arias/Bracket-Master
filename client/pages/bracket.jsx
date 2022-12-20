@@ -18,6 +18,7 @@ export default class Brackets extends React.Component {
       isEditing: false,
       newBracket: false,
       toggleBracket: false,
+      confirmAutomate: false,
       groupStage: {
         a1: '',
         a2: '',
@@ -58,6 +59,8 @@ export default class Brackets extends React.Component {
     this.teamSelected = this.teamSelected.bind(this);
     this.verifyCheck = this.verifyCheck.bind(this);
     this.handleGroupSave = this.handleGroupSave.bind(this);
+    this.automateGroupStage = this.automateGroupStage.bind(this);
+    this.confirmAutomate = this.confirmAutomate.bind(this);
   }
 
   componentDidMount() {
@@ -160,31 +163,91 @@ export default class Brackets extends React.Component {
 
   handleGroupSave() {
     const token = window.localStorage.getItem('react-jwt');
-
-    const koStageCopy = { ...this.state.knockoutStage };
-    koStageCopy.bracketId = this.state.groupStage.bracketId;
-    fetch('/api/koStage', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-access-token': token
-      },
-      body: JSON.stringify(koStageCopy)
-    })
-      .then(res => res.json())
-      .then(result => {
-        this.setState({
-          confirmSave: true
-        });
-        setTimeout(() => {
-          this.setState({
-            confirmSave: false
-          });
-        }, 5000);
+    if (this.state.newBracket) {
+      fetch('/api/brackets', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify(this.state.brackets)
       })
-      .catch(error => {
-        console.error('error:', error);
-      });
+        .then(res => res.json())
+        .then(result => {
+          const groupStageCopy = { ...this.state.groupStage };
+          groupStageCopy.bracketId = result.bracketId;
+          this.setState({
+            groupStage: groupStageCopy
+          });
+          fetch('/api/groups', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-access-token': token
+            },
+            body: JSON.stringify(groupStageCopy)
+          })
+            .then(res => res.json())
+            .then(result => {
+              this.setState({
+                confirmSave: true
+              });
+            });
+          const koStageCopy = { ...this.state.knockoutStage };
+
+          if (koStageCopy.game49 !== '') {
+            const koStageCopy = { ...this.state.knockoutStage };
+            koStageCopy.bracketId = groupStageCopy.bracketId;
+            fetch('/api/koStage', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'x-access-token': token
+              },
+              body: JSON.stringify(koStageCopy)
+            })
+              .then(res => res.json())
+              .then(result => {
+                setTimeout(() => {
+                  this.setState({
+                    confirmSave: false
+                  });
+                }, 5000);
+              })
+              .catch(error => {
+                console.error('error:', error);
+              });
+          }
+        })
+        .catch(error => {
+          console.error('error:', error);
+        });
+    } else {
+      const koStageCopy = { ...this.state.knockoutStage };
+      koStageCopy.bracketId = this.state.groupStage.bracketId;
+      fetch('/api/koStage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify(koStageCopy)
+      })
+        .then(res => res.json())
+        .then(result => {
+          this.setState({
+            confirmSave: true
+          });
+          setTimeout(() => {
+            this.setState({
+              confirmSave: false
+            });
+          }, 5000);
+        })
+        .catch(error => {
+          console.error('error:', error);
+        });
+    }
   }
 
   renderFinal() {
@@ -425,9 +488,91 @@ export default class Brackets extends React.Component {
     );
   }
 
+  automateGroupStage() {
+    const groupStageCopy = { ...this.state.groupStage };
+    function randomUniqueNum(range, outputCount) {
+
+      const arr = [];
+      for (let i = 1; i <= range; i++) {
+        arr.push(i);
+      }
+      const result = [];
+      for (let i = 1; i <= outputCount; i++) {
+        const random = Math.floor(Math.random() * (range - i));
+        result.push(arr[random]);
+        arr[random] = arr[range - i];
+      }
+      return result;
+    }
+
+    const randomTeamIdA = randomUniqueNum(4, 2);
+    groupStageCopy.a1 = randomTeamIdA[0];
+    groupStageCopy.a2 = randomTeamIdA[1];
+
+    const randomTeamIdB = randomUniqueNum(4, 2);
+    groupStageCopy.b1 = randomTeamIdB[0] + 4;
+    groupStageCopy.b2 = randomTeamIdB[1] + 4;
+
+    const randomTeamIdC = randomUniqueNum(4, 2);
+    groupStageCopy.c1 = randomTeamIdC[0] + 8;
+    groupStageCopy.c2 = randomTeamIdC[1] + 8;
+
+    const randomTeamIdD = randomUniqueNum(4, 2);
+    groupStageCopy.d1 = randomTeamIdD[0] + 12;
+    groupStageCopy.d2 = randomTeamIdD[1] + 12;
+
+    const randomTeamIdE = randomUniqueNum(4, 2);
+    groupStageCopy.e1 = randomTeamIdE[0] + 16;
+    groupStageCopy.e2 = randomTeamIdE[1] + 16;
+
+    const randomTeamIdF = randomUniqueNum(4, 2);
+    groupStageCopy.f1 = randomTeamIdF[0] + 20;
+    groupStageCopy.f2 = randomTeamIdF[1] + 20;
+
+    const randomTeamIdG = randomUniqueNum(4, 2);
+    groupStageCopy.g1 = randomTeamIdG[0] + 24;
+    groupStageCopy.g2 = randomTeamIdG[1] + 24;
+
+    const randomTeamIdH = randomUniqueNum(4, 2);
+    groupStageCopy.h1 = randomTeamIdH[0] + 28;
+    groupStageCopy.h2 = randomTeamIdH[1] + 28;
+
+    const { user } = this.context;
+
+    this.setState({
+      groupStage: groupStageCopy,
+      isEditing: true,
+      newBracket: true,
+      brackets: {
+        userId: user.userId,
+        bracketName: 'New Bracket'
+      }
+    });
+  }
+
+  confirmAutomate() {
+
+    return (
+      <div className="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-body">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to automate Group Stage predictions?</h1>
+              <div className="d-flex justify-content-center pt-5">
+                <button type="button" className="btn btn-secondary mx-3" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" className="btn btn-primary mx-3" onClick={this.automateGroupStage} data-bs-dismiss="modal">Yes</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   componentDidUpdate() {
     localStorage.setItem('editing-state', JSON.stringify(this.state.isEditing));
     localStorage.setItem('brackets-state', JSON.stringify(this.state.brackets));
+    localStorage.setItem('newBracket-state', JSON.stringify(this.state.newBracket));
     localStorage.setItem('groupStage-state', JSON.stringify(this.state.groupStage));
     localStorage.setItem('koStage-state', JSON.stringify(this.state.knockoutStage));
   }
@@ -470,6 +615,10 @@ export default class Brackets extends React.Component {
           : <div className='fixed-bottom'>
             {this.handleEditing()}
           </div>
+        }
+        {(this.state.confirmAutomate)
+          ? null
+          : <this.confirmAutomate />
         }
         {(!this.state.confirmSave)
           ? null

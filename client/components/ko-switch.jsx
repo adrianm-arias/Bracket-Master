@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function KoSwitch(props) {
+
   return (
     <>
       <div className={`div-switch ${props.hide}`}>
@@ -12,8 +13,10 @@ export default function KoSwitch(props) {
           onClick={props.handleClick}>EAST</button>
       </div>
       <div>
-        <i className="bi bi-plus-circle px-2 ko-icons" />
-        <i className="bi bi-shuffle px-2  ko-icons" />
+        <i className="bi bi-plus-circle px-2 ko-icons" onClick={() => { window.location.hash = 'groups?group=a'; }} />
+        <i className="bi bi-shuffle px-2  ko-icons"
+        data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+         />
       </div>
     </>
   );
