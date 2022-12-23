@@ -23,7 +23,7 @@ export default class App extends React.Component {
     this.handleSignIn = this.handleSignIn.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
     this.removeBracket = this.removeBracket.bind(this);
-
+    this.updateBrackets = this.updateBrackets.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +64,12 @@ export default class App extends React.Component {
     const { user, token } = result;
     window.localStorage.setItem('react-jwt', token);
     this.setState({ user });
+    if (!user) {
+      return null;
+    } else {
+      this.updateBrackets(user.userId);
+      window.location.hash = '';
+    }
   }
 
   removeBracket(bracketId) {
@@ -76,6 +82,16 @@ export default class App extends React.Component {
     this.setState({
       myBrackets: bracketsCopy
     });
+  }
+
+  updateBrackets(userId) {
+    fetch(`/api/brackets/${userId}`)
+      .then(res => res.json())
+      .then(bracket => {
+        this.setState({
+          myBrackets: bracket
+        });
+      });
   }
 
   handleSignOut() {
@@ -114,8 +130,8 @@ export default class App extends React.Component {
 
   render() {
     const { user, isAuthorizing, route, myBrackets, teams } = this.state;
-    const { handleSignIn, handleSignOut, removeBracket } = this;
-    const contextValue = { user, isAuthorizing, route, myBrackets, handleSignIn, handleSignOut, removeBracket, teams };
+    const { handleSignIn, handleSignOut, removeBracket, updateBrackets } = this;
+    const contextValue = { user, isAuthorizing, route, myBrackets, handleSignIn, handleSignOut, removeBracket, teams, updateBrackets };
 
     return (
       <AppContext.Provider value={contextValue}>

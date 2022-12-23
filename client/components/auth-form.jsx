@@ -45,7 +45,7 @@ export default class AuthForm extends React.Component {
     const { handleChange, handleSubmit } = this;
 
     const alternateActionHref = action === 'sign-up' ? '#sign-in' : '#sign-up';
-    const alternateActionText = action === 'sign-up' ? 'Sign in' : 'Register now';
+    const alternateActionText = action === 'sign-up' ? 'Sign in' : 'New Here? Register now';
     const submitButtonText = action === 'sign-up' ? 'Register' : 'Log In';
     const welcomeMessage = action === 'sign-in' ? 'Please sign in to continue' : 'Create an account to get started!';
 

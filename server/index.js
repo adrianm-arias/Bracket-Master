@@ -249,6 +249,25 @@ app.patch('/api/groups/:groupStageId', (req, res, next) => {
     .catch(err => next(err));
 });
 
+app.patch('/api/home/:bracketId', (req, res, next) => {
+  const bracketId = Number(req.params.bracketId);
+  if (!bracketId) {
+    throw new ClientError(400, 'Bracket ID are required fields');
+  }
+  const { bracketName } = req.body;
+  const sql = `
+    update "brackets"
+    set "bracketName" = $1
+    where "bracketId" = $2;
+  `;
+  const params = [bracketName, bracketId];
+  db.query(sql, params)
+    .then(result => {
+      res.json(result.rows);
+    })
+    .catch(err => next(err));
+});
+
 app.delete('/api/brackets/:bracketId', (req, res, next) => {
   const bracketId = Number(req.params.bracketId);
   if (!bracketId) {
