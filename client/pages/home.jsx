@@ -6,6 +6,12 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      inputIndex: '',
+      bracket0: '',
+      bracket1: '',
+      bracket2: '',
+      bracket3: '',
+      bracket4: '',
       bracketName: '',
       bracketId: null,
       route: parseRoute(window.location.hash),
@@ -13,7 +19,16 @@ export default class Home extends React.Component {
     };
     this.handleBracketDelete = this.handleBracketDelete.bind(this);
     this.confirmDeleteAlert = this.confirmDeleteAlert.bind(this);
+    this.handleBracketNameChange = this.handleBracketNameChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.editBracketName = this.editBracketName.bind(this);
+  }
 
+  handleBracketNameChange(event) {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
   }
 
   confirmDeleteAlert() {
@@ -69,22 +84,79 @@ export default class Home extends React.Component {
     });
   }
 
+  handleSubmit(index, bracketId) {
+    const { updateBrackets, user } = this.context;
+
+    if (this.state[`bracket${index}`] === '') {
+      this.setState({
+        inputIndex: ''
+      });
+    } else {
+      const token = window.localStorage.getItem('react-jwt');
+      const newBracketName = {
+        bracketName: this.state[`bracket${index}`]
+      };
+
+      fetch(`/api/home/${bracketId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-access-token': token
+        },
+        body: JSON.stringify(newBracketName)
+      })
+        .then(res => res.json())
+        .then(result => {
+          this.setState({
+            inputIndex: ''
+          });
+          if (!user) {
+            return null;
+          } else {
+            updateBrackets(user.userId);
+          }
+        })
+        .catch(error => {
+          console.error('error:', error);
+        });
+    }
+  }
+
+  editBracketName(index, bracketId) {
+    this.setState({
+      inputIndex: index,
+      editingBracketName: true
+    });
+  }
+
   renderUserBrackets() {
     const { myBrackets } = this.context;
 
-    const mapList = myBrackets.map(data => {
+    const mapList = myBrackets.map((data, index) => {
       return (
-        <div className='d-flex justify-content-center' key={data.bracketId}>
-          <div className='edit-bracket-wrapper my-1 mx-auto d-flex justify-content-start align-items-center position-relative'>
-            <i className='bi bi-pencil-fill editing-icon' />
-            <a href={`#groups?group=a&bracketId=${data.bracketId}&bracketName=${data.bracketName}`}>
-              <h1 className='bracket-name'>{data.bracketName}</h1>
-            </a>
-            <div className='position-absolute end-0'>
-              <i className='bi bi-dash-circle editing-delete-icon' onClick={() => this.setState({ confirmDelete: true, bracketName: data.bracketName, bracketId: data.bracketId })} />
+        (this.state.inputIndex !== index)
+          ? <div className='d-flex justify-content-center' key={data.bracketId}>
+            <div className='edit-bracket-wrapper my-1 mx-auto d-flex justify-content-start align-items-center position-relative'>
+              <i className='bi bi-pencil-fill editing-icon' onClick={() => this.editBracketName(index)} />
+              <a href={`#groups?group=a&bracketId=${data.bracketId}&bracketName=${data.bracketName}`}>
+                <h1 className='bracket-name'>{data.bracketName}</h1>
+              </a>
+              <div className='position-absolute end-0'>
+                <i className='bi bi-dash-circle editing-delete-icon' onClick={() => this.setState({ confirmDelete: true, bracketName: data.bracketName, bracketId: data.bracketId })} />
+              </div>
             </div>
           </div>
-        </div>
+          : <form onSubmit={this.handleSubmit} key={data.bracketId} >
+            <div className='d-flex justify-content-center'>
+              <div className='edit-bracket-wrapper my-1 mx-auto d-flex justify-content-start align-items-center position-relative'>
+                <i className='bi bi-check-circle-fill editing-icon' onClick={() => this.handleSubmit(index, data.bracketId)}/>
+                <input type='text' className='bracket-name' id={data.bracketId} name={`bracket${index}`} value={this.state[`brackets${index}`]} placeholder={data.bracketName} onChange={this.handleBracketNameChange} />
+                <div className='position-absolute end-0'>
+                  <i className='bi bi-dash-circle editing-delete-icon' onClick={() => this.setState({ confirmDelete: true, bracketName: data.bracketName, bracketId: data.bracketId })} />
+                </div>
+              </div>
+            </div>
+          </form>
       );
     });
     return (
