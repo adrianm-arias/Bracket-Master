@@ -74,30 +74,28 @@ export default class Groups extends React.Component {
         console.error('error:', error);
       });
 
-    const updateEditState = JSON.parse(window.localStorage.getItem('editing-state'));
-    this.setState({
-      isEditing: updateEditState
-    });
-
-    const updateBracketState = JSON.parse(window.localStorage.getItem('brackets-state'));
-    this.setState({
-      brackets: updateBracketState
-    });
-
-    const updateGroupsState = JSON.parse(window.localStorage.getItem('groupStage-state'));
-    this.setState({
-      groupStage: updateGroupsState
-    });
-
-    const updateNewBracketState = JSON.parse(window.localStorage.getItem('newBracket-state'));
-    this.setState({
-      newBracket: updateNewBracketState
-    });
-
-    const updateGroupCount = JSON.parse(window.localStorage.getItem('groupCount-state'));
-    this.setState({
-      groupCount: updateGroupCount
-    });
+    if (this.state.isEditing) {
+      const updateEditState = JSON.parse(window.localStorage.getItem('editing-state'));
+      this.setState({
+        isEditing: updateEditState
+      });
+      const updateBracketState = JSON.parse(window.localStorage.getItem('brackets-state'));
+      this.setState({
+        brackets: updateBracketState
+      });
+      const updateGroupsState = JSON.parse(window.localStorage.getItem('groupStage-state'));
+      this.setState({
+        groupStage: updateGroupsState
+      });
+      const updateNewBracketState = JSON.parse(window.localStorage.getItem('newBracket-state'));
+      this.setState({
+        newBracket: updateNewBracketState
+      });
+      const updateGroupCount = JSON.parse(window.localStorage.getItem('groupCount-state'));
+      this.setState({
+        groupCount: updateGroupCount
+      });
+    }
 
     const { user } = this.context;
     const route = this.state.route;
