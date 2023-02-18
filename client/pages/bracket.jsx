@@ -141,7 +141,7 @@ export default class Brackets extends React.Component {
   }
 
   verifyCheck(teamId) {
-    if (!this.isEditing) return null;
+    if (!this.state.isEditing) return null;
 
     const koStage = this.state.knockoutStage;
     const route = parseRoute(window.location.hash);
