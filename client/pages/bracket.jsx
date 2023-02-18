@@ -75,25 +75,24 @@ export default class Brackets extends React.Component {
         console.error('error:', error);
       });
 
-    const updateEditState = JSON.parse(window.localStorage.getItem('editing-state'));
-    this.setState({
-      isEditing: updateEditState
-    });
-
-    const updateBracketState = JSON.parse(window.localStorage.getItem('brackets-state'));
-    this.setState({
-      brackets: updateBracketState
-    });
-
-    const updateGroupsState = JSON.parse(window.localStorage.getItem('groupStage-state'));
-    this.setState({
-      groupStage: updateGroupsState
-    });
-
-    const updateKoState = JSON.parse(window.localStorage.getItem('koStage-state'));
-    this.setState({
-      knockoutStage: updateKoState
-    });
+    if (this.state.isEditing) {
+      const updateEditState = JSON.parse(window.localStorage.getItem('editing-state'));
+      this.setState({
+        isEditing: updateEditState
+      });
+      const updateBracketState = JSON.parse(window.localStorage.getItem('brackets-state'));
+      this.setState({
+        brackets: updateBracketState
+      });
+      const updateGroupsState = JSON.parse(window.localStorage.getItem('groupStage-state'));
+      this.setState({
+        groupStage: updateGroupsState
+      });
+      const updateKoState = JSON.parse(window.localStorage.getItem('koStage-state'));
+      this.setState({
+        knockoutStage: updateKoState
+      });
+    }
 
     const route = parseRoute(window.location.hash);
 
@@ -142,6 +141,7 @@ export default class Brackets extends React.Component {
   }
 
   verifyCheck(teamId) {
+    if (!this.isEditing) return null;
 
     const koStage = this.state.knockoutStage;
     const route = parseRoute(window.location.hash);
